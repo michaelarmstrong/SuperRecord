@@ -1,7 +1,7 @@
 //
 //  CoreDataStack.swift
 //
-//  A small set of utilities to make working with CoreData a bit easier.
+//  SuperFinders - A small set of utilities to make working with CoreData a bit easier.
 //  http://mike.kz/
 //
 //  Created by Michael Armstrong on 12/10/2014.
