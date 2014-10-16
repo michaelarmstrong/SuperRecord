@@ -7,6 +7,7 @@
 //  Created by Michael Armstrong on 12/10/2014.
 //  Copyright (c) 2014 SuperArmstrong.UK. All rights reserved.
 //
+//  RESPONSIBILITY : Several helpers for NSManagedObject to make common operations simpler.
 
 import CoreData
 
