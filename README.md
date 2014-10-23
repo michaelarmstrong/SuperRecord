@@ -33,18 +33,20 @@ The project has been built over several versions of Swift so some choices may se
 #### <i class="icon-file"></i> Create a new Entity
 Assuming you have an NSManagedObject of type "Pokemon" you could do the following
 
-let pokemon = Pokemon.createNewEntity() as Pokemon
+`let pokemon = Pokemon.createNewEntity() as Pokemon`
 
 Please add `@objc(className)` above the class name of all your `NSManagedObject` subclasses (as shown in the demo project) for now. Better support will be coming in the future.
 
 #### <i class="icon-folder-open"></i> Creating an NSFetchedResultsController
 This feature is currently in progress with basic support so far, in future versions, sorting and sectionNameKeyPath's will be supported. Until then you can create your own NSFetchedResultsController, however, if you have no need for the above missing functionality then simply use
 
+```
 lazy var fetchedResultsController: NSFetchedResultsController = self.superFetchedResultsController()
 
 func superFetchedResultsController() -> NSFetchedResultsController {
 return NSFetchedResultsController.superFetchedResultsController("Pokemon", tableView: tableView)
 }
+```
 
 With `Pokemon` being the entity name of your `NSManagedObject`.
 
@@ -53,7 +55,7 @@ With `Pokemon` being the entity name of your `NSManagedObject`.
 
 I'm planning on adding much more powerful functionality around Delete soon, such as deleteAllWithPredicate() or deleteEntity(), right now all that is available is
 
-Pokemon.deleteAll()
+`Pokemon.deleteAll()`
 
 
 ### Method Listing
