@@ -10,12 +10,13 @@
 //  RESPONSIBILITY : Setup a CoreData Stack accessible via a singleton.
 
 import UIKit
+import CoreData
+
+let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary
+let stackName = infoDictionary["CFBundleName"] as NSString
+let storeName = stackName + ".sqlite"
 
 class CoreDataStack: NSObject {
-    
-    let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary
-    let stackName = infoDictionary["CFBundleName"] as NSString
-    let storeName = stackName + ".sqlite"
     
     class var defaultStack : CoreDataStack {
     struct Static {
@@ -31,13 +32,15 @@ class CoreDataStack: NSObject {
     // MARK: - Core Data stack
     
     lazy var applicationDocumentsDirectory: NSURL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.rs..SampleCoreData" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls.last as NSURL
         }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
+        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource(stackName, withExtension: "momd")
-        return NSManagedObjectModel(contentsOfURL: modelURL!)
+        return NSManagedObjectModel(contentsOfURL: modelURL!)!
         }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
@@ -53,8 +56,9 @@ class CoreDataStack: NSObject {
             let dict = NSMutableDictionary()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
-            dict[NSUnderlyingErrorKey] = error
-            error = NSError.errorWithDomain("YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            dict[NSUnderlyingErrorKey] = error            
+            error = NSError(domain: "com.superrecord.error.domain", code: 9999, userInfo: dict)
+            
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")

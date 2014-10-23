@@ -65,17 +65,31 @@ extension NSManagedObject {
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
-        var results = NSArray()
+        var fetchedObjects = NSArray()
+        
         context.performBlockAndWait({ () -> Void in
             var error : NSError?
-            results = context.executeFetchRequest(fetchRequest, error: &error)!
+            let results = context.executeFetchRequest(fetchRequest, error: &error)! as NSArray
+            fetchedObjects = results
         })
-        for result in results {
-            return result as NSManagedObject
-        }
         
-        var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
+        if let firstObject = fetchedObjects.firstObject as? NSManagedObject {
+            return firstObject
+        }
+
+        var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context) as NSManagedObject
         return obj
+    }
+    
+    class func createNewEntity(context: NSManagedObjectContext) -> NSManagedObject {
+        let entityName : NSString = NSStringFromClass(self)
+        let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
+        return obj as NSManagedObject
+    }
+    
+    class func createNewEntity() -> NSManagedObject {
+        return createNewEntity(CoreDataStack.defaultStack.managedObjectContext!)
     }
     
     class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext) -> NSManagedObject {
