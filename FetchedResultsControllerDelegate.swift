@@ -10,7 +10,7 @@
 //  RESPONSIBILITY : Manage safe batched updates to UITableView and UICollectionView
 //
 //  Credits: 
-//  Inspired by https://github.com/AshFurrow/UICollectionView-NSFetchedResultsController/blob/master/AFMasterViewController.m
+//  Largely Inspired by https://github.com/AshFurrow/UICollectionView-NSFetchedResultsController/blob/master/AFMasterViewController.m
 //
 
 import Foundation
@@ -71,7 +71,7 @@ class FetchResultsControllerBinder : NSObject, NSFetchedResultsControllerDelegat
         
         var ownerArray : AnyObject? = objc_getAssociatedObject(self.owner, kOwnerKey);
         if(ownerArray == nil){
-            ownerArray = NSMutableArray.array()
+            ownerArray = NSMutableArray()
             objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, UInt(OBJC_ASSOCIATION_RETAIN));
         }
         ownerArray?.addObject(self)

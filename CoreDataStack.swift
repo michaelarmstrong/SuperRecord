@@ -12,8 +12,8 @@
 import UIKit
 import CoreData
 
-let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary
-let stackName = infoDictionary["CFBundleName"] as NSString
+let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
+let stackName = infoDictionary!["CFBundleName"] as NSString
 let storeName = stackName + ".sqlite"
 
 class CoreDataStack: NSObject {
