@@ -1,5 +1,5 @@
 //
-//  CoreDataStack.swift
+//  SuperCoreDataStack.swift
 //
 //  SuperRecord - A small set of utilities to make working with CoreData a bit easier.
 //  http://mike.kz/
@@ -8,6 +8,8 @@
 //  Copyright (c) 2014 SuperArmstrong.UK. All rights reserved.
 //
 //  RESPONSIBILITY : Setup a CoreData Stack accessible via a singleton.
+//
+//  NOTE: !!This Boiler Plate singleton is experimental and a work in progress!!
 
 import UIKit
 import CoreData
@@ -16,11 +18,11 @@ let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
 let stackName = infoDictionary!["CFBundleName"] as NSString
 let storeName = stackName + ".sqlite"
 
-class CoreDataStack: NSObject {
-    
-    class var defaultStack : CoreDataStack {
+class SuperCoreDataStack: NSObject {
+    //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
+    class var defaultStack : SuperCoreDataStack {
     struct Static {
-        static let instance : CoreDataStack = CoreDataStack()
+        static let instance : SuperCoreDataStack = SuperCoreDataStack()
         }
         return Static.instance
     }
@@ -32,7 +34,6 @@ class CoreDataStack: NSObject {
     // MARK: - Core Data stack
     
     lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.rs..SampleCoreData" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls.last as NSURL
         }()
@@ -43,6 +44,7 @@ class CoreDataStack: NSObject {
         return NSManagedObjectModel(contentsOfURL: modelURL!)!
         }()
     
+    //TODO : Implement better error handling around this boilerplate and implement in memory store types.
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
@@ -82,6 +84,7 @@ class CoreDataStack: NSObject {
     // MARK: - Core Data Saving support
     
     func saveContext () {
+        //TODO: Improve error handling.
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
             if moc.hasChanges && !moc.save(&error) {

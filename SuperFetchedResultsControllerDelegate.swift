@@ -1,5 +1,5 @@
 //
-//  FetchedResultsControllerDelegate.swift
+//  SuperFetchedResultsControllerDelegate.swift
 //
 //  SuperRecord - A small set of utilities to make working with CoreData a bit easier.
 //  http://mike.kz/
@@ -17,8 +17,8 @@ import Foundation
 import UIKit
 import CoreData
 
-@objc(FetchResultsControllerBinder)
-class FetchResultsControllerBinder : NSObject, NSFetchedResultsControllerDelegate {
+@objc(SuperFetchedResultsControllerDelegate)
+class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControllerDelegate {
     
     enum ReusableViewType : Int {
         case CollectionView

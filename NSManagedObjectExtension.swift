@@ -14,7 +14,8 @@ import CoreData
 extension NSManagedObject {
 
     class func findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSArray {
-        let entityName : NSString = NSStringFromClass(self)
+    
+        var entityName : NSString = NSStringFromClass(self)        
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.predicate = predicate
@@ -28,7 +29,7 @@ extension NSManagedObject {
     }
     
     class func findAllWithPredicate(predicate: NSPredicate!) -> NSArray {
-        let context = CoreDataStack.defaultStack.managedObjectContext!
+        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
         return findAllWithPredicate(nil, context: context)
     }
 
@@ -39,12 +40,17 @@ extension NSManagedObject {
         }
     }
     
+    class func deleteAll() -> Void {
+        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
+        return deleteAll(context)
+    }
+    
     class func findAll(context: NSManagedObjectContext) -> NSArray {
         return findAllWithPredicate(nil, context: context)
     }
     
     class func findAll() -> NSArray {
-        let context = CoreDataStack.defaultStack.managedObjectContext!
+        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
         return findAllWithPredicate(nil, context: context)
     }
     
@@ -54,12 +60,13 @@ extension NSManagedObject {
     }
     
     class func findFirstOrCreateWithPredicate(predicate: NSPredicate!) -> NSManagedObject {
-        let context = CoreDataStack.defaultStack.managedObjectContext!
+        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
         return findFirstOrCreateWithPredicate(predicate, context: context)
     }
     
     class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSManagedObject {
-        let entityName : NSString = NSStringFromClass(self)
+        var entityName : NSString = NSStringFromClass(self)
+        entityName = entityName.substringFromIndex(entityName.rangeOfString(".").location).stringByReplacingOccurrencesOfString(".", withString: "")
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.fetchLimit = 1
@@ -82,14 +89,14 @@ extension NSManagedObject {
     }
     
     class func createNewEntity(context: NSManagedObjectContext) -> NSManagedObject {
-        let entityName : NSString = NSStringFromClass(self)
+        var entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
         return obj as NSManagedObject
     }
     
     class func createNewEntity() -> NSManagedObject {
-        return createNewEntity(CoreDataStack.defaultStack.managedObjectContext!)
+        return createNewEntity(SuperCoreDataStack.defaultStack.managedObjectContext!)
     }
     
     class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext) -> NSManagedObject {
@@ -98,7 +105,7 @@ extension NSManagedObject {
     }
     
     class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!) -> NSManagedObject {
-        let context = CoreDataStack.defaultStack.managedObjectContext!
+        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
         return findFirstOrCreateWithAttribute(attribute, value: value, context: context)
     }
 }

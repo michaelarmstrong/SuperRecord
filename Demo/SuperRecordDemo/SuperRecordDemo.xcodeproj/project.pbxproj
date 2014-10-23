@@ -8,11 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		6391AE5F19F8FE5D00DAA557 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE5E19F8FE5D00DAA557 /* AppDelegate.swift */; };
-		6391AE6119F8FE5D00DAA557 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE6019F8FE5D00DAA557 /* ViewController.swift */; };
 		6391AE6419F8FE5D00DAA557 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6391AE6219F8FE5D00DAA557 /* Main.storyboard */; };
 		6391AE6619F8FE5D00DAA557 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6391AE6519F8FE5D00DAA557 /* Images.xcassets */; };
 		6391AE6919F8FE5D00DAA557 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6391AE6719F8FE5D00DAA557 /* LaunchScreen.xib */; };
 		6391AE7519F8FE5D00DAA557 /* SuperRecordDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE7419F8FE5D00DAA557 /* SuperRecordDemoTests.swift */; };
+		6391AE7F19F8FE7E00DAA557 /* SampleDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE7E19F8FE7E00DAA557 /* SampleDataTableViewController.swift */; };
+		6391AE8219F9012300DAA557 /* SuperRecordDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE8019F9012300DAA557 /* SuperRecordDemo.xcdatamodeld */; };
+		6391AE8A19F9017800DAA557 /* SuperCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE8519F9017800DAA557 /* SuperCoreDataStack.swift */; };
+		6391AE8B19F9017800DAA557 /* SuperFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE8619F9017800DAA557 /* SuperFetchedResultsControllerDelegate.swift */; };
+		6391AE8C19F9017800DAA557 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6391AE8719F9017800DAA557 /* LICENSE */; };
+		6391AE8D19F9017800DAA557 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE8819F9017800DAA557 /* NSManagedObjectExtension.swift */; };
+		6391AE8E19F9017800DAA557 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE8919F9017800DAA557 /* README.md */; };
+		6391AE9319F901DB00DAA557 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE9219F901DB00DAA557 /* Pokemon.swift */; };
+		6391AE9519F9041000DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391AE9419F9041000DAA557 /* NSFetchedResultsControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +37,21 @@
 		6391AE5919F8FE5D00DAA557 /* SuperRecordDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperRecordDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6391AE5D19F8FE5D00DAA557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6391AE5E19F8FE5D00DAA557 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6391AE6019F8FE5D00DAA557 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6391AE6319F8FE5D00DAA557 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6391AE6519F8FE5D00DAA557 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6391AE6819F8FE5D00DAA557 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6391AE6E19F8FE5D00DAA557 /* SuperRecordDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperRecordDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6391AE7319F8FE5D00DAA557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6391AE7419F8FE5D00DAA557 /* SuperRecordDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperRecordDemoTests.swift; sourceTree = "<group>"; };
+		6391AE7E19F8FE7E00DAA557 /* SampleDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleDataTableViewController.swift; sourceTree = "<group>"; };
+		6391AE8119F9012300DAA557 /* SuperRecordDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SuperRecordDemo.xcdatamodel; sourceTree = "<group>"; };
+		6391AE8519F9017800DAA557 /* SuperCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperCoreDataStack.swift; path = ../../../SuperCoreDataStack.swift; sourceTree = "<group>"; };
+		6391AE8619F9017800DAA557 /* SuperFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperFetchedResultsControllerDelegate.swift; path = ../../../SuperFetchedResultsControllerDelegate.swift; sourceTree = "<group>"; };
+		6391AE8719F9017800DAA557 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
+		6391AE8819F9017800DAA557 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSManagedObjectExtension.swift; path = ../../../NSManagedObjectExtension.swift; sourceTree = "<group>"; };
+		6391AE8919F9017800DAA557 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
+		6391AE9219F901DB00DAA557 /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		6391AE9419F9041000DAA557 /* NSFetchedResultsControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSFetchedResultsControllerExtension.swift; path = ../../../NSFetchedResultsControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +93,14 @@
 		6391AE5B19F8FE5D00DAA557 /* SuperRecordDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6391AE8419F9016500DAA557 /* SuperRecord */,
 				6391AE5E19F8FE5D00DAA557 /* AppDelegate.swift */,
-				6391AE6019F8FE5D00DAA557 /* ViewController.swift */,
+				6391AE7E19F8FE7E00DAA557 /* SampleDataTableViewController.swift */,
 				6391AE6219F8FE5D00DAA557 /* Main.storyboard */,
 				6391AE6519F8FE5D00DAA557 /* Images.xcassets */,
 				6391AE6719F8FE5D00DAA557 /* LaunchScreen.xib */,
+				6391AE8019F9012300DAA557 /* SuperRecordDemo.xcdatamodeld */,
+				6391AE9219F901DB00DAA557 /* Pokemon.swift */,
 				6391AE5C19F8FE5D00DAA557 /* Supporting Files */,
 			);
 			path = SuperRecordDemo;
@@ -110,6 +129,19 @@
 				6391AE7319F8FE5D00DAA557 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6391AE8419F9016500DAA557 /* SuperRecord */ = {
+			isa = PBXGroup;
+			children = (
+				6391AE8519F9017800DAA557 /* SuperCoreDataStack.swift */,
+				6391AE8619F9017800DAA557 /* SuperFetchedResultsControllerDelegate.swift */,
+				6391AE8719F9017800DAA557 /* LICENSE */,
+				6391AE8819F9017800DAA557 /* NSManagedObjectExtension.swift */,
+				6391AE8919F9017800DAA557 /* README.md */,
+				6391AE9419F9041000DAA557 /* NSFetchedResultsControllerExtension.swift */,
+			);
+			name = SuperRecord;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +226,7 @@
 			files = (
 				6391AE6419F8FE5D00DAA557 /* Main.storyboard in Resources */,
 				6391AE6919F8FE5D00DAA557 /* LaunchScreen.xib in Resources */,
+				6391AE8C19F9017800DAA557 /* LICENSE in Resources */,
 				6391AE6619F8FE5D00DAA557 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,8 +245,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6391AE6119F8FE5D00DAA557 /* ViewController.swift in Sources */,
+				6391AE8219F9012300DAA557 /* SuperRecordDemo.xcdatamodeld in Sources */,
+				6391AE9319F901DB00DAA557 /* Pokemon.swift in Sources */,
+				6391AE8B19F9017800DAA557 /* SuperFetchedResultsControllerDelegate.swift in Sources */,
 				6391AE5F19F8FE5D00DAA557 /* AppDelegate.swift in Sources */,
+				6391AE8E19F9017800DAA557 /* README.md in Sources */,
+				6391AE9519F9041000DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */,
+				6391AE8D19F9017800DAA557 /* NSManagedObjectExtension.swift in Sources */,
+				6391AE7F19F8FE7E00DAA557 /* SampleDataTableViewController.swift in Sources */,
+				6391AE8A19F9017800DAA557 /* SuperCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,9 +376,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SuperRecordDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -346,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SuperRecordDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -415,6 +458,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6391AE8019F9012300DAA557 /* SuperRecordDemo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6391AE8119F9012300DAA557 /* SuperRecordDemo.xcdatamodel */,
+			);
+			currentVersion = 6391AE8119F9012300DAA557 /* SuperRecordDemo.xcdatamodel */;
+			path = SuperRecordDemo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6391AE5119F8FE5C00DAA557 /* Project object */;
 }
