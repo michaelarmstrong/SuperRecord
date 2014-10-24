@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63DDD64E19FA531800DAA557 /* SuperRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 63DDD64D19FA531800DAA557 /* SuperRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63DDD65419FA531800DAA557 /* SuperRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DDD64819FA531800DAA557 /* SuperRecord.framework */; };
-		63DDD65B19FA531800DAA557 /* SuperRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */; };
+		63DDD6EA19FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E819FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift */; };
+		63DDD6EB19FA598A00DAA557 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */; };
+		63DDD6EE19FA599600DAA557 /* SuperCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6EC19FA599600DAA557 /* SuperCoreDataStack.swift */; };
+		63DDD6EF19FA599600DAA557 /* SuperFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6ED19FA599600DAA557 /* SuperFetchedResultsControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,10 @@
 		63DDD65319FA531800DAA557 /* SuperRecordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperRecordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DDD65919FA531800DAA557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperRecordTests.swift; sourceTree = "<group>"; };
+		63DDD6E819FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSFetchedResultsControllerExtension.swift; sourceTree = "<group>"; };
+		63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
+		63DDD6EC19FA599600DAA557 /* SuperCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperCoreDataStack.swift; sourceTree = "<group>"; };
+		63DDD6ED19FA599600DAA557 /* SuperFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperFetchedResultsControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,8 @@
 		63DDD64A19FA531800DAA557 /* SuperRecord */ = {
 			isa = PBXGroup;
 			children = (
+				63DDD6E719FA597300DAA557 /* Classes */,
+				63DDD6E619FA596F00DAA557 /* Extensions */,
 				63DDD64D19FA531800DAA557 /* SuperRecord.h */,
 				63DDD64B19FA531800DAA557 /* Supporting Files */,
 			);
@@ -102,6 +110,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		63DDD6E619FA596F00DAA557 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				63DDD6E819FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift */,
+				63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		63DDD6E719FA597300DAA557 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				63DDD6EC19FA599600DAA557 /* SuperCoreDataStack.swift */,
+				63DDD6ED19FA599600DAA557 /* SuperFetchedResultsControllerDelegate.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -109,7 +135,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63DDD64E19FA531800DAA557 /* SuperRecord.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +234,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63DDD6EA19FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */,
+				63DDD6EF19FA599600DAA557 /* SuperFetchedResultsControllerDelegate.swift in Sources */,
+				63DDD6EE19FA599600DAA557 /* SuperCoreDataStack.swift in Sources */,
+				63DDD6EB19FA598A00DAA557 /* NSManagedObjectExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +245,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63DDD65B19FA531800DAA557 /* SuperRecordTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +347,7 @@
 		63DDD65F19FA531800DAA557 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -328,12 +357,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		63DDD66019FA531800DAA557 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -395,6 +426,7 @@
 				63DDD66019FA531800DAA557 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63DDD66119FA531800DAA557 /* Build configuration list for PBXNativeTarget "SuperRecordTests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +435,7 @@
 				63DDD66319FA531800DAA557 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
