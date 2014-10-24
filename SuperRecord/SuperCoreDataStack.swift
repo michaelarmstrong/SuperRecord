@@ -67,9 +67,7 @@ class SuperCoreDataStack: NSObject {
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         
-        var storeType = NSSQLiteStoreType
-        
-        if coordinator!.addPersistentStoreWithType(storeType, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
+        if coordinator!.addPersistentStoreWithType(self.storeType, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             let dict = NSMutableDictionary()
