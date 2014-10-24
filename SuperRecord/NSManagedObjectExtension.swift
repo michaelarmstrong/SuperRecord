@@ -66,7 +66,6 @@ extension NSManagedObject {
     
     class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSManagedObject {
         var entityName : NSString = NSStringFromClass(self)
-        entityName = entityName.substringFromIndex(entityName.rangeOfString(".").location).stringByReplacingOccurrencesOfString(".", withString: "")
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.fetchLimit = 1
