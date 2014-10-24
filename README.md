@@ -15,7 +15,7 @@ SuperRecord consists of several Extensions to add MagicalRecord/ActiveRecord sty
 
 The project has been built over several versions of Swift so some choices may seem strange at first. **Please see the included Demo Project for more information and a closer look.**
 
-
+*Swift code doesn't yet work with cocoapods, so its best to use this as a submodule for now.
 
 > **Files:**
 
