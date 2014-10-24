@@ -44,11 +44,7 @@ class SuperCoreDataStack: NSObject {
     }
     
     init(storeType: NSString, storeURL: NSURL?) {
-        if let persistentStoreURL = storeURL {
-            self.persistentStoreURL = storeURL
-        } else {
-            self.persistentStoreURL = nil
-        }
+        self.persistentStoreURL = storeURL
         self.storeType = storeType
         
         super.init()
