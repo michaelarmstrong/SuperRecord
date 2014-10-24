@@ -1,7 +1,7 @@
 SuperRecord 
 ===================
 
-A **Swift CoreData extension** to bring some love and take the hassle out of common CoreData tasks.
+A **Swift CoreData Framework** consisting of several **Extensions** and Helpers to bring some love and take the hassle out of common CoreData tasks.
 
 ----------
 Each piece of functionality can be used independently and discreetly, so there is no need for a "buy in" to the whole project. For example, you could use your own `NSFetchedResultsController` or `NSManagedObjectContext` with any of the finders or even the `SuperFetchedResultsControllerDelegate`
@@ -17,36 +17,54 @@ The project has been built over several versions of Swift so some choices may se
 
 *Swift code doesn't yet work with cocoapods, so its best to use this as a submodule for now.
 
-> **Files:**
+### Adding SuperRecord to your project
 
+#### Method 1 (recommended)
+
+	git submodule add https://github.com/michaelarmstrong/SuperRecord.git SuperRecord
+
+- Drag the checked out submodule into Xcode
+- Click on your main application target
+- Open "Build Phases"
+- Add SuperRecord.framework under "Target Dependencies"
+
+#### Method 2
+
+	git clone https://github.com/michaelarmstrong/SuperRecord.git
+	
+Now add the source files into your project directly.
+
+
+## Core Files
 > - **NSManagedObjectExtension.swift** 
 >      This extension is responsible for most of the "finder" functionality and has operations such as `deleteAll()`, `findOrCreateWithAttribute()` `createEntity()` and allows you to specify your own `NSManagedObjectContext` or use the default one (running on the main thread).
 >      
-<br>
 > - **NSFetchedResultsControllerExtension.swift**
 > In constant development, this Extension allows the easy creation of `FetchedResultsControllers` for use with `UICollectionView` and `UITableView` that utilise the `SuperFetchedResultsControllerDelegate` for safe batch updates.
-<br>
+>
 > - **SuperFetchedResultsControllerDelegate.swift** heavily inspired by past-projects i've worked on along with other popular open source projects. This handles **safe batch updates** to `UICollectionView` and `UITableView` across iOS 7 and iOS 8. It can be used on its own with your `NSFetchedResultsController` or alternatively, its automatically used by the `NSFetchedResultsControllerExtension` methods included in **SuperRecord**.
+>
+> - **SuperCoreDataStack.swift** a boilerplate experimental main thread CoreData stack. Can be used either as a sqlite store or in memory store. Simply by calling `SuperCoreDataStack.defaultStack()` for SQLite or `SuperCoreDataStack.inMemoryStack()` for an in memory store. Of course you have access to your context `.context` / `.saveContext()`
 
 ## Usage
 
 #### <i class="icon-file"></i> Create a new Entity
 Assuming you have an NSManagedObject of type "Pokemon" you could do the following
 
-`let pokemon = Pokemon.createNewEntity() as Pokemon`
+	let pokemon = Pokemon.createNewEntity() as Pokemon
 
 Please add `@objc(className)` above the class name of all your `NSManagedObject` subclasses (as shown in the demo project) for now. Better support will be coming in the future.
 
 #### <i class="icon-folder-open"></i> Creating an NSFetchedResultsController
 This feature is currently in progress with basic support so far, in future versions, sorting and sectionNameKeyPath's will be supported. Until then you can create your own NSFetchedResultsController, however, if you have no need for the above missing functionality then simply use
 
-```
-lazy var fetchedResultsController: NSFetchedResultsController = self.superFetchedResultsController()
 
-func superFetchedResultsController() -> NSFetchedResultsController {
-return NSFetchedResultsController.superFetchedResultsController("Pokemon", tableView: tableView)
-}
-```
+	lazy var fetchedResultsController: NSFetchedResultsController = self.superFetchedResultsController()
+	
+	func superFetchedResultsController() -> NSFetchedResultsController {
+	return NSFetchedResultsController.superFetchedResultsController("Pokemon", tableView: tableView)
+	}
+	
 
 With `Pokemon` being the entity name of your `NSManagedObject`.
 
@@ -55,7 +73,7 @@ With `Pokemon` being the entity name of your `NSManagedObject`.
 
 I'm planning on adding much more powerful functionality around Delete soon, such as deleteAllWithPredicate() or deleteEntity(), right now all that is available is
 
-`Pokemon.deleteAll()`
+	Pokemon.deleteAll()
 
 
 ### Method Listing
