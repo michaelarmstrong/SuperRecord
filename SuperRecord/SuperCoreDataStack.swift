@@ -18,25 +18,43 @@ let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
 let stackName = infoDictionary!["CFBundleName"] as NSString
 let storeName = stackName + ".sqlite"
 
+let applicationDocumentsDirectory: NSURL = {
+    let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    return urls.last as NSURL
+    }()
+
 class SuperCoreDataStack: NSObject {
+    
+    let persistentStoreURL : NSURL?
+    let storeType : NSString
+    
     //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
     class var defaultStack : SuperCoreDataStack {
-    struct Static {
-        static let instance : SuperCoreDataStack = SuperCoreDataStack()
+    struct DefaultStatic {
+            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
         }
-        return Static.instance
+        return DefaultStatic.instance
     }
     
-    override init() {
+    class var inMemoryStack : SuperCoreDataStack {
+        struct InMemoryStatic {
+            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSInMemoryStoreType,storeURL:nil)
+        }
+        return InMemoryStatic.instance
+    }
+    
+    init(storeType: NSString, storeURL: NSURL?) {
+        if let persistentStoreURL = storeURL {
+            self.persistentStoreURL = storeURL
+        } else {
+            self.persistentStoreURL = nil
+        }
+        self.storeType = storeType
+        
         super.init()
     }
    
     // MARK: - Core Data stack
-    
-    lazy var applicationDocumentsDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls.last as NSURL
-        }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
@@ -49,10 +67,13 @@ class SuperCoreDataStack: NSObject {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(storeName)
+      //  let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(storeName)
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        
+        var storeType = NSSQLiteStoreType
+        
+        if coordinator!.addPersistentStoreWithType(storeType, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             let dict = NSMutableDictionary()
