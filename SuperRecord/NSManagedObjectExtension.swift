@@ -30,7 +30,7 @@ extension NSManagedObject {
     
     class func findAllWithPredicate(predicate: NSPredicate!) -> NSArray {
         let context = SuperCoreDataStack.defaultStack.managedObjectContext!
-        return findAllWithPredicate(nil, context: context)
+        return findAllWithPredicate(predicate, context: context)
     }
 
     class func deleteAll(context: NSManagedObjectContext) -> Void {
