@@ -95,14 +95,14 @@ This isn't an exhaustive list of all methods and classes, however it includes so
 
 #### NSFetchedResultsControllerExtension
 
-`NSFetchedResultsControllers` created using the below methods will automatically handle safe batch updates to the passed `UITableView` or `UICollectionView`
+**`NSFetchedResultsControllers` created using the below methods will automatically handle safe batch updates to the passed `UITableView` or `UICollectionView`**
 
 - `superFetchedResultsController(entityName: NSString!, collectionView: UICollectionView) -> NSFetchedResultsController`
 - `superFetchedResultsController(entityName: NSString!, tableView: UITableView) -> NSFetchedResultsController`
 - `superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate?, collectionView: UICollectionView!, context: NSManagedObjectContext!) -> NSFetchedResultsController`
 - `superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate?, tableView: UITableView!, context: NSManagedObjectContext!) -> NSFetchedResultsController`
 
-`NSFetchedResultsControllers` created using the below methods require you to use your own `NSFetchedResultsControllerDelegate` class
+**`NSFetchedResultsControllers` created using the below methods require you to use your own `NSFetchedResultsControllerDelegate` class**
 
 - `superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortedBy: NSString?, ascending: Bool, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController`
 - `superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortedBy: NSString?, ascending: Bool, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController`
