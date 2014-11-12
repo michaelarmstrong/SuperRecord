@@ -56,15 +56,20 @@ Assuming you have an NSManagedObject of type "Pokemon" you could do the followin
 Please add `@objc(className)` above the class name of all your `NSManagedObject` subclasses (as shown in the demo project) for now. Better support will be coming in the future.
 
 #### <i class="icon-folder-open"></i> Creating an NSFetchedResultsController
-This feature is currently in progress with basic support so far, in future versions, sorting and sectionNameKeyPath's will be supported. Until then you can create your own NSFetchedResultsController, however, if you have no need for the above missing functionality then simply use
-
+There are many factory methods for your convenience that **SuperRecord** adds to `NSFetchedResultsController` to make your life simpler, yet still powerful. As always, you don't have to use these with SuperRecord, however they are there for your convenience. Many of the SuperRecord factory methods will handle safe batch updates for you to your passed collectionView or tableView. No more song and dance.
 
 	lazy var fetchedResultsController: NSFetchedResultsController = self.superFetchedResultsController()
 	
 	func superFetchedResultsController() -> NSFetchedResultsController {
 	return NSFetchedResultsController.superFetchedResultsController("Pokemon", tableView: tableView)
 	}
-	
+
+Or for some more advanced usage (collectionView with multiple sections and a predicate with automatic batch updates):
+
+    let sortDescriptors = [NSSortDescriptor(key: "evolutionLevel", ascending: false),NSSortDescriptor(key: "level", ascending: false)]
+    let predicate = NSPredicate(format: "trainer = %@", self.trainer)!
+    let tempFetchedResultsController = NSFetchedResultsController.superFetchedResultsController("Pokemon", sectionNameKeyPath: "evolutionLevel", sortDescriptors: sortDescriptors, predicate: predicate, collectionView: self.collectionView, context: context)	
+
 
 With `Pokemon` being the entity name of your `NSManagedObject`.
 
