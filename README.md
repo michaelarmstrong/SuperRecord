@@ -79,7 +79,7 @@ I'm planning on adding much more powerful functionality around Delete soon, such
 ### Method Listing
 This isn't an exhaustive list of all methods and classes, however it includes some of the most useful ones.
 
-- **NSManagedObjectExtension**
+#### NSManagedObjectExtension
 - `findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSArray`
 - `findAllWithPredicate(predicate: NSPredicate!) -> NSArray`
 - `deleteAll(context: NSManagedObjectContext) -> Void`
@@ -93,7 +93,7 @@ This isn't an exhaustive list of all methods and classes, however it includes so
 - `findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!) -> NSManagedObject`
 
 
-- **NSFetchedResultsControllerExtension**
+#### NSFetchedResultsControllerExtension
 
 `NSFetchedResultsControllers` created using the below methods will automatically handle safe batch updates to the passed `UITableView` or `UICollectionView`
 
