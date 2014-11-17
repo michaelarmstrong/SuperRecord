@@ -99,7 +99,7 @@ extension NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate:nil, delegate: delegate)
     }
     
-    private class func superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate?, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
+    private class func superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate?, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext! = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSFetchedResultsController {
         
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
@@ -133,8 +133,4 @@ extension NSFetchedResultsController {
         return tempFetchedResultsController
     }
     
-    private class func superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate? , delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-        let context = SuperCoreDataStack.defaultStack.managedObjectContext!
-        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate, context: context)
-    }
 }
