@@ -12,7 +12,7 @@
 import CoreData
 import UIKit
 
-extension NSFetchedResultsController {
+public extension NSFetchedResultsController {
     
     // MARK: Public Methods
     class func superFetchedResultsController(entityName: NSString!, collectionView: UICollectionView!) -> NSFetchedResultsController {

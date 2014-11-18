@@ -9,29 +9,80 @@
 
 import UIKit
 import XCTest
+import CoreData
+import SuperRecord
 
-class SuperRecordTests: XCTestCase {
+class SuperRecordTests: SuperRecordTestsTestCase {
+    
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+    func testCreate() {
+        var error: NSError? = nil
+        
+        let fireType = Type.createNewEntity(managedObjectContext) as Type;
+        fireType.name = "Fire";
+        
+        managedObjectContext.save(&error);
+        if(error != nil){
+            XCTFail("Cannot save context");
         }
+        
+        let Charizard = Pokemon.createNewEntity(managedObjectContext) as Pokemon;
+        Charizard.name = "Charizard";
+        Charizard.level = 10;
+        Charizard.type = fireType;
+        managedObjectContext.save(&error);
+        if(error != nil){
+            XCTFail("Cannot save context");
+        }
+        
+        var expectation = expectationWithDescription("Pokemon Creation")
+        var result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
+            expectation.fulfill();
+        })
+        
+        waitForExpectationsWithTimeout(5, handler: { error in
+            XCTAssertEqual(result.count, 1,  "Result");
+        })
+        
+        let charmender = Pokemon.createNewEntity(managedObjectContext) as Pokemon;
+        expectation = expectationWithDescription("Pokemon Creation")
+        charmender.name = "charmender";
+        charmender.level = 1;
+        charmender.type = fireType;
+        
+        managedObjectContext.save(&error);
+        if(error != nil){
+            XCTFail("Cannot save context");
+        }
+        
+        result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
+            expectation.fulfill();
+        })
+        
+        waitForExpectationsWithTimeout(5, handler: { error in
+            XCTAssertEqual(result.count, 2,  "Result");
+        })
+        
+        XCTAssertEqual(fireType.pokemons.count, 2,  "Result");
+        
+        expectation = expectationWithDescription("Pokemon Deletion")
+        Pokemon.deleteAll(managedObjectContext);
+        result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
+            expectation.fulfill();
+        })
+        
+        waitForExpectationsWithTimeout(5, handler: { error in
+            XCTAssertEqual(result.count, 0,  "Result");
+        })
+        
     }
     
 }

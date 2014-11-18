@@ -11,9 +11,9 @@
 
 import CoreData
 
-extension NSManagedObject {
+public extension NSManagedObject {
 
-    class func findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSArray {
+    class func findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
     
         var entityName : NSString = NSStringFromClass(self)        
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
@@ -25,6 +25,8 @@ extension NSManagedObject {
             var error : NSError?
             results = context.executeFetchRequest(fetchRequest, error: &error)!
         })
+        var error : NSError?
+        handler?(error);
         return results
     }
     
@@ -64,7 +66,7 @@ extension NSManagedObject {
         return findFirstOrCreateWithPredicate(predicate, context: context)
     }
     
-    class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext) -> NSManagedObject {
+    class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
         var entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
@@ -84,6 +86,8 @@ extension NSManagedObject {
         }
 
         var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context) as NSManagedObject
+        var error : NSError?
+        handler?(error);
         return obj
     }
     
