@@ -74,7 +74,7 @@ class SuperRecordTests: SuperRecordTestsTestCase {
         XCTAssertEqual(fireType.pokemons.count, 2,  "Result");
         
         expectation = expectationWithDescription("Pokemon Deletion")
-        Pokemon.deleteAll(managedObjectContext);
+        Pokemon.deleteAll(context: managedObjectContext);
         result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
             expectation.fulfill();
         })
