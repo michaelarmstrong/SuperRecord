@@ -11,7 +11,7 @@ import CoreData
 import XCTest
 
 
-class SuperRecordTestsTestCase: XCTestCase {
+class SuperRecordTestCase: XCTestCase {
     
     var managedObjectContext  = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
 

@@ -12,7 +12,7 @@ import XCTest
 import CoreData
 import SuperRecord
 
-class SuperRecordTests: SuperRecordTestsTestCase {
+class SuperRecordTests: SuperRecordTestCase {
     
     
     override func setUp() {
