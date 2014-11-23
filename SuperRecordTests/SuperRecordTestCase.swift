@@ -9,11 +9,14 @@
 import UIKit
 import CoreData
 import XCTest
+import SuperRecord
 
+let SuperRecordTestCaseTimeout : NSTimeInterval = 5
 
 class SuperRecordTestCase: XCTestCase {
     
     var managedObjectContext  = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+    var error: NSError? = nil
 
     override func setUp() {
         super.setUp();
@@ -35,7 +38,17 @@ class SuperRecordTestCase: XCTestCase {
         mom.entities.count
         
         managedObjectContext.persistentStoreCoordinator = psc
+        error = nil;
 
+    }
+    
+    override func tearDown() {
+
+        managedObjectContext.save(&error);
+        if(error != nil){
+            XCTFail("Cannot save context: \(error?.localizedDescription)");
+        }
+        super.tearDown();
     }
    
 }

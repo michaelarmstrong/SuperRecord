@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		126BFA8A1A1F366600D59CE9 /* PokemonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126BFA891A1F366600D59CE9 /* PokemonFactory.swift */; };
+		126BFA8C1A1F506B00D59CE9 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126BFA8B1A1F506B00D59CE9 /* Pokemon.swift */; };
 		129BB2361A1B58ED00D21867 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 129BB2311A1B58ED00D21867 /* Model.xcdatamodeld */; };
-		129BB2371A1B58ED00D21867 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129BB2331A1B58ED00D21867 /* Pokemon.swift */; };
 		129BB2381A1B58ED00D21867 /* SuperRecordTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129BB2341A1B58ED00D21867 /* SuperRecordTestCase.swift */; };
 		129BB2391A1B58ED00D21867 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129BB2351A1B58ED00D21867 /* Type.swift */; };
 		129BB23A1A1B593500D21867 /* SuperRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */; };
+		12FEA4BC1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */; };
 		63DDD65419FA531800DAA557 /* SuperRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DDD64819FA531800DAA557 /* SuperRecord.framework */; };
 		63DDD6EA19FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E819FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift */; };
 		63DDD6EB19FA598A00DAA557 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */; };
@@ -30,10 +32,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		126BFA891A1F366600D59CE9 /* PokemonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonFactory.swift; sourceTree = "<group>"; };
+		126BFA8B1A1F506B00D59CE9 /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		129BB2321A1B58ED00D21867 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		129BB2331A1B58ED00D21867 /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		129BB2341A1B58ED00D21867 /* SuperRecordTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperRecordTestCase.swift; sourceTree = "<group>"; };
 		129BB2351A1B58ED00D21867 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
 		63DDD64819FA531800DAA557 /* SuperRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SuperRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DDD64C19FA531800DAA557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63DDD64D19FA531800DAA557 /* SuperRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuperRecord.h; sourceTree = "<group>"; };
@@ -106,9 +110,11 @@
 			isa = PBXGroup;
 			children = (
 				129BB2311A1B58ED00D21867 /* Model.xcdatamodeld */,
-				129BB2331A1B58ED00D21867 /* Pokemon.swift */,
+				126BFA891A1F366600D59CE9 /* PokemonFactory.swift */,
 				129BB2341A1B58ED00D21867 /* SuperRecordTestCase.swift */,
+				126BFA8B1A1F506B00D59CE9 /* Pokemon.swift */,
 				129BB2351A1B58ED00D21867 /* Type.swift */,
+				12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */,
 				63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */,
 				63DDD65819FA531800DAA557 /* Supporting Files */,
 			);
@@ -258,9 +264,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				126BFA8C1A1F506B00D59CE9 /* Pokemon.swift in Sources */,
+				126BFA8A1A1F366600D59CE9 /* PokemonFactory.swift in Sources */,
 				129BB2381A1B58ED00D21867 /* SuperRecordTestCase.swift in Sources */,
 				129BB2361A1B58ED00D21867 /* Model.xcdatamodeld in Sources */,
-				129BB2371A1B58ED00D21867 /* Pokemon.swift in Sources */,
+				12FEA4BC1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift in Sources */,
 				129BB23A1A1B593500D21867 /* SuperRecordTests.swift in Sources */,
 				129BB2391A1B58ED00D21867 /* Type.swift in Sources */,
 			);

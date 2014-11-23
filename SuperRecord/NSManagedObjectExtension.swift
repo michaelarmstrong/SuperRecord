@@ -22,11 +22,10 @@ public extension NSManagedObject {
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
         var results = NSArray()
+        var error : NSError?
         context.performBlockAndWait({ () -> Void in
-            var error : NSError?
             results = context.executeFetchRequest(fetchRequest, error: &error)!
         })
-        var error : NSError?
         handler?(error);
         return results
     }
@@ -51,7 +50,18 @@ public extension NSManagedObject {
         return findAllWithPredicate(predicate, context: context)
     }
     
+    //MARK: Entity Creation
 
+    /**
+    Search for the entity with the specify value or create a new Entity
+    
+    :predicate: attribute predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: NSManagedObject.
+    */
+    
     class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
         var entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
@@ -60,37 +70,51 @@ public extension NSManagedObject {
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
         var fetchedObjects = NSArray()
-        
+        var error : NSError?
         context.performBlockAndWait({ () -> Void in
-            var error : NSError?
             let results = context.executeFetchRequest(fetchRequest, error: &error)! as NSArray
             fetchedObjects = results
         })
-        
         if let firstObject = fetchedObjects.firstObject as? NSManagedObject {
+            handler?(error);
             return firstObject
         }
 
         var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context) as NSManagedObject
-        var error : NSError?
+        
         handler?(error);
         return obj
     }
     
-    class func createNewEntity(context: NSManagedObjectContext) -> NSManagedObject {
+    /**
+    Create a new Entity
+    
+    :param: context NSManagedObjectContext
+    
+    :returns: NSManagedObject.
+    */
+    class func createNewEntity(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSManagedObject {
         var entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         var obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
         return obj as NSManagedObject
     }
+
     
-    class func createNewEntity() -> NSManagedObject {
-        return createNewEntity(SuperCoreDataStack.defaultStack.managedObjectContext!)
-    }
+    /**
+    Search for the entity with the specify value or create a new Entity
     
-    class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSManagedObject {
+    :param: attribute name of the attribute to find
+    
+    :param: value of the attribute to find
+
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: NSManagedObject.
+    */
+    class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
         let predicate = NSPredicate(format: "%K = %@", attribute,value)
-        return findFirstOrCreateWithPredicate(predicate, context: context)
+        return findFirstOrCreateWithPredicate(predicate, context: context, handler)
     }
     
 }
