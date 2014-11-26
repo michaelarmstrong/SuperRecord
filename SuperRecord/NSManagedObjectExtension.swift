@@ -13,10 +13,54 @@ import CoreData
 
 public extension NSManagedObject {
 
+    //MARK: Entity Search
+    
+    /**
+    Delete all entity
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    */
 
+    
+    class func deleteAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
+        let results = findAll(context: context)
+        for result in results {
+            context.deleteObject(result as NSManagedObject)
+        }
+    }
+    
+    
+    /**
+    Delete all entity matching the input predicate
+    
+    :param: predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    */
+    class func deleteAll(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
+        let results = findAllWithPredicate(predicate, context: context, completionHandler: nil)
+        for result in results {
+            context.deleteObject(result as NSManagedObject)
+        }
+    }
+    
+    //MARK: Entity search
+    
+    
+    /**
+    Search for all entity with the specify value or create a new Entity
+    
+    :param: predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: NSArray of NSManagedObject.
+    */
     class func findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
         
-        var entityName : NSString = NSStringFromClass(self)        
+        var entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.predicate = predicate
@@ -24,29 +68,38 @@ public extension NSManagedObject {
         var results = NSArray()
         var error : NSError?
         context.performBlockAndWait({ () -> Void in
-            results = context.executeFetchRequest(fetchRequest, error: &error)!
+            results = context.executeFetchRequest(fetchRequest, error: &error)! as [NSManagedObject]
         })
         handler?(error);
         return results
     }
     
-    class func deleteAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
-        let results = findAll(context)
-        for result in results {
-            context.deleteObject(result as NSManagedObject)
-        }
-    }
     
-    class func findAll(context: NSManagedObjectContext) -> NSArray {
+    /**
+    Search for all entity with the specify value or create a new Entity
+
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: NSArray of NSManagedObject.
+    */
+    class func findAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSArray {
         return findAllWithPredicate(nil, context: context)
     }
     
-    class func findAll() -> NSArray {
-        return findAllWithPredicate(nil)
-    }
     
-    class func findAllWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext) -> NSArray {
-        let predicate = NSPredicate(format: "%K = %@", attribute,value)
+    /**
+    Search for all entity with the specify attribute and value
+    
+    :param: attribute name of the attribute of the NSManagedObject
+
+    :param: value value of the attribute
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: NSArray of NSManagedObject.
+    */
+    class func findAllWithAttribute(attribute: String!, value: String!, context: NSManagedObjectContext) -> NSArray {
+        let predicate = NSPredicate(format: "%K = %@", attribute, value)
         return findAllWithPredicate(predicate, context: context)
     }
     

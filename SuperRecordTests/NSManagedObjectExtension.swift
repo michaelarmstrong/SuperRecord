@@ -125,4 +125,72 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         managedObjectContext.deleteObject(Charmender);
         
     }
+    
+    //MARK: Entity Search
+    
+    func testFindAll(){
+    
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        
+        var pokemons = Pokemon.findAll(context: managedObjectContext)
+        
+        XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
+        XCTAssertTrue(pokemons.containsObject( charmender), "Should contains pokemon");
+        XCTAssertTrue(pokemons.containsObject(charmeleon), "Should contains pokemon");
+        XCTAssertTrue(pokemons.containsObject(charizard), "Should contains pokemon");
+        
+    }
+    
+    func testFindAllWithAttribute(){
+        
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        
+        var pokemons = Pokemon.findAllWithAttribute("name", value: charizard.name, context: managedObjectContext)
+        XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
+
+    }
+    
+    func testFindAllWithPredicate(){
+        
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        
+
+
+        var predicate = NSPredicate (format: "level == %d", PokemonLevel.Charizard.rawValue)
+        var pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, completionHandler: nil)
+        XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
+    }
+    
+    //MARK: Entity Deletion
+    
+    func testDeleteAll(){
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        var pokemons = Pokemon.findAll (context: managedObjectContext);
+        XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
+        Pokemon.deleteAll(context: managedObjectContext);
+        pokemons = Pokemon.findAll (context: managedObjectContext);
+        XCTAssertEqual(0, pokemons.count, "Should contains 3 pokemons");
+    }
+    
+    func testDeleteAllWithPredicate(){
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        var pokemons = Pokemon.findAll (context: managedObjectContext);
+        XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
+        var predicate = NSPredicate (format: "level == %d", PokemonLevel.Charizard.rawValue)
+        Pokemon.deleteAll(predicate, context: managedObjectContext)
+        pokemons = Pokemon.findAll (context: managedObjectContext)
+        XCTAssertEqual(2, pokemons.count, "Should contains 3 pokemons")
+
+    }
+
 }
