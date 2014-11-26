@@ -32,7 +32,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
 
         Charizard.id = PokemonID.Charizard.rawValue
         Charizard.name = PokemonName.Charizard.rawValue
-        Charizard.level = PokemonLevel.Charizard.rawValue
+        Charizard.level = 36
         Charizard.type = fireType
     
         
@@ -49,7 +49,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         expectation = expectationWithDescription("Charmender Creation")
         Charmender.id = PokemonID.Charmender.rawValue
         Charmender.name = PokemonName.Charmender.rawValue
-        Charmender.level = PokemonLevel.Charmender.rawValue
+        Charmender.level = 1
         Charmender.type = fireType
 
         result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
@@ -78,7 +78,8 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     func testFindFirstOrCreateWithAttribute(){
 
 
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire)
+        let Charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
+
         
         let charizardExpectation = expectationWithDescription("Charizard creation")
         let anotherCharizard  = Pokemon.findFirstOrCreateWithAttribute("name", value: "Charizard", context: managedObjectContext, handler:{error in
@@ -98,7 +99,8 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testFindFirstOrCreateWithPredicate(){
         
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire)
+        let Charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
+
     
         let predicate =  NSPredicate(format: "%K = %@", "name","Charizard")
         let charizardExpectation = expectationWithDescription("Charizard creation")
@@ -130,9 +132,9 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testFindAll(){
     
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
         
         var pokemons = Pokemon.findAll(context: managedObjectContext)
         
@@ -145,9 +147,10 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testFindAllWithAttribute(){
         
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
+
         
         var pokemons = Pokemon.findAllWithAttribute("name", value: charizard.name, context: managedObjectContext)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
@@ -156,13 +159,11 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testFindAllWithPredicate(){
         
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
-        
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
 
-
-        var predicate = NSPredicate (format: "level == %d", PokemonLevel.Charizard.rawValue)
+        var predicate = NSPredicate (format: "level == %d", 36)
         var pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, completionHandler: nil)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
     }
@@ -170,9 +171,10 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     //MARK: Entity Deletion
     
     func testDeleteAll(){
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
+
         var pokemons = Pokemon.findAll (context: managedObjectContext);
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
         Pokemon.deleteAll(context: managedObjectContext);
@@ -181,12 +183,13 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     }
     
     func testDeleteAllWithPredicate(){
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: .Charmender, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: .Charmeleon, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: .Charizard, type: .Fire);
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
+
         var pokemons = Pokemon.findAll (context: managedObjectContext);
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
-        var predicate = NSPredicate (format: "level == %d", PokemonLevel.Charizard.rawValue)
+        var predicate = NSPredicate (format: "level == %d", 36)
         Pokemon.deleteAll(predicate, context: managedObjectContext)
         pokemons = Pokemon.findAll (context: managedObjectContext)
         XCTAssertEqual(2, pokemons.count, "Should contains 3 pokemons")
