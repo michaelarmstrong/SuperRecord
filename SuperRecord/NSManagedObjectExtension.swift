@@ -13,7 +13,7 @@ import CoreData
 
 public extension NSManagedObject {
 
-    //MARK: Entity Search
+    //MARK: Entity deletion
     
     /**
     Delete all entity
@@ -103,7 +103,7 @@ public extension NSManagedObject {
         return findAllWithPredicate(predicate, context: context)
     }
     
-    //MARK: Entity Creation
+    //MARK: Entity creation
 
     /**
     Search for the entity with the specify value or create a new Entity

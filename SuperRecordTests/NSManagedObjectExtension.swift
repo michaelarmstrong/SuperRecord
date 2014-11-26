@@ -21,7 +21,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         super.tearDown()
     }
     
-    //MARK: Entity Creation
+    //MARK: Entity creation
     
     func testCreateNewEntity() {
 
@@ -128,7 +128,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         
     }
     
-    //MARK: Entity Search
+    //MARK: Entity search
     
     func testFindAll(){
     
@@ -168,7 +168,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
     }
     
-    //MARK: Entity Deletion
+    //MARK: Entity deletion
     
     func testDeleteAll(){
         let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
