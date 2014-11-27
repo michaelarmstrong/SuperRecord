@@ -21,15 +21,9 @@ public extension NSManagedObject {
     :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
     
     */
-
-    
     class func deleteAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
-        let results = findAll(context: context)
-        for result in results {
-            context.deleteObject(result as NSManagedObject)
-        }
+        deleteAll(nil, context: context)
     }
-    
     
     /**
     Delete all entity matching the input predicate
