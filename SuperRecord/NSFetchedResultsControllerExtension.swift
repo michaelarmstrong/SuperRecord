@@ -119,6 +119,8 @@ public extension NSFetchedResultsController {
         } else {
             tempFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest , managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         }
+        tempFetchedResultsController.delegate = delegate
+        
         NSFetchedResultsController.deleteCacheWithName(nil)
         
         var error : NSError?
