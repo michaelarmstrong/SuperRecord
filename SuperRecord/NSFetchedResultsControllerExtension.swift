@@ -112,7 +112,6 @@ public extension NSFetchedResultsController {
         } else {
             fetchRequest.sortDescriptors = []
         }
-        fetchRequest.sortDescriptors = sortDescriptors
         
         var tempFetchedResultsController : NSFetchedResultsController!
         if let sectionNameKeyPath = sectionNameKeyPath {
