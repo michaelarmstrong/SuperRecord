@@ -7,11 +7,12 @@
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Type" inverseName="pokemons" inverseEntity="Type" syncable="YES"/>
     </entity>
     <entity name="Type" representedClassName="Type" syncable="YES">
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="type" inverseEntity="Pokemon" syncable="YES"/>
     </entity>
     <elements>
         <element name="Pokemon" positionX="-54" positionY="-9" width="128" height="105"/>
-        <element name="Type" positionX="-54" positionY="18" width="128" height="73"/>
+        <element name="Type" positionX="-54" positionY="18" width="128" height="90"/>
     </elements>
 </model>

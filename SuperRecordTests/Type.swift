@@ -12,6 +12,7 @@ import CoreData
 @objc(Type)
 class Type: NSManagedObject {
 
+    @NSManaged var id: NSNumber
     @NSManaged var name: String
     @NSManaged var pokemons: NSSet
 

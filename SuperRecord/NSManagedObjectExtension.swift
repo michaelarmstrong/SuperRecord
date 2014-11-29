@@ -163,5 +163,41 @@ public extension NSManagedObject {
         let predicate = NSPredicate(format: "%K = %@", attribute,value)
         return findFirstOrCreateWithPredicate(predicate, context: context, handler)
     }
+
+
+    //MARK: Entity operations
     
+    /**
+    Count all the entity
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :param: error
+    
+    :returns: Int.
+    */
+    class func count(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, error: NSErrorPointer) -> Int {
+        return count(context: context, predicate: nil, error: error);
+    }
+    
+    /**
+    Count all the entity matching the input predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :param: predicate
+    
+    :param: error
+    
+    :returns: Int.
+    */
+    class func count(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, predicate : NSPredicate?, error: NSErrorPointer) -> Int {
+            var entityName : NSString = NSStringFromClass(self)
+            var fetchRequest = NSFetchRequest(entityName: entityName);
+            fetchRequest.includesPropertyValues = false
+            fetchRequest.includesSubentities = false
+            fetchRequest.predicate = predicate
+            fetchRequest.propertiesToFetch = [];
+            return context.countForFetchRequest(fetchRequest, error: error)
+    }
 }
