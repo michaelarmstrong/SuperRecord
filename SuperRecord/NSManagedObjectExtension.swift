@@ -97,6 +97,20 @@ public extension NSManagedObject {
         return findAllWithPredicate(predicate, context: context)
     }
     
+    /**
+    Search for all entity with the specified predicate and return a count of objects.
+    
+    :param: predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    
+    :returns: Int of total result set count.
+    */
+    class func countWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, completionHandler handler: ((NSError!) -> Void)! = nil) -> Int {
+        let results = findAllWithPredicate(predicate, context: context, completionHandler: handler)
+        return results.count
+    }
+    
     //MARK: Entity creation
 
     /**
