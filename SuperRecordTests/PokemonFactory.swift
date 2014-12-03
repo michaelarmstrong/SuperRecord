@@ -21,6 +21,7 @@ class PokemonFactory {
     
     class func createPokemon (managedObjectContext: NSManagedObjectContext, id : PokemonID, name : PokemonName, level: Int, type : Type) -> Pokemon{
         var pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as Pokemon;
+        pokemon.id =  id.rawValue
         pokemon.name = name.rawValue
         pokemon.level = level;
         pokemon.type = type;
