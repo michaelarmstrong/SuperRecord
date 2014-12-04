@@ -30,10 +30,11 @@ class SuperCoreDataStack: NSObject {
     
     //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
     class var defaultStack : SuperCoreDataStack {
-    struct DefaultStatic {
-            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
-        }
-        return DefaultStatic.instance
+//    struct DefaultStatic {
+//            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
+//        }
+//        return DefaultStatic.instance
+        return inMemoryStack
     }
     
     class var inMemoryStack : SuperCoreDataStack {
