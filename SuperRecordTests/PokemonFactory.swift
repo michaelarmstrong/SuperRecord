@@ -11,14 +11,20 @@ import CoreData
 
 class PokemonFactory {
 
-    class func createPokemon (managedObjectContext: NSManagedObjectContext, id : PokemonID, name : PokemonName, level: Int, type : PokemonType) -> Pokemon{
-     
-        let pokemonType = Type.findFirstOrCreateWithAttribute("name", value: type.rawValue, context: managedObjectContext, handler: nil) as Type;
-
+    
+    class func createType (managedObjectContext: NSManagedObjectContext, id : TypeID, name : TypeName) -> Type{
+    
+        let type = Type.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as Type;
+        type.name = name.rawValue;
+        return type;
+    }
+    
+    class func createPokemon (managedObjectContext: NSManagedObjectContext, id : PokemonID, name : PokemonName, level: Int, type : Type) -> Pokemon{
         var pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as Pokemon;
+        pokemon.id =  id.rawValue
         pokemon.name = name.rawValue
         pokemon.level = level;
-        pokemon.type = pokemonType;
+        pokemon.type = type;
         
         return pokemon
     }
@@ -49,8 +55,13 @@ enum PokemonName : String {
     case Blastoise = "Blastoise"
 }
 
+enum TypeID : Int {
+    case Fire
+    case Grass
+    case Water
+}
 
-enum PokemonType : String {
+enum TypeName : String {
     case Fire =  "Fire"
     case Grass = "Grass"
     case Water = "Water"
