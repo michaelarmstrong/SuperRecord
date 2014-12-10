@@ -105,4 +105,8 @@ extension NSPredicate {
             self.init()
         }
     }
+    
+    convenience init?(attribute: String!, value: [AnyObject]) {
+        self.init(format: "%K IN %@", attribute, value)
+    }
 }

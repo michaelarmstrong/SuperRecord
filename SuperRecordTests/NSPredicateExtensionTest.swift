@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class NSPredicateExtensionTest: XCTestCase {
+class NSPredicateExtensionTest: SuperRecordTestCase {
 
     let firstLevelPredicate = NSPredicate(format: "level > 1")!
     let secondLevelPredicate = NSPredicate (format: "level =< 36")!
@@ -88,12 +88,30 @@ class NSPredicateExtensionTest: XCTestCase {
 
         checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
     }
+
+    func testPredicateValueIn(){
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        
+        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+
+        var predicate = NSPredicate(attribute: "name", value: ["Charmender", "Charizard"])
+        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(2, count, "Count mismatch")
+
+        predicate = NSPredicate(attribute: "level", value: [16])
+        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(1, count, "Count mismatch")
+
+    }
     
     private func checkPreficate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){
         XCTAssertNotNil(expectedPredicate, "Shouldn't be nil")
         XCTAssertNotNil(resultPredicate, "Shouldn't be nil")
         XCTAssertEqual(expectedPredicate!, resultPredicate!, "Predicates mismatch")
-
     }
+    
+
 
 }
