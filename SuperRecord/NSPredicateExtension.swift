@@ -87,6 +87,22 @@ func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
     return NSCompoundPredicate.orPredicateWithSubpredicates(left + right)
 }
 
-extension NSPredicate {    
+enum NSPredicateOperator {
+    case And
+    case Or
+}
 
+extension NSPredicate {
+    
+    convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSPredicateOperator ) {
+        if(predicateOperator == .And){
+            self.init(format: "(\(firstPredicate)) AND (\(secondPredicate))")
+        }
+        else if (predicateOperator == .Or){
+            self.init(format: "(\(firstPredicate)) OR (\(secondPredicate))")
+        }
+        else{
+            self.init()
+        }
+    }
 }

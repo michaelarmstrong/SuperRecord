@@ -69,6 +69,26 @@ class NSPredicateExtensionTest: XCTestCase {
         checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
+    func testInitAnd(){
+        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: NSPredicateOperator.And)
+        var resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36)")
+        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+
+        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: NSPredicateOperator.And)
+        resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36 AND name == Charmender)")
+        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+    }
+    
+    func testInitOr(){
+        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: NSPredicateOperator.Or)
+        var resultPredicate = NSPredicate(format: "(level > 1) OR (level =< 36)")
+        
+        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: NSPredicateOperator.Or)
+        resultPredicate = NSPredicate(format: "(level > 1) OR (level =< 36 AND name == Charmender)")
+
+        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+    }
+    
     private func checkPreficate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){
         XCTAssertNotNil(expectedPredicate, "Shouldn't be nil")
         XCTAssertNotNil(resultPredicate, "Shouldn't be nil")
