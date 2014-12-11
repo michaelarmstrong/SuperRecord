@@ -120,9 +120,36 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .Equal)
+        expectedPredicate = NSPredicate(format: "type == %@", fireType)
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
 
+    }
+    
+    func testPredicateNotEqualValue(){
+        PokemonFactory.populate(managedObjectContext);
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        var predicate = NSPredicate.predicateBuilder("name", value: "Charmender", predicateOperator: .NotEqual)
+        var expectedPredicate = NSPredicate(format: "name != \"Charmender\"")
+        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(8, count, "Count mismatch")
+        
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        
+        predicate = NSPredicate.predicateBuilder("level", value: 1, predicateOperator: .NotEqual)
+        expectedPredicate = NSPredicate(format: "level != 1")
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(6, count, "Count mismatch")
+        
+        predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .NotEqual)
+        expectedPredicate = NSPredicate(format: "type != %@", fireType)
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(6, count, "Count mismatch")
+        
     }
 
     

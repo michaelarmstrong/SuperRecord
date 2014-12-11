@@ -92,6 +92,7 @@ enum NSPredicateOperator : String {
     case Or = "OR"
     case In = "IN"
     case Equal = "=="
+    case NotEqual = "!="
 
 }
 
