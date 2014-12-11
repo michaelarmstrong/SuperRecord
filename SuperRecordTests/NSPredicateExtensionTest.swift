@@ -70,20 +70,20 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
     }
     
     func testInitAnd(){
-        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: NSPredicateOperator.And)
+        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: .And)
         var resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36)")
         checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
 
-        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: NSPredicateOperator.And)
+        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: .And)
         resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36 AND name == Charmender)")
         checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
     func testInitOr(){
-        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: NSPredicateOperator.Or)
+        var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: .Or)
         var resultPredicate = NSPredicate(format: "(level > 1) OR (level =< 36)")
         
-        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: NSPredicateOperator.Or)
+        expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: .Or)
         resultPredicate = NSPredicate(format: "(level > 1) OR (level =< 36 AND name == Charmender)")
 
         checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
