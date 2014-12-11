@@ -151,6 +151,38 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         XCTAssertEqual(6, count, "Count mismatch")
         
     }
+    
+    func testPredicateGreaterThanValue(){
+        PokemonFactory.populate(managedObjectContext);
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThan)
+        var expectedPredicate = NSPredicate(format: "level > 16")
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(3, count, "Count mismatch")
+        
+        predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThanOrEqual)
+        expectedPredicate = NSPredicate(format: "level >= 16")
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(6, count, "Count mismatch")
+    }
+    
+    func testPredicateLessThanValue(){
+        PokemonFactory.populate(managedObjectContext);
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThan)
+        var expectedPredicate = NSPredicate(format: "level < 16")
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(3, count, "Count mismatch")
+        
+        predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThanOrEqual)
+        expectedPredicate = NSPredicate(format: "level <= 16")
+        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(6, count, "Count mismatch")
+    }
 
     
     private func checkPreficate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){

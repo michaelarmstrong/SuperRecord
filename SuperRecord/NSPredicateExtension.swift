@@ -93,7 +93,10 @@ enum NSPredicateOperator : String {
     case In = "IN"
     case Equal = "=="
     case NotEqual = "!="
-
+    case GreaterThan = ">"
+    case GreaterThanOrEqual = ">="
+    case LessThan = "<"
+    case LessThanOrEqual = "<="
 }
 
 extension NSPredicate {
