@@ -175,17 +175,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         var pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, completionHandler: nil)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
     }
-    
-    func testCountWithPredicate(){
         
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: .Fire);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: .Fire);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: .Fire);
-        
-        var pokemonCount = Pokemon.countWithPredicate(nil, context: managedObjectContext, completionHandler: nil)
-        XCTAssertEqual(3, pokemonCount, "Count Should return 3 pokemons");
-    }
-    
     //MARK: Entity deletion
     
     func testDeleteAll(){
