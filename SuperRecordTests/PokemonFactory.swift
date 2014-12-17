@@ -14,7 +14,7 @@ class PokemonFactory {
     
     class func createType (managedObjectContext: NSManagedObjectContext, id : TypeID, name : TypeName) -> Type{
     
-        let type = Type.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as Type;
+        let type = Type.findFirstOrCreateWithAttribute("id", value: id.rawValue, context: managedObjectContext, handler: nil) as Type;
         type.name = name.rawValue;
         return type;
     }
@@ -27,6 +27,25 @@ class PokemonFactory {
         pokemon.type = type;
         
         return pokemon
+    }
+    
+    class func populate(managedObjectContext: NSManagedObjectContext ){
+    
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
+        let grassType = PokemonFactory.createType(managedObjectContext, id: .Grass, name: .Grass)
+        
+        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        
+        let Bulbasaur = PokemonFactory.createPokemon(managedObjectContext, id: .Bulbasaur, name: .Bulbasaur, level: 1, type: grassType)
+        let Ivysaur = PokemonFactory.createPokemon(managedObjectContext, id: .Ivysaur, name: .Ivysaur, level: 16, type: grassType)
+        let Venusaur = PokemonFactory.createPokemon(managedObjectContext, id: .Venusaur, name: .Venusaur, level: 36, type: grassType)
+        
+        let Squirtle = PokemonFactory.createPokemon(managedObjectContext, id: .Squirtle, name: .Squirtle, level: 1, type: waterType)
+        let Wartortle = PokemonFactory.createPokemon(managedObjectContext, id: .Wartortle, name: .Wartortle, level: 16, type: waterType)
+        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
     }
 }
 

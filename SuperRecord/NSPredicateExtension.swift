@@ -87,6 +87,33 @@ func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
     return NSCompoundPredicate.orPredicateWithSubpredicates(left + right)
 }
 
-extension NSPredicate {    
+enum NSLogicOperator : String {
+    case And = "AND"
+    case Or = "OR"
+}
 
+enum NSPredicateOperator : String {
+    case And = "AND"
+    case Or = "OR"
+    case In = "IN"
+    case Equal = "=="
+    case NotEqual = "!="
+    case GreaterThan = ">"
+    case GreaterThanOrEqual = ">="
+    case LessThan = "<"
+    case LessThanOrEqual = "<="
+}
+
+extension NSPredicate {
+    
+    convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
+            self.init(format: "(\(firstPredicate)) \(predicateOperator.rawValue) (\(secondPredicate))")
+    }
+
+    
+    class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator ) -> NSPredicate? {
+        var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
+        predicate = predicate?.predicateWithSubstitutionVariables(["value" : value]);
+        return predicate
+    }
 }

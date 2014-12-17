@@ -159,8 +159,8 @@ public extension NSManagedObject {
     
     :returns: NSManagedObject.
     */
-    class func findFirstOrCreateWithAttribute(attribute: NSString!, value: NSString!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
-        let predicate = NSPredicate(format: "%K = %@", attribute,value)
+    class func findFirstOrCreateWithAttribute(attribute: String!, value: AnyObject!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
+        var predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
         return findFirstOrCreateWithPredicate(predicate, context: context, handler)
     }
 
