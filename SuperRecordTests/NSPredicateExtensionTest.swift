@@ -31,52 +31,52 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
     func testAndPredicate(){
         let expectedPredicate = NSPredicate (format: "level > 1 AND level =< 36");
         let resultPredicate = firstLevelPredicate & secondLevelPredicate;
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
 
     func testOrPredicate(){
         let expectedPredicate = NSPredicate (format: "level > 1 OR level =< 36");
         let resultPredicate = firstLevelPredicate | secondLevelPredicate;
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
     func testAndPredicates(){
         var expectedPredicate = NSPredicate (format: "level > 1 AND name == Charmender AND level =< 36");
         var resultPredicate = [firstLevelPredicate, namePredicate] & [secondLevelPredicate];
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
         
         expectedPredicate = NSPredicate (format: "level > 1 AND name == Charmender AND level =< 36 AND type.id = 1");
         resultPredicate = [firstLevelPredicate, namePredicate] & [secondLevelPredicate, typePredicate];
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
         
     }
     
     func testOrPredicates(){
         var expectedPredicate = NSPredicate (format: "level > 1 OR name == Charmender OR level =< 36");
         var resultPredicate = [firstLevelPredicate, namePredicate] | [secondLevelPredicate];
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
         
         expectedPredicate = NSPredicate (format: "level > 1 OR name == Charmender OR level =< 36 OR type.id = 1");
         resultPredicate = [firstLevelPredicate, namePredicate] | [secondLevelPredicate, typePredicate];
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
         
     }
     
     func testMixedPredicates(){
         var expectedPredicate = NSPredicate (format: "level > 1 AND name == Charmender OR level =< 36");
         var resultPredicate = firstLevelPredicate & namePredicate | [secondLevelPredicate];
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
     func testInitAnd(){
         var expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate, predicateOperator: .And)
         var resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36)")
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
 
         expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: .And)
         resultPredicate = NSPredicate(format: "(level > 1) AND (level =< 36 AND name == Charmender)")
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
     }
     
     func testInitOr(){
@@ -86,7 +86,7 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         expectedPredicate = NSPredicate(firstPredicate: firstLevelPredicate, secondPredicate: secondLevelPredicate & namePredicate, predicateOperator: .Or)
         resultPredicate = NSPredicate(format: "(level > 1) OR (level =< 36 AND name == Charmender)")
 
-        checkPreficate(expectedPredicate, resultPredicate: resultPredicate);
+        checkPredicate(expectedPredicate, resultPredicate: resultPredicate);
     }
 
     func testPredicateValueIn(){
@@ -111,17 +111,17 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(1, count, "Count mismatch")
         
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         
         predicate = NSPredicate.predicateBuilder("level", value: 1, predicateOperator: .Equal)
         expectedPredicate = NSPredicate(format: "level == 1")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .Equal)
         expectedPredicate = NSPredicate(format: "type == %@", fireType)
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
 
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
@@ -136,17 +136,17 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(8, count, "Count mismatch")
         
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         
         predicate = NSPredicate.predicateBuilder("level", value: 1, predicateOperator: .NotEqual)
         expectedPredicate = NSPredicate(format: "level != 1")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .NotEqual)
         expectedPredicate = NSPredicate(format: "type != %@", fireType)
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
         
@@ -157,13 +157,13 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThan)
         var expectedPredicate = NSPredicate(format: "level > 16")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThanOrEqual)
         expectedPredicate = NSPredicate(format: "level >= 16")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
     }
@@ -173,19 +173,19 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThan)
         var expectedPredicate = NSPredicate(format: "level < 16")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThanOrEqual)
         expectedPredicate = NSPredicate(format: "level <= 16")
-        checkPreficate(expectedPredicate, resultPredicate: predicate)
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
         count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
     }
 
     
-    private func checkPreficate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){
+    private func checkPredicate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){
         XCTAssertNotNil(expectedPredicate, "Shouldn't be nil")
         XCTAssertNotNil(resultPredicate, "Shouldn't be nil")
         XCTAssertEqual(expectedPredicate!, resultPredicate!, "Predicates mismatch")
