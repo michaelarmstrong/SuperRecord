@@ -17,7 +17,7 @@ Create a new NSPredicate as logical AND of left and right predicate
 
 :returns: NSPredicate
 */
-func & (left : NSPredicate, right : NSPredicate )-> NSPredicate{
+public func & (left : NSPredicate, right : NSPredicate )-> NSPredicate{
     return [left] & [right]
 }
 
@@ -29,7 +29,7 @@ Create a new NSPredicate as logical AND of left and right predicates
 
 :returns: NSPredicate
 */
-func & (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
+public func & (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
     return [left] & right
 }
 
@@ -41,7 +41,7 @@ Create a new NSPredicate as logical AND of left and right predicates
 
 :returns: NSPredicate
 */
-func & (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
+public func & (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
     return NSCompoundPredicate.andPredicateWithSubpredicates(left + right)
 }
 
@@ -55,7 +55,7 @@ Create a new NSPredicate as logical OR of left and right predicate
 :returns: NSPredicate
 */
 
-func | (left : NSPredicate, right : NSPredicate )-> NSPredicate{
+public func | (left : NSPredicate, right : NSPredicate )-> NSPredicate{
     return [left] | [right]
 }
 
@@ -69,7 +69,7 @@ Create a new NSPredicate as logical OR of left and right predicates
 :returns: NSPredicate
 */
 
-func | (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
+public func | (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
     return [left] | right
 }
 
@@ -83,16 +83,16 @@ Create a new NSPredicate as logical OR of left and right predicates
 
 :returns: NSPredicate
 */
-func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
+public func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
     return NSCompoundPredicate.orPredicateWithSubpredicates(left + right)
 }
 
-enum NSLogicOperator : String {
+public enum NSLogicOperator : String {
     case And = "AND"
     case Or = "OR"
 }
 
-enum NSPredicateOperator : String {
+public enum NSPredicateOperator : String {
     case And = "AND"
     case Or = "OR"
     case In = "IN"
@@ -104,14 +104,14 @@ enum NSPredicateOperator : String {
     case LessThanOrEqual = "<="
 }
 
-extension NSPredicate {
+public extension NSPredicate {
     
-    convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
+public convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
             self.init(format: "(\(firstPredicate)) \(predicateOperator.rawValue) (\(secondPredicate))")
     }
 
     
-    class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator ) -> NSPredicate? {
+public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator ) -> NSPredicate? {
         var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
         predicate = predicate?.predicateWithSubstitutionVariables(["value" : value]);
         return predicate
