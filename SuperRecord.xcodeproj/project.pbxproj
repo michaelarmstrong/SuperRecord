@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		12487FC71A25BFA20038C070 /* NSPredicateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12487FC61A25BFA20038C070 /* NSPredicateExtension.swift */; };
-		12487FCA1A25C41B0038C070 /* NSPredicateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12487FC61A25BFA20038C070 /* NSPredicateExtension.swift */; };
 		126BFA8A1A1F366600D59CE9 /* PokemonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126BFA891A1F366600D59CE9 /* PokemonFactory.swift */; };
 		126BFA8C1A1F506B00D59CE9 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126BFA8B1A1F506B00D59CE9 /* Pokemon.swift */; };
 		129BB2361A1B58ED00D21867 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 129BB2311A1B58ED00D21867 /* Model.xcdatamodeld */; };
@@ -276,7 +275,6 @@
 				126BFA8A1A1F366600D59CE9 /* PokemonFactory.swift in Sources */,
 				129BB2381A1B58ED00D21867 /* SuperRecordTestCase.swift in Sources */,
 				129BB2361A1B58ED00D21867 /* Model.xcdatamodeld in Sources */,
-				12487FCA1A25C41B0038C070 /* NSPredicateExtension.swift in Sources */,
 				12FEA4BC1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift in Sources */,
 				129BB23A1A1B593500D21867 /* SuperRecordTests.swift in Sources */,
 				129BB2391A1B58ED00D21867 /* Type.swift in Sources */,

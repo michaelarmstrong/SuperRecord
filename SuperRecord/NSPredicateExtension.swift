@@ -106,12 +106,11 @@ public enum NSPredicateOperator : String {
 
 public extension NSPredicate {
     
-public convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
+    public convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
             self.init(format: "(\(firstPredicate)) \(predicateOperator.rawValue) (\(secondPredicate))")
     }
 
-    
-public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator ) -> NSPredicate? {
+    public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> NSPredicate? {
         var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
         predicate = predicate?.predicateWithSubstitutionVariables(["value" : value]);
         return predicate
