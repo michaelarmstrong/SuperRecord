@@ -34,7 +34,7 @@ public extension NSManagedObject {
     
     */
     class func deleteAll(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
-        let results = findAllWithPredicate(predicate, context: context, completionHandler: nil)
+        let results = findAllWithPredicate(predicate, includesPropertyValues: false, context: context, completionHandler: nil)
         for result in results {
             context.deleteObject(result as NSManagedObject)
         }
@@ -48,15 +48,17 @@ public extension NSManagedObject {
     
     :param: predicate
     
+    :param: includesPropertyValues
+
     :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
     
     :returns: NSArray of NSManagedObject.
     */
-    class func findAllWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
-        
-        var entityName : NSString = NSStringFromClass(self)
+    class func findAllWithPredicate(predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
+        let entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName)
+        fetchRequest.includesPropertyValues = includesPropertyValues
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
         var results = NSArray()
