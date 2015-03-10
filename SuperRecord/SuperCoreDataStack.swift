@@ -23,20 +23,20 @@ let applicationDocumentsDirectory: NSURL = {
     return urls.last as! NSURL
     }()
 
-class SuperCoreDataStack: NSObject {
+public class SuperCoreDataStack: NSObject {
     
     let persistentStoreURL : NSURL?
     let storeType : NSString
     
     //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
-    class var defaultStack : SuperCoreDataStack {
+    public class var defaultStack : SuperCoreDataStack {
     struct DefaultStatic {
             static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
         }
         return DefaultStatic.instance
     }
     
-    class var inMemoryStack : SuperCoreDataStack {
+    public class var inMemoryStack : SuperCoreDataStack {
         struct InMemoryStatic {
             static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSInMemoryStoreType,storeURL:nil)
         }
@@ -98,7 +98,7 @@ class SuperCoreDataStack: NSObject {
     
     // MARK: - Core Data Saving support
     
-    func saveContext () {
+    public func saveContext () {
         //TODO: Improve error handling.
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
