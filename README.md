@@ -1,4 +1,6 @@
-SuperRecord 
+SuperRecord  
+===================
+
 
 [![Build Status](https://travis-ci.org/michaelarmstrong/SuperRecord.svg)](https://travis-ci.org/michaelarmstrong/SuperRecord/)
 
