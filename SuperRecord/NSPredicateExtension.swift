@@ -113,7 +113,7 @@ extension NSPredicate {
     
     class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator ) -> NSPredicate? {
         var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
-        predicate = predicate?.predicateWithSubstitutionVariables(["value" : value]);
+        predicate = predicate.predicateWithSubstitutionVariables(["value" : value]);
         return predicate
     }
 }
