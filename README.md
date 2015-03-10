@@ -22,7 +22,7 @@ The project has been built over several versions of Swift so some choices may se
 
 ### Adding SuperRecord to your project
 
-#### Method 1 (recommended)
+#### Method 1 (Submoule recommended)
 
 	git submodule add https://github.com/michaelarmstrong/SuperRecord.git SuperRecord
 
@@ -31,7 +31,14 @@ The project has been built over several versions of Swift so some choices may se
 - Open "Build Phases"
 - Add SuperRecord.framework under "Target Dependencies"
 
-#### Method 2
+
+#### Method 2 (Carthage)
+
+To integrate SuperRecord into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your Cartfile:
+
+	github "michaelarmstrong/SuperRecord"
+
+#### Method 3 (Manually)
 
 	git clone https://github.com/michaelarmstrong/SuperRecord.git
 	
