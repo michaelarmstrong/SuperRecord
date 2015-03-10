@@ -1,4 +1,7 @@
 SuperRecord 
+
+[![Build Status](https://travis-ci.org/michaelarmstrong/SuperRecord.svg)](https://travis-ci.org/michaelarmstrong/SuperRecord/)
+
 ===================
 
 A **Swift CoreData Framework** consisting of several **Extensions** and Helpers to bring some love and take the hassle out of common CoreData tasks.
