@@ -22,7 +22,7 @@ class SuperRecordTestCase: XCTestCase {
     
     let applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls.last as! NSURL
+        return urls.last as NSURL
         }()
 
 
