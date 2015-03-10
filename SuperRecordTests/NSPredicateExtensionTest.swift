@@ -12,11 +12,11 @@ import SuperRecord
 
 class NSPredicateExtensionTest: SuperRecordTestCase {
 
-    let firstLevelPredicate = NSPredicate(format: "level > 1")
-    let secondLevelPredicate = NSPredicate (format: "level =< 36")
+    let firstLevelPredicate = NSPredicate(format: "level > 1")!
+    let secondLevelPredicate = NSPredicate (format: "level =< 36")!
     
-    let typePredicate = NSPredicate(format: "type.id = 1")
-    let namePredicate = NSPredicate (format: "name == Charmender")
+    let typePredicate = NSPredicate(format: "type.id = 1")!
+    let namePredicate = NSPredicate (format: "name == Charmender")!
     
     override func setUp() {
         super.setUp()

@@ -14,13 +14,13 @@ class PokemonFactory {
     
     class func createType (managedObjectContext: NSManagedObjectContext, id : TypeID, name : TypeName) -> Type{
     
-        let type = Type.findFirstOrCreateWithAttribute("id", value: id.rawValue, context: managedObjectContext, handler: nil) as! Type;
+        let type = Type.findFirstOrCreateWithAttribute("id", value: id.rawValue, context: managedObjectContext, handler: nil) as Type;
         type.name = name.rawValue;
         return type;
     }
     
     class func createPokemon (managedObjectContext: NSManagedObjectContext, id : PokemonID, name : PokemonName, level: Int, type : Type) -> Pokemon{
-        var pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as! Pokemon;
+        var pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as Pokemon;
         pokemon.id =  id.rawValue
         pokemon.name = name.rawValue
         pokemon.level = level;

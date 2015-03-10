@@ -94,28 +94,28 @@ public extension NSFetchedResultsController {
         
         var sortDescriptors = []
         if let sortedBy = sortedBy {
-            sortDescriptors = [NSSortDescriptor(key: sortedBy as String, ascending: ascending)]
+            sortDescriptors = [NSSortDescriptor(key: sortedBy, ascending: ascending)]
         }
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate:nil, delegate: delegate)
     }
     
     private class func superFetchedResultsController(entityName: NSString!, sectionNameKeyPath: NSString?, sortDescriptors: NSArray?, predicate: NSPredicate?, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext! = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSFetchedResultsController {
         
-        let fetchRequest = NSFetchRequest(entityName: entityName as String)
-        fetchRequest.entity = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         
         if let predicate = predicate {
             fetchRequest.predicate = predicate
         }
         if let sortDescriptors = sortDescriptors {
-            fetchRequest.sortDescriptors = sortDescriptors as [AnyObject]
+            fetchRequest.sortDescriptors = sortDescriptors
         } else {
             fetchRequest.sortDescriptors = []
         }
         
         var tempFetchedResultsController : NSFetchedResultsController!
         if let sectionNameKeyPath = sectionNameKeyPath {
-            tempFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest , managedObjectContext: context, sectionNameKeyPath: sectionNameKeyPath as String, cacheName: nil)
+            tempFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest , managedObjectContext: context, sectionNameKeyPath: sectionNameKeyPath, cacheName: nil)
         } else {
             tempFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest , managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         }
