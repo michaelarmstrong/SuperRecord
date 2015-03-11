@@ -142,7 +142,7 @@ This isn't an exhaustive list of all methods and classes, however it includes so
 
 This whole project is a work in progress, a learning exercise and has been released "early" so that it can be built and collaborated on with feedback from the community. I'm using it in a project I work on everyday, so hopefully it'll improve and gain more functionality, thread-safety and error handling over time.
 
-The next key things to be worked on are Optionality (as this has changed in every Swift BETA), the CoreDataStack, adding more finders with more functionality and improving the NSFetchedResultsControllerExtension.
+Currently work is in progress to replace the SuperCoreDataStack with a much better, more flexible and cleaner implementation + a wiki is in progress. If you'd like to help out, please get in touch or open a PR.
 
 
 
