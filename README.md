@@ -24,7 +24,22 @@ The project has been built over several versions of Swift so some choices may se
 
 ### Adding SuperRecord to your project
 
-#### Method 1 (Submoule recommended)
+#### Method 1 (Cocoapods)
+
+To integrate SuperRecord into your Xcode project using [Cocoapods](http://cocoapods.org/), specify it in your Podfile:
+	use_f rameworks!
+	pod 'SuperRecord'
+- Build	
+- Add import SuperRecord
+
+#### Method 2 (Carthage)
+
+To integrate SuperRecord into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your Cartfile:
+
+	github "michaelarmstrong/SuperRecord"
+	
+	
+#### Method 3 (Submoule)
 
 	git submodule add https://github.com/michaelarmstrong/SuperRecord.git SuperRecord
 
@@ -33,14 +48,7 @@ The project has been built over several versions of Swift so some choices may se
 - Open "Build Phases"
 - Add SuperRecord.framework under "Target Dependencies"
 
-
-#### Method 2 (Carthage)
-
-To integrate SuperRecord into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your Cartfile:
-
-	github "michaelarmstrong/SuperRecord"
-
-#### Method 3 (Manually)
+#### Method 4 (Manually)
 
 	git clone https://github.com/michaelarmstrong/SuperRecord.git
 	
