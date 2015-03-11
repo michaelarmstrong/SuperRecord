@@ -27,8 +27,10 @@ The project has been built over several versions of Swift so some choices may se
 #### Method 1 (Cocoapods)
 
 To integrate SuperRecord into your Xcode project using [Cocoapods](http://cocoapods.org/), specify it in your Podfile:
+
 	use_f rameworks!
 	pod 'SuperRecord'
+	
 - Build	
 - Add import SuperRecord
 
