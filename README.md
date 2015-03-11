@@ -18,9 +18,7 @@ Features
 
 SuperRecord consists of several Extensions to add MagicalRecord/ActiveRecord style "finders" to your NSManagedObject subclasses, a **FetchResultsControllerDelegate** class to handle safe batch updates to both **UITableView** and **UICollectionView** and an experimental Boilerplate CoreData Stack Singleton.  
 
-The project has been built over several versions of Swift so some choices may seem strange at first. **Please see the included Demo Project for more information and a closer look.**
-
-*Swift code doesn't yet work with cocoapods, so its best to use this as a submodule for now.
+The project has been built over several versions of Swift so some choices may seem strange at first. 
 
 ### Adding SuperRecord to your project
 
