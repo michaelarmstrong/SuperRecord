@@ -3,6 +3,8 @@ SuperRecord
 
 
 [![Build Status](https://travis-ci.org/michaelarmstrong/SuperRecord.svg)](https://travis-ci.org/michaelarmstrong/SuperRecord/)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 
 ===================
 
