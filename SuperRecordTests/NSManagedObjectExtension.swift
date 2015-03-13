@@ -266,6 +266,35 @@ class NSManagedObjectExtension: SuperRecordTestCase {
 
     }
     
+    func testSumGroupBy(){
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
+        
+        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        managedObjectContext.save(&error)
+
+        let expectedLevels : [String : Double] = ["Fire" : 53, "Water" : 36]
+    
+        let sumsExpectation = expectationWithDescription("Sum")
+    
+        var sumLevel = Pokemon.sum(context: managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
+            sumsExpectation.fulfill()
+        })
+        
+        waitForExpectationsWithTimeout(SuperRecordTestCaseTimeout, handler: { error in
+            for dictionay in sumLevel  {
+                let type : String! = dictionay["type.name"] as String!
+                let level : Double! = dictionay["level"] as Double!
+                let expectedLevel : Double = expectedLevels[type] as Double!
+                XCTAssertEqual(expectedLevel, level)
+            }
+        })
+     
+    }
+    
     func testMax(){
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
