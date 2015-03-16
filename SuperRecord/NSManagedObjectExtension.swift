@@ -14,7 +14,7 @@ import CoreData
 public extension NSManagedObject {
 
     /// The class name itself, without module name.
-    class var entityName: String {
+    public class var entityName: String {
         return NSStringFromClass(self).componentsSeparatedByString(".").last!
     }
 
