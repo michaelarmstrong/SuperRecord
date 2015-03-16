@@ -153,14 +153,24 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testFindAllWithAttribute(){
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
+
 
         let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
         let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
         let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
 
         
         var pokemons = Pokemon.findAllWithAttribute("name", value: charizard.name, context: managedObjectContext)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
+        
+        pokemons = Pokemon.findAllWithAttribute("type", value: fireType, context: managedObjectContext)
+        XCTAssertEqual(3, pokemons.count, "Should contains 1 pokemons");
+        
+        pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext)
+        XCTAssertEqual(3, pokemons.count, "Should contains 1 pokemons");
+
 
     }
     
