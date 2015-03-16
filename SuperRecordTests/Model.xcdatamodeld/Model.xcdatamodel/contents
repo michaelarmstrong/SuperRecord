@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Pokemon" representedClassName="SuperRecordTests.Pokemon" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Pokemon" representedClassName="Pokemon" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="level" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Type" inverseName="pokemons" inverseEntity="Type" syncable="YES"/>
     </entity>
-    <entity name="Type" representedClassName="SuperRecordTests.Type" syncable="YES">
+    <entity name="Type" representedClassName="Type" syncable="YES">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pokemon" inverseName="type" inverseEntity="Pokemon" syncable="YES"/>
