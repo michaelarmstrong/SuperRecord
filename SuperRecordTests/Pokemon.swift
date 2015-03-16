@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-@objc(Pokemon)
 class Pokemon: NSManagedObject {
 
     @NSManaged var level: NSNumber
