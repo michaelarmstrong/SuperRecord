@@ -94,8 +94,8 @@ public extension NSManagedObject {
     
     :returns: NSArray of NSManagedObject.
     */
-    class func findAllWithAttribute(attribute: String!, value: String!, context: NSManagedObjectContext) -> NSArray {
-        let predicate = NSPredicate(format: "%K = %@", attribute, value)
+    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext) -> NSArray {
+        var predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
         return findAllWithPredicate(predicate, context: context)
     }
     
