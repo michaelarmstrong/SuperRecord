@@ -157,9 +157,9 @@ public extension NSPredicate {
     /**
     Init a new NSPredicate using the input predicates adding parenthesis for more complex NSPredicate
     
-        :param: firstPredicate
-        :param: secondPredicate the value the attribute should assume
-        :param: NSLogicOperator to use in the predicate AND/OR
+    :param: firstPredicate
+    :param: secondPredicate 
+    :param: NSLogicOperator to use in the predicate AND/OR
     
     :returns: NSPredicate
     */
