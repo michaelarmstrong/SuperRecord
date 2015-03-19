@@ -41,7 +41,7 @@ To integrate SuperRecord into your Xcode project using [Carthage](https://github
 	github "michaelarmstrong/SuperRecord"
 	
 	
-#### Method 3 (Submoule)
+#### Method 3 (Submodule)
 
 	git submodule add https://github.com/michaelarmstrong/SuperRecord.git SuperRecord
 
