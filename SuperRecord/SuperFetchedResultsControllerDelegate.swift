@@ -77,7 +77,7 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
         ownerArray?.addObject(self)
         
         if(oldOwner != nil){
-            var oldOwnerArray : NSMutableArray = objc_getAssociatedObject(oldOwner, kOwnerKey) as NSMutableArray;
+            var oldOwnerArray : NSMutableArray = objc_getAssociatedObject(oldOwner, kOwnerKey) as! NSMutableArray;
             oldOwnerArray.removeObjectIdenticalTo(self)
         }
     }
@@ -204,7 +204,7 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                                     self.collectionView!.reloadItemsAtIndexPaths([dictValue])
                                     break;
                                 case NSFetchedResultsChangeType.Move:
-                                    self.collectionView!.moveItemAtIndexPath(dictValue[0] as NSIndexPath, toIndexPath: dictValue[1] as NSIndexPath)
+                                    self.collectionView!.moveItemAtIndexPath(dictValue[0] as! NSIndexPath, toIndexPath: dictValue[1] as! NSIndexPath)
                                     break;
                                 default:
                                 println("Unexpected NSFetchedResultsChangeType stored for controllerDidChangeContent. \(dictKey)")
