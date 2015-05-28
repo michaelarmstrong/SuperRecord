@@ -218,6 +218,39 @@ class NSManagedObjectExtension: SuperRecordTestCase {
 
     }
     
+    //MARK: Entity Update
+    
+    func testUpdateAllUsingPredicate(){
+        let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
+        let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Fire)
+        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
+        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
+        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        
+        managedObjectContext.save(nil);
+
+        var error: NSError?
+    
+        let levelPredicate = NSPredicate.predicateBuilder("level", value: 5, predicateOperator: NSPredicateOperator.GreaterThan);
+        let typePredicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: NSPredicateOperator.Equal);
+        let wrongTypePredicate = NSPredicate.predicateBuilder("type", value: waterType, predicateOperator: NSPredicateOperator.Equal);
+        
+        var updatedRows:Int = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 100], predicate: levelPredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+
+        XCTAssertNil(error, "error shoul be nil")
+        XCTAssertEqual(2, updatedRows, "Count mismatch")
+
+        updatedRows = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 1], predicate: wrongTypePredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+        
+        XCTAssertNil(error, "error shoul be nil")
+        XCTAssertEqual(0, updatedRows, "Count mismatch")
+
+        updatedRows = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 100], predicate: typePredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+        
+        XCTAssertNil(error, "error shoul be nil")
+        XCTAssertEqual(3, updatedRows, "Count mismatch")
+    }
+    
     //MARK: Entity operations
     
     func testCount(){
