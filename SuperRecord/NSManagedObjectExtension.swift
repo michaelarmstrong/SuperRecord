@@ -13,6 +13,31 @@ import CoreData
 
 public extension NSManagedObject {
 
+    //MARK: Entity update
+    
+    /**
+    Update all entity matching the predicate
+    
+    :param: context the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
+    :param: propertiesToUpdate
+    :param: predicate the predicate the entity should match
+    :param: resultType the default value is UpdatedObjectsCountResultType (rows number)
+    :param: error
+    
+    :returns: AnyObject? depends on resultType
+    */
+
+    class func updateAll (context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, propertiesToUpdate: [String : AnyObject], predicate:NSPredicate?, resultType: NSBatchUpdateRequestResultType = .UpdatedObjectsCountResultType, error : NSErrorPointer) -> AnyObject?{
+        let entityName : String = NSStringFromClass(self)
+        let request = NSBatchUpdateRequest(entityName: entityName);
+        request.propertiesToUpdate = propertiesToUpdate
+        request.resultType = resultType
+        request.predicate = predicate
+        let result =  context.executeRequest(request, error: error) as! NSBatchUpdateResult;
+        return result.result
+    }
+
+    
     //MARK: Entity deletion
     
     /**
