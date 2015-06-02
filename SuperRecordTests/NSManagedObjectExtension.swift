@@ -148,6 +148,17 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         XCTAssertTrue(pokemons.containsObject( charmender), "Should contains pokemon");
         XCTAssertTrue(pokemons.containsObject(charmeleon), "Should contains pokemon");
         XCTAssertTrue(pokemons.containsObject(charizard), "Should contains pokemon");
+
+        var expectedPokemonArray = [charizard, charmeleon, charmender];
+        var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
+        pokemons = Pokemon.findAll(context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
+
+        sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
+        pokemons = Pokemon.findAll(context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        
+        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
+
         
     }
     
@@ -166,11 +177,19 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
         
         pokemons = Pokemon.findAllWithAttribute("type", value: fireType, context: managedObjectContext)
-        XCTAssertEqual(3, pokemons.count, "Should contains 1 pokemons");
+        XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
         
         pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext)
-        XCTAssertEqual(3, pokemons.count, "Should contains 1 pokemons");
-
+        XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
+        
+        var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
+        var expectedPokemonArray = [charizard, charmeleon, charmender];
+        pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
+        
+        sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
+        pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
 
     }
     
@@ -184,6 +203,15 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         var predicate = NSPredicate (format: "level == %d", 36)
         var pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, completionHandler: nil)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
+        var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
+        var expectedPokemonArray = [charmeleon, charmender];
+        predicate = NSPredicate (format: "level < %d", 36)
+        pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, sortDescriptors: [sortDescriptor], completionHandler: nil)
+        XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
+        
+        sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
+        pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, sortDescriptors: [sortDescriptor], completionHandler: nil)
+        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
     }
         
     //MARK: Entity deletion

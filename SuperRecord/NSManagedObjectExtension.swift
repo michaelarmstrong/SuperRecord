@@ -79,13 +79,14 @@ public extension NSManagedObject {
     
     :returns: NSArray of NSManagedObject.
     */
-    class func findAllWithPredicate(predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
+    class func findAllWithPredicate(predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
         let entityName : NSString = NSStringFromClass(self)
         let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName as String)
         fetchRequest.includesPropertyValues = includesPropertyValues
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
+        fetchRequest.sortDescriptors = sortDescriptors
         var results = NSArray()
         var error : NSError?
         context.performBlockAndWait({ () -> Void in
@@ -103,8 +104,8 @@ public extension NSManagedObject {
     
     :returns: NSArray of NSManagedObject.
     */
-    class func findAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSArray {
-        return findAllWithPredicate(nil, context: context)
+    class func findAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
+        return findAllWithPredicate(nil, context: context, sortDescriptors:sortDescriptors)
     }
     
     
@@ -119,9 +120,9 @@ public extension NSManagedObject {
     
     :returns: NSArray of NSManagedObject.
     */
-    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext) -> NSArray {
+    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
         var predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
-        return findAllWithPredicate(predicate, context: context)
+        return findAllWithPredicate(predicate, context: context, sortDescriptors:sortDescriptors)
     }
     
     //MARK: Entity creation
