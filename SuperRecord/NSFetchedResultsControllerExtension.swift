@@ -37,30 +37,30 @@ public extension NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortedBy: sortedBy, ascending: ascending, delegate: delegate)
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate)
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate)
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate, context: context)
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate,  context: context)
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, collectionView: UICollectionView!, context: NSManagedObjectContext!) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, collectionView: UICollectionView!, context: NSManagedObjectContext!) -> NSFetchedResultsController {
         let fetchedResultsDelegate = setupFetchedResultsControllerDelegate(collectionView)
         let fetchedResultsController = superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: fetchedResultsDelegate, context: context)
         fetchedResultsDelegate.bindsLifetimeTo(fetchedResultsController)
         return fetchedResultsController
     }
     
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, tableView: UITableView!, context: NSManagedObjectContext!) -> NSFetchedResultsController {
+    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, tableView: UITableView!, context: NSManagedObjectContext!) -> NSFetchedResultsController {
         let fetchedResultsDelegate = setupFetchedResultsControllerDelegate(tableView)
         let fetchedResultsController = superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: fetchedResultsDelegate, context: context)
         fetchedResultsDelegate.bindsLifetimeTo(fetchedResultsController)
@@ -92,14 +92,14 @@ public extension NSFetchedResultsController {
     
     private class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortedBy: String?, ascending: Bool, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
         
-        var sortDescriptors = []
+        var sortDescriptors: [NSSortDescriptor]? = nil
         if let sortedBy = sortedBy {
             sortDescriptors = [NSSortDescriptor(key: sortedBy, ascending: ascending)]
         }
-        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors as [AnyObject], predicate:nil, delegate: delegate)
+        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate:nil, delegate: delegate)
     }
     
-    private class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [AnyObject]?, predicate: NSPredicate?, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext! = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSFetchedResultsController {
+    private class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext! = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSFetchedResultsController {
         
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
@@ -107,7 +107,7 @@ public extension NSFetchedResultsController {
         if let predicate = predicate {
             fetchRequest.predicate = predicate
         }
-        if let sortDescriptors = sortDescriptors as? [NSSortDescriptor] {
+        if let sortDescriptors = sortDescriptors {
             fetchRequest.sortDescriptors = sortDescriptors
         } else {
             fetchRequest.sortDescriptors = []
