@@ -15,28 +15,28 @@ import UIKit
 import CoreData
 
 let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
-let stackName = infoDictionary!["CFBundleName"] as NSString
+let stackName = infoDictionary!["CFBundleName"] as! String
 let storeName = stackName + ".sqlite"
 
 let applicationDocumentsDirectory: NSURL = {
     let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    return urls.last as NSURL
+    return urls.last as! NSURL
     }()
 
-class SuperCoreDataStack: NSObject {
+public class SuperCoreDataStack: NSObject {
     
     let persistentStoreURL : NSURL?
     let storeType : NSString
     
     //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
-    class var defaultStack : SuperCoreDataStack {
+    public class var defaultStack : SuperCoreDataStack {
     struct DefaultStatic {
             static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
         }
         return DefaultStatic.instance
     }
     
-    class var inMemoryStack : SuperCoreDataStack {
+    public class var inMemoryStack : SuperCoreDataStack {
         struct InMemoryStatic {
             static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSInMemoryStoreType,storeURL:nil)
         }
@@ -67,14 +67,14 @@ class SuperCoreDataStack: NSObject {
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         
-        if coordinator!.addPersistentStoreWithType(self.storeType, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
+        if coordinator!.addPersistentStoreWithType(self.storeType as String, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             let dict = NSMutableDictionary()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error            
-            error = NSError(domain: "com.superrecord.error.domain", code: 9999, userInfo: dict)
+            error = NSError(domain: "com.superrecord.error.domain", code: 9999, userInfo: dict as [NSObject : AnyObject])
             
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -98,7 +98,7 @@ class SuperCoreDataStack: NSObject {
     
     // MARK: - Core Data Saving support
     
-    func saveContext () {
+    public func saveContext () {
         //TODO: Improve error handling.
         if let moc = self.managedObjectContext {
             var error: NSError? = nil

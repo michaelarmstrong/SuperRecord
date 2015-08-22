@@ -1,4 +1,12 @@
-SuperRecord 
+SuperRecord  
+===================
+
+
+[![Build Status](https://travis-ci.org/michaelarmstrong/SuperRecord.svg)](https://travis-ci.org/michaelarmstrong/SuperRecord/)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+![CocoaPods](https://img.shields.io/cocoapods/v/SuperRecord.svg)
+
+
 ===================
 
 A **Swift CoreData Framework** consisting of several **Extensions** and Helpers to bring some love and take the hassle out of common CoreData tasks.
@@ -13,13 +21,28 @@ Features
 
 SuperRecord consists of several Extensions to add MagicalRecord/ActiveRecord style "finders" to your NSManagedObject subclasses, a **FetchResultsControllerDelegate** class to handle safe batch updates to both **UITableView** and **UICollectionView** and an experimental Boilerplate CoreData Stack Singleton.  
 
-The project has been built over several versions of Swift so some choices may seem strange at first. **Please see the included Demo Project for more information and a closer look.**
-
-*Swift code doesn't yet work with cocoapods, so its best to use this as a submodule for now.
+The project has been built over several versions of Swift so some choices may seem strange at first. 
 
 ### Adding SuperRecord to your project
 
-#### Method 1 (recommended)
+#### Method 1 (Cocoapods)
+
+To integrate SuperRecord into your Xcode project using [Cocoapods](http://cocoapods.org/), specify it in your Podfile:
+
+	use_frameworks!
+	pod 'SuperRecord'
+	
+- Build	
+- Add import SuperRecord
+
+#### Method 2 (Carthage)
+
+To integrate SuperRecord into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your Cartfile:
+
+	github "michaelarmstrong/SuperRecord"
+	
+	
+#### Method 3 (Submodule)
 
 	git submodule add https://github.com/michaelarmstrong/SuperRecord.git SuperRecord
 
@@ -28,7 +51,7 @@ The project has been built over several versions of Swift so some choices may se
 - Open "Build Phases"
 - Add SuperRecord.framework under "Target Dependencies"
 
-#### Method 2
+#### Method 4 (Manually)
 
 	git clone https://github.com/michaelarmstrong/SuperRecord.git
 	
@@ -120,7 +143,7 @@ This isn't an exhaustive list of all methods and classes, however it includes so
 
 This whole project is a work in progress, a learning exercise and has been released "early" so that it can be built and collaborated on with feedback from the community. I'm using it in a project I work on everyday, so hopefully it'll improve and gain more functionality, thread-safety and error handling over time.
 
-The next key things to be worked on are Optionality (as this has changed in every Swift BETA), the CoreDataStack, adding more finders with more functionality and improving the NSFetchedResultsControllerExtension.
+Currently work is in progress to replace the SuperCoreDataStack with a much better, more flexible and cleaner implementation + a wiki is in progress. If you'd like to help out, please get in touch or open a PR.
 
 
 
