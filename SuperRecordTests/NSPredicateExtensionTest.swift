@@ -96,10 +96,10 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
         let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
         var predicate = NSPredicate.predicateBuilder("name", value: ["Charmender", "Charizard"], predicateOperator: .In)
-        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        var count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(2, count, "Count mismatch")
         predicate = NSPredicate.predicateBuilder("level", value: [16], predicateOperator: .In)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(1, count, "Count mismatch")
 
     }
@@ -109,7 +109,7 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         var predicate = NSPredicate.predicateBuilder("name", value: "Charmender", predicateOperator: .Equal)
         var expectedPredicate = NSPredicate(format: "name == \"Charmender\"")
-        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        var count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(1, count, "Count mismatch")
         
         checkPredicate(expectedPredicate, resultPredicate: predicate)
@@ -117,14 +117,14 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         predicate = NSPredicate.predicateBuilder("level", value: 1, predicateOperator: .Equal)
         expectedPredicate = NSPredicate(format: "level == 1")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .Equal)
         expectedPredicate = NSPredicate(format: "type == %@", fireType)
         checkPredicate(expectedPredicate, resultPredicate: predicate)
 
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
 
     }
@@ -134,7 +134,7 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         var predicate = NSPredicate.predicateBuilder("name", value: "Charmender", predicateOperator: .NotEqual)
         var expectedPredicate = NSPredicate(format: "name != \"Charmender\"")
-        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        var count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(8, count, "Count mismatch")
         
         checkPredicate(expectedPredicate, resultPredicate: predicate)
@@ -142,13 +142,13 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         predicate = NSPredicate.predicateBuilder("level", value: 1, predicateOperator: .NotEqual)
         expectedPredicate = NSPredicate(format: "level != 1")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: .NotEqual)
         expectedPredicate = NSPredicate(format: "type != %@", fireType)
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
         
     }
@@ -159,13 +159,13 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThan)
         var expectedPredicate = NSPredicate(format: "level > 16")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        var count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .GreaterThanOrEqual)
         expectedPredicate = NSPredicate(format: "level >= 16")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
     }
     
@@ -175,13 +175,13 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         var predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThan)
         var expectedPredicate = NSPredicate(format: "level < 16")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        var count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        var count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(3, count, "Count mismatch")
         
         predicate = NSPredicate.predicateBuilder("level", value: 16, predicateOperator: .LessThanOrEqual)
         expectedPredicate = NSPredicate(format: "level <= 16")
         checkPredicate(expectedPredicate, resultPredicate: predicate)
-        count = Pokemon.count(context: managedObjectContext, predicate: predicate, error: nil)
+        count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
     }
 

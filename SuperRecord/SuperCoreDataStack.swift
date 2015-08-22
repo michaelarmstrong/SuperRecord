@@ -20,7 +20,7 @@ let storeName = stackName + ".sqlite"
 
 let applicationDocumentsDirectory: NSURL = {
     let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    return urls.last as! NSURL
+    return urls.last!
     }()
 
 public class SuperCoreDataStack: NSObject {
@@ -67,19 +67,24 @@ public class SuperCoreDataStack: NSObject {
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         
-        if coordinator!.addPersistentStoreWithType(self.storeType as String, configuration: nil, URL: self.persistentStoreURL, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(self.storeType as String, configuration: nil, URL: self.persistentStoreURL, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
-            let dict = NSMutableDictionary()
+            var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error            
-            error = NSError(domain: "com.superrecord.error.domain", code: 9999, userInfo: dict as [NSObject : AnyObject])
+            error = NSError(domain: "com.superrecord.error.domain", code: 9999, userInfo: dict)
             
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         return coordinator
@@ -102,11 +107,16 @@ public class SuperCoreDataStack: NSObject {
         //TODO: Improve error handling.
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
