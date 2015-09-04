@@ -203,7 +203,8 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                                     self.collectionView!.reloadItemsAtIndexPaths([dictValue as! NSIndexPath])
                                     break;
                                 case NSFetchedResultsChangeType.Move:
-                                    self.collectionView!.moveItemAtIndexPath(dictValue[0] as! NSIndexPath, toIndexPath: dictValue[1] as! NSIndexPath)
+                                    //TODO: Implement Move properly.
+                                    self.collectionView?.reloadData()
                                     break;
                                 }
                             }
