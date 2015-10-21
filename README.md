@@ -9,6 +9,9 @@ SuperRecord
 
 ===================
 
+** SUPPORTS SWIFT 2.0 from Version >= 1.4 **
+** SUPPORTS SWIFT 1.2 from Version <= 1.3 **
+ 
 A **Swift CoreData Framework** consisting of several **Extensions** and Helpers to bring some love and take the hassle out of common CoreData tasks.
 
 ----------
