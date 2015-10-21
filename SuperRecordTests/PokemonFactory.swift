@@ -20,7 +20,7 @@ class PokemonFactory {
     }
     
     class func createPokemon (managedObjectContext: NSManagedObjectContext, id : PokemonID, name : PokemonName, level: Int, type : Type) -> Pokemon{
-        var pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as! Pokemon;
+        let pokemon = Pokemon.findFirstOrCreateWithAttribute("id", value: id.rawValue.description, context: managedObjectContext, handler: nil) as! Pokemon;
         pokemon.id =  id.rawValue
         pokemon.name = name.rawValue
         pokemon.level = level;
@@ -35,17 +35,17 @@ class PokemonFactory {
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         let grassType = PokemonFactory.createType(managedObjectContext, id: .Grass, name: .Grass)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
         
-        let Bulbasaur = PokemonFactory.createPokemon(managedObjectContext, id: .Bulbasaur, name: .Bulbasaur, level: 1, type: grassType)
-        let Ivysaur = PokemonFactory.createPokemon(managedObjectContext, id: .Ivysaur, name: .Ivysaur, level: 16, type: grassType)
-        let Venusaur = PokemonFactory.createPokemon(managedObjectContext, id: .Venusaur, name: .Venusaur, level: 36, type: grassType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Bulbasaur, name: .Bulbasaur, level: 1, type: grassType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Ivysaur, name: .Ivysaur, level: 16, type: grassType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Venusaur, name: .Venusaur, level: 36, type: grassType)
         
-        let Squirtle = PokemonFactory.createPokemon(managedObjectContext, id: .Squirtle, name: .Squirtle, level: 1, type: waterType)
-        let Wartortle = PokemonFactory.createPokemon(managedObjectContext, id: .Wartortle, name: .Wartortle, level: 16, type: waterType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Squirtle, name: .Squirtle, level: 1, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Wartortle, name: .Wartortle, level: 16, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
     }
 }
 

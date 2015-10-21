@@ -37,7 +37,7 @@ class SuperRecordTestCase: XCTestCase {
         var error: NSError? = nil
         let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())!;
         let psc : NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: mom);
-        var ps : NSPersistentStore = try! psc.addPersistentStoreWithType(
+        try! psc.addPersistentStoreWithType(
             NSSQLiteStoreType,
             configuration: nil,
             URL: url,
