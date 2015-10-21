@@ -12,10 +12,10 @@ import Foundation
 /**
 Create a new NSPredicate as logical AND of left and right predicate
 
-:param: left
-:param: right
+- parameter left:
+- parameter right:
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 public func & (left : NSPredicate, right : NSPredicate )-> NSPredicate{
     return [left] & [right]
@@ -24,10 +24,10 @@ public func & (left : NSPredicate, right : NSPredicate )-> NSPredicate{
 /**
 Create a new NSPredicate as logical AND of left and right predicates
 
-:param: left
-:param: right a collection NSPredicate
+- parameter left:
+- parameter right: a collection NSPredicate
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 public func & (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
     return [left] & right
@@ -36,23 +36,23 @@ public func & (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
 /**
 Create a new NSPredicate as logical AND of left and right predicates
 
-:param: left a collection NSPredicate
-:param: right a collection NSPredicate
+- parameter left: a collection NSPredicate
+- parameter right: a collection NSPredicate
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 public func & (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
-    return NSCompoundPredicate.andPredicateWithSubpredicates(left + right)
+    return NSCompoundPredicate(andPredicateWithSubpredicates: left + right)
 }
 
 /**
 
 Create a new NSPredicate as logical OR of left and right predicate
 
-:param: left
-:param: right
+- parameter left:
+- parameter right:
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 
 public func | (left : NSPredicate, right : NSPredicate )-> NSPredicate{
@@ -63,10 +63,10 @@ public func | (left : NSPredicate, right : NSPredicate )-> NSPredicate{
 
 Create a new NSPredicate as logical OR of left and right predicates
 
-:param: left
-:param: right a collection NSPredicate
+- parameter left:
+- parameter right: a collection NSPredicate
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 
 public func | (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
@@ -78,13 +78,13 @@ public func | (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
 
 Create a new NSPredicate as logical OR of left and right predicates
 
-:param: left a collection NSPredicate
-:param: right a collection NSPredicate
+- parameter left: a collection NSPredicate
+- parameter right: a collection NSPredicate
 
-:returns: NSPredicate
+- returns: NSPredicate
 */
 public func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
-    return NSCompoundPredicate.orPredicateWithSubpredicates(left + right)
+    return NSCompoundPredicate(orPredicateWithSubpredicates: left + right)
 }
 
 /**
@@ -157,11 +157,11 @@ public extension NSPredicate {
     /**
     Init a new NSPredicate using the input predicates adding parenthesis for more complex NSPredicate
     
-    :param: firstPredicate
-    :param: secondPredicate 
-    :param: NSLogicOperator to use in the predicate AND/OR
+    - parameter firstPredicate:
+    - parameter secondPredicate: 
+    - parameter NSLogicOperator: to use in the predicate AND/OR
     
-    :returns: NSPredicate
+    - returns: NSPredicate
     */
     public convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
             self.init(format: "(\(firstPredicate)) \(predicateOperator.rawValue) (\(secondPredicate))")
@@ -171,11 +171,11 @@ public extension NSPredicate {
     
     Build NSPredicate using the input parameters
 
-    :param: attribute the name of the attribute
-    :param: value the value the attribute should assume
-    :param: predicateOperator to use in the predicate
+    - parameter attribute: the name of the attribute
+    - parameter value: the value the attribute should assume
+    - parameter predicateOperator: to use in the predicate
     
-    :returns: NSPredicate
+    - returns: NSPredicate
     */
     public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> NSPredicate? {
         var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)

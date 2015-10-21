@@ -54,11 +54,11 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
     
     func receiverType() -> ReusableViewType
     {
-        if let reusableView = collectionView {
+        if let _ = collectionView {
             return ReusableViewType.CollectionView
         }
         
-        if let reusableView = tableView {
+        if let _ = tableView {
             return ReusableViewType.TableView
         }
         
@@ -66,18 +66,19 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
     }
     
     func bindsLifetimeTo(owner: AnyObject!) -> Void {
-        var oldOwner: AnyObject? = self.owner
+        let oldOwner: AnyObject? = self.owner
         self.owner = owner
         
         var ownerArray : AnyObject? = objc_getAssociatedObject(self.owner, kOwnerKey);
         if(ownerArray == nil){
             ownerArray = NSMutableArray()
-            objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, UInt(OBJC_ASSOCIATION_RETAIN));
+            objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            //objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, UInt(objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN));
         }
         ownerArray?.addObject(self)
         
         if(oldOwner != nil){
-            var oldOwnerArray : NSMutableArray = objc_getAssociatedObject(oldOwner, kOwnerKey) as! NSMutableArray;
+            let oldOwnerArray : NSMutableArray = objc_getAssociatedObject(oldOwner, kOwnerKey) as! NSMutableArray;
             oldOwnerArray.removeObjectIdenticalTo(self)
         }
     }
@@ -111,14 +112,13 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
             case NSFetchedResultsChangeType.Delete:
                 changeDictionary[type] = sectionIndex
             default:
-                println("Unexpected NSFetchedResultsChangeType received for didChangeSection. \(type)")
+                print("Unexpected NSFetchedResultsChangeType received for didChangeSection. \(type)")
             }
             sectionChanges.append(changeDictionary)
         }
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
-    {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         if(receiverType() == ReusableViewType.TableView){
             switch type {
             case NSFetchedResultsChangeType.Insert:
@@ -130,13 +130,11 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
             case NSFetchedResultsChangeType.Move:
                 tableView!.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
                 tableView!.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-            default:
-                println("Unexpected NSFetchedResultsChangeType received for didChangeObject. \(type)")
             }
-                
+
         } else if(receiverType() == ReusableViewType.CollectionView) {
             var changeDictionary : Dictionary<NSFetchedResultsChangeType,AnyObject> = Dictionary()
-            
+
             switch (type) {
             case NSFetchedResultsChangeType.Insert:
                 changeDictionary[type] = newIndexPath
@@ -151,12 +149,12 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                 // !TODO : we may need to migrate this to a homogenous Array as I expect this to throw a runtime exception.
                 changeDictionary[type] = [indexPath!, newIndexPath!]
                 break;
-            default:
-                println("Unexpected NSFetchedResultsChangeType received for didChangeObject. \(type)")
             }
             objectChanges.append(changeDictionary)
         }
+
     }
+
 
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
@@ -178,7 +176,7 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                                 self.collectionView!.reloadSections(NSIndexSet(index: dictValue))
                                 break;
                             default:
-                                println("Unexpected NSFetchedResultsChangeType stored for controllerDidChangeContent. \(dictKey)")
+                                print("Unexpected NSFetchedResultsChangeType stored for controllerDidChangeContent. \(dictKey)")
                             }
                         }
                     }
@@ -193,22 +191,21 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                 } else {
                     collectionView!.performBatchUpdates({() -> Void in
                         for change in self.objectChanges {
-                            for (dictKey,dictValue) in change {
+                            for (dictKey,dictValue) in change  {
                                 switch (dictKey) {
                                 case NSFetchedResultsChangeType.Insert:
-                                    self.collectionView!.insertItemsAtIndexPaths([dictValue])
+                                    self.collectionView!.insertItemsAtIndexPaths([dictValue as! NSIndexPath])
                                     break;
                                 case NSFetchedResultsChangeType.Delete:
-                                    self.collectionView!.deleteItemsAtIndexPaths([dictValue])
+                                    self.collectionView!.deleteItemsAtIndexPaths([dictValue as! NSIndexPath])
                                     break;
                                 case NSFetchedResultsChangeType.Update:
-                                    self.collectionView!.reloadItemsAtIndexPaths([dictValue])
+                                    self.collectionView!.reloadItemsAtIndexPaths([dictValue as! NSIndexPath])
                                     break;
                                 case NSFetchedResultsChangeType.Move:
-                                    self.collectionView!.moveItemAtIndexPath(dictValue[0] as! NSIndexPath, toIndexPath: dictValue[1] as! NSIndexPath)
+                                    //TODO: Implement Move properly.
+                                    self.collectionView?.reloadData()
                                     break;
-                                default:
-                                println("Unexpected NSFetchedResultsChangeType stored for controllerDidChangeContent. \(dictKey)")
                                 }
                             }
                         }

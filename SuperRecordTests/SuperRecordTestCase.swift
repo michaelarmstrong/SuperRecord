@@ -22,7 +22,7 @@ class SuperRecordTestCase: XCTestCase {
     
     let applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls.last as! NSURL
+        return urls.last!
         }()
 
 
@@ -30,16 +30,18 @@ class SuperRecordTestCase: XCTestCase {
     override func setUp() {
         super.setUp();
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Pokemon.sqlite")
-        NSFileManager.defaultManager().removeItemAtURL(url, error: nil)
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(url)
+        } catch _ {
+        }
         var error: NSError? = nil
-        var mom : NSManagedObjectModel = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())!;
-        var psc : NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: mom);
-        var ps : NSPersistentStore = psc.addPersistentStoreWithType(
+        let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())!;
+        let psc : NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: mom);
+        try! psc.addPersistentStoreWithType(
             NSSQLiteStoreType,
             configuration: nil,
             URL: url,
-            options: nil,
-            error: &error)!
+            options: nil)
         if ((error) != nil)
         {
             XCTFail("Error creating NSPersistentStore");
@@ -55,7 +57,11 @@ class SuperRecordTestCase: XCTestCase {
     
     override func tearDown() {
 
-        managedObjectContext.save(&error);
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        };
         if(error != nil){
             XCTFail("Cannot save context: \(error?.localizedDescription)");
         }

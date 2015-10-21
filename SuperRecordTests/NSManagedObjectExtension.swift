@@ -25,10 +25,10 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     
     func testCreateNewEntity() {
 
-        let fireType = Type.createNewEntity(context: managedObjectContext) as! Type;
+        let fireType = Type.createNewEntity(managedObjectContext) as! Type;
         fireType.name = "Fire";
     
-        let Charizard = Pokemon.createNewEntity(context: managedObjectContext) as! Pokemon;
+        let Charizard = Pokemon.createNewEntity(managedObjectContext) as! Pokemon;
 
         Charizard.id = PokemonID.Charizard.rawValue
         Charizard.name = PokemonName.Charizard.rawValue
@@ -45,7 +45,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
             XCTAssertEqual(result.count, 1,  "Should contains 1 pokemon");
         })
         
-        let Charmender = Pokemon.createNewEntity(context: managedObjectContext) as! Pokemon;
+        let Charmender = Pokemon.createNewEntity(managedObjectContext) as! Pokemon;
         expectation = expectationWithDescription("Charmender Creation")
         Charmender.id = PokemonID.Charmender.rawValue
         Charmender.name = PokemonName.Charmender.rawValue
@@ -63,7 +63,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         XCTAssertEqual(fireType.pokemons.count, 2,  "Should contains 2 pokemon of this type");
         
         expectation = expectationWithDescription("Pokemon Deletion")
-        Pokemon.deleteAll(context: managedObjectContext);
+        Pokemon.deleteAll(managedObjectContext)
         result = Pokemon.findAllWithPredicate(nil, context: managedObjectContext,  completionHandler:{error in
             expectation.fulfill();
         })
@@ -113,8 +113,8 @@ class NSManagedObjectExtension: SuperRecordTestCase {
             XCTAssertEqual(Charizard, anotherCharizard, "Pokemon should be equals");
         })
         
-        XCTAssertEqual(1, Pokemon.count(context: managedObjectContext, predicate: nil, error: nil), "Count mismatch")
-        XCTAssertEqual(1, Type.count(context: managedObjectContext, predicate: nil, error: nil), "Count mismatch")
+        XCTAssertEqual(1, Pokemon.count(managedObjectContext, predicate: nil, error: nil), "Count mismatch")
+        XCTAssertEqual(1, Type.count(managedObjectContext, predicate: nil, error: nil), "Count mismatch")
         
         let charmenderExpectation = expectationWithDescription("Charmender creation")
         let charmenderPredicate = NSPredicate(format: "%K = %@", "name", "Charmender")
@@ -142,22 +142,22 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
         let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
         
-        var pokemons = Pokemon.findAll(context: managedObjectContext)
+        var pokemons = Pokemon.findAll(managedObjectContext)
         
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
         XCTAssertTrue(pokemons.containsObject( charmender), "Should contains pokemon");
         XCTAssertTrue(pokemons.containsObject(charmeleon), "Should contains pokemon");
         XCTAssertTrue(pokemons.containsObject(charizard), "Should contains pokemon");
 
-        var expectedPokemonArray = [charizard, charmeleon, charmender];
+        let expectedPokemonArray = [charizard, charmeleon, charmender];
         var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
-        pokemons = Pokemon.findAll(context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        pokemons = Pokemon.findAll(managedObjectContext, sortDescriptors: [sortDescriptor])
         XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
 
         sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
-        pokemons = Pokemon.findAll(context: managedObjectContext, sortDescriptors: [sortDescriptor])
+        pokemons = Pokemon.findAll(managedObjectContext, sortDescriptors: [sortDescriptor])
         
-        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
+        XCTAssertEqual(Array(expectedPokemonArray.reverse()), pokemons, "Order mismatch")
 
         
     }
@@ -170,7 +170,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
         let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
         let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
 
         
         var pokemons = Pokemon.findAllWithAttribute("name", value: charizard.name, context: managedObjectContext)
@@ -183,13 +183,13 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
         
         var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
-        var expectedPokemonArray = [charizard, charmeleon, charmender];
+        let expectedPokemonArray = [charizard, charmeleon, charmender];
         pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext, sortDescriptors: [sortDescriptor])
         XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
         
         sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
         pokemons = Pokemon.findAllWithAttribute("type.name", value: fireType.name, context: managedObjectContext, sortDescriptors: [sortDescriptor])
-        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
+        XCTAssertEqual(Array(expectedPokemonArray.reverse()), pokemons, "Order mismatch")
 
     }
     
@@ -198,20 +198,20 @@ class NSManagedObjectExtension: SuperRecordTestCase {
 
         let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
         let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
 
         var predicate = NSPredicate (format: "level == %d", 36)
         var pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, completionHandler: nil)
         XCTAssertEqual(1, pokemons.count, "Should contains 1 pokemons");
         var sortDescriptor = NSSortDescriptor(key: "level", ascending: false)
-        var expectedPokemonArray = [charmeleon, charmender];
+        let expectedPokemonArray = [charmeleon, charmender];
         predicate = NSPredicate (format: "level < %d", 36)
         pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, sortDescriptors: [sortDescriptor], completionHandler: nil)
         XCTAssertEqual(expectedPokemonArray, pokemons, "Order mismatch")
         
         sortDescriptor = NSSortDescriptor(key: "level", ascending: true)
         pokemons = Pokemon.findAllWithPredicate(predicate, context: managedObjectContext, sortDescriptors: [sortDescriptor], completionHandler: nil)
-        XCTAssertEqual(expectedPokemonArray.reverse(), pokemons, "Order mismatch")
+        XCTAssertEqual(Array(expectedPokemonArray.reverse()), pokemons, "Order mismatch")
     }
         
     //MARK: Entity deletion
@@ -219,29 +219,29 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     func testDeleteAll(){
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
 
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
 
-        var pokemons = Pokemon.findAll (context: managedObjectContext);
+        var pokemons = Pokemon.findAll (managedObjectContext);
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
-        Pokemon.deleteAll(context: managedObjectContext);
-        pokemons = Pokemon.findAll (context: managedObjectContext);
+        Pokemon.deleteAll(managedObjectContext)
+        pokemons = Pokemon.findAll (managedObjectContext);
         XCTAssertEqual(0, pokemons.count, "Should contains 3 pokemons");
     }
     
     func testDeleteAllWithPredicate(){
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
 
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
 
-        var pokemons = Pokemon.findAll (context: managedObjectContext);
+        var pokemons = Pokemon.findAll (managedObjectContext);
         XCTAssertEqual(3, pokemons.count, "Should contains 3 pokemons");
-        var predicate = NSPredicate (format: "level == %d", 36)
+        let predicate = NSPredicate (format: "level == %d", 36)
         Pokemon.deleteAll(predicate, context: managedObjectContext)
-        pokemons = Pokemon.findAll (context: managedObjectContext)
+        pokemons = Pokemon.findAll (managedObjectContext)
         XCTAssertEqual(2, pokemons.count, "Should contains 3 pokemons")
 
     }
@@ -251,29 +251,32 @@ class NSManagedObjectExtension: SuperRecordTestCase {
     func testUpdateAllUsingPredicate(){
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Fire)
-        let charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
-        let charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
-        let charizard  = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType);
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType);
         
-        managedObjectContext.save(nil);
+        do {
+            try managedObjectContext.save()
+        } catch _ {
+        };
 
-        var error: NSError?
+        var error: NSError? = nil
     
         let levelPredicate = NSPredicate.predicateBuilder("level", value: 5, predicateOperator: NSPredicateOperator.GreaterThan);
         let typePredicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: NSPredicateOperator.Equal);
         let wrongTypePredicate = NSPredicate.predicateBuilder("type", value: waterType, predicateOperator: NSPredicateOperator.Equal);
         
-        var updatedRows:Int = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 100], predicate: levelPredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+        var updatedRows:Int = try! Pokemon.updateAll(managedObjectContext, propertiesToUpdate: ["level": 100], predicate: levelPredicate!, resultType: .UpdatedObjectsCountResultType) as! Int
 
         XCTAssertNil(error, "error shoul be nil")
         XCTAssertEqual(2, updatedRows, "Count mismatch")
 
-        updatedRows = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 1], predicate: wrongTypePredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+        updatedRows = try! Pokemon.updateAll(managedObjectContext, propertiesToUpdate: ["level": 1], predicate: wrongTypePredicate!, resultType: .UpdatedObjectsCountResultType) as! Int
         
         XCTAssertNil(error, "error shoul be nil")
         XCTAssertEqual(0, updatedRows, "Count mismatch")
 
-        updatedRows = Pokemon.updateAll(context: managedObjectContext, propertiesToUpdate: ["level": 100], predicate: typePredicate!, resultType: .UpdatedObjectsCountResultType, error: &error ) as! Int
+        updatedRows = try! Pokemon.updateAll(managedObjectContext, propertiesToUpdate: ["level": 100], predicate: typePredicate!, resultType: .UpdatedObjectsCountResultType) as! Int
         
         XCTAssertNil(error, "error shoul be nil")
         XCTAssertEqual(3, updatedRows, "Count mismatch")
@@ -286,23 +289,23 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
 
 
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
 
-        XCTAssertEqual(2, Type.count(context: managedObjectContext, predicate: nil, error: nil), "Count mismatch")
+        XCTAssertEqual(2, Type.count(managedObjectContext, predicate: nil, error: nil), "Count mismatch")
         
-        XCTAssertEqual(4, Pokemon.count(context: managedObjectContext, predicate: nil, error: nil), "Count mismatch")
+        XCTAssertEqual(4, Pokemon.count(managedObjectContext, predicate: nil, error: nil), "Count mismatch")
         var levelPredicate = NSPredicate(format: "level > 6");
         
-        XCTAssertEqual(3, Pokemon.count(context: managedObjectContext, predicate: levelPredicate,  error: nil), "Count mismatch")
+        XCTAssertEqual(3, Pokemon.count(managedObjectContext, predicate: levelPredicate,  error: nil), "Count mismatch")
         
         levelPredicate = NSPredicate(format: "level > 36");
-        XCTAssertEqual(0, Pokemon.count(context: managedObjectContext, predicate: levelPredicate,  error: nil), "Count mismatch")
+        XCTAssertEqual(0, Pokemon.count(managedObjectContext, predicate: levelPredicate,  error: nil), "Count mismatch")
         
-        var typePredicate = NSPredicate(format: "%K = %@", "type", fireType);
-        XCTAssertEqual(3, Pokemon.count(context: managedObjectContext, predicate: typePredicate,  error: nil),  "Count mismatch")
+        let typePredicate = NSPredicate(format: "%K = %@", "type", fireType);
+        XCTAssertEqual(3, Pokemon.count(managedObjectContext, predicate: typePredicate,  error: nil),  "Count mismatch")
 
     }
     
@@ -311,13 +314,18 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
     
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
-        managedObjectContext.save(&error)
-        var expectation = expectationWithDescription("Sum")
-        var sumLevel = Pokemon.sum(context:managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        let expectation = expectationWithDescription("Sum")
+        let sumLevel = Pokemon.sum(managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
             expectation.fulfill()
         })
         
@@ -326,7 +334,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         let sumsExpectation = expectationWithDescription("Sum")
-        var sumsLevel = Pokemon.sum(context:managedObjectContext, fieldName: ["level", "id"], predicate: nil,  handler:{error in
+        var sumsLevel = Pokemon.sum(managedObjectContext, fieldName: ["level", "id"], predicate: nil,  handler:{error in
             sumsExpectation.fulfill()
         })
         
@@ -341,25 +349,30 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
-        managedObjectContext.save(&error)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
 
         let expectedLevels : [String : Double] = ["Fire" : 53, "Water" : 36]
     
         let sumsExpectation = expectationWithDescription("Sum")
     
-        var sumLevel = Pokemon.sum(context: managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
+        let sumLevel = Pokemon.sum(managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
             sumsExpectation.fulfill()
         })
         
         waitForExpectationsWithTimeout(SuperRecordTestCaseTimeout, handler: { error in
-            for dictionay in sumLevel  {
-                let type : String! = dictionay["type.name"] as! String!
-                let level : Double! = dictionay["level"] as! Double!
-                let expectedLevel : Double = expectedLevels[type] as Double!
+            for dictionary in sumLevel  {
+                let type = dictionary["type.name"] as AnyObject as! String
+                let level = dictionary["level"]
+                let expectedLevel = expectedLevels[type]
                 XCTAssertEqual(expectedLevel, level)
             }
         })
@@ -370,25 +383,30 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
-        managedObjectContext.save(&error)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         
         let expectedLevels : [String : Double] = ["Fire" : 36, "Water" : 36]
         
         let sumsExpectation = expectationWithDescription("max")
         
-        var sumLevel = Pokemon.max(context: managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
+        let sumLevel = Pokemon.max(managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
             sumsExpectation.fulfill()
         })
         
         waitForExpectationsWithTimeout(SuperRecordTestCaseTimeout, handler: { error in
-            for dictionay in sumLevel  {
-                let type : String! = dictionay["type.name"] as! String!
-                let level : Double! = dictionay["level"] as! Double!
-                let expectedLevel : Double = expectedLevels[type] as Double!
+            for dictionary in sumLevel  {
+                let type = dictionary["type.name"] as AnyObject as! String
+                let level = dictionary["level"]
+                let expectedLevel = expectedLevels[type]
                 XCTAssertEqual(expectedLevel, level)
             }
         })
@@ -400,14 +418,18 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
         
-        managedObjectContext.save(&error)
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         var expectation = expectationWithDescription("Max")
-        var max = Pokemon.max(context:managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
+        var max = Pokemon.max(managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
             expectation.fulfill()
         }).first as Double!
         
@@ -416,7 +438,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("Max")
-        max = Pokemon.max(context:managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
+        max = Pokemon.max(managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
             expectation.fulfill()
         })
         
@@ -425,7 +447,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("Max")
-        max = Pokemon.max(context:managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level < 5"), handler:{error in
+        max = Pokemon.max(managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level < 5"), handler:{error in
             expectation.fulfill()
         })
         
@@ -439,25 +461,30 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
-        managedObjectContext.save(&error)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         
         let expectedLevels : [String : Double] = ["Fire" : 1, "Water" : 36]
         
         let sumsExpectation = expectationWithDescription("min")
         
-        var sumLevel = Pokemon.min(context: managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
+        let sumLevel = Pokemon.min(managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
             sumsExpectation.fulfill()
         })
         
         waitForExpectationsWithTimeout(SuperRecordTestCaseTimeout, handler: { error in
-            for dictionay in sumLevel  {
-                let type : String! = dictionay["type.name"] as! String!
-                let level : Double! = dictionay["level"] as! Double!
-                let expectedLevel : Double = expectedLevels[type] as Double!
+            for dictionary in sumLevel  {
+                let type = dictionary["type.name"] as AnyObject as! String
+                let level = dictionary["level"]
+                let expectedLevel = expectedLevels[type]
                 XCTAssertEqual(expectedLevel, level)
             }
         })
@@ -468,14 +495,19 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
         
-        managedObjectContext.save(&error)
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
         var expectation = expectationWithDescription("min")
-        var min = Pokemon.min(context:managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
+        var min = Pokemon.min(managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
             expectation.fulfill()
         }).first as Double!
         
@@ -484,7 +516,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("min")
-        min = Pokemon.min(context:managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
+        min = Pokemon.min(managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
             expectation.fulfill()
         })
         
@@ -493,7 +525,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("min")
-        min = Pokemon.min(context:managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level >= 6"), handler:{error in
+        min = Pokemon.min(managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level >= 6"), handler:{error in
             expectation.fulfill()
         })
         
@@ -507,25 +539,30 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
-        managedObjectContext.save(&error)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         let fireAvg : Double = Double(36 + 1 + 16) / 3;
         let expectedLevels : [String : Double] = ["Fire" : fireAvg , "Water" : 36]
         
         let sumsExpectation = expectationWithDescription("avg")
         
-        var sumLevel = Pokemon.avg(context: managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
+        let sumLevel = Pokemon.avg(managedObjectContext, fieldName: ["level"], predicate: nil, groupByField: ["type.name", "type.id"],  handler:{error in
             sumsExpectation.fulfill()
         })
         
         waitForExpectationsWithTimeout(SuperRecordTestCaseTimeout, handler: { error in
-            for dictionay in sumLevel  {
-                let type : String! = dictionay["type.name"] as! String!
-                let level : Double! = dictionay["level"] as! Double!
-                let expectedLevel : Double = expectedLevels[type] as Double!
+            for dictionary in sumLevel  {
+                let type = dictionary["type.name"] as AnyObject as! String
+                let level = dictionary["level"]
+                let expectedLevel = expectedLevels[type]
                 XCTAssertEqual(expectedLevel, level)
             }
         })
@@ -536,14 +573,18 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         let fireType = PokemonFactory.createType(managedObjectContext, id: .Fire, name: .Fire)
         let waterType = PokemonFactory.createType(managedObjectContext, id: .Water, name: .Water)
         
-        let Charmender = PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
-        let Charmeleon = PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
-        let Charizard = PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
-        let Blastoise = PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmender, name: .Charmender, level: 1, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charmeleon, name: .Charmeleon, level: 16, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Charizard, name: .Charizard, level: 36, type: fireType)
+        PokemonFactory.createPokemon(managedObjectContext, id: .Blastoise, name: .Blastoise, level: 36, type: waterType)
         
-        managedObjectContext.save(&error)
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         var expectation = expectationWithDescription("avg")
-        var avg = Pokemon.avg(context:managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
+        var avg = Pokemon.avg(managedObjectContext, fieldName: ["level"], predicate: nil, handler:{error in
             expectation.fulfill()
         }).first as Double!
         
@@ -552,7 +593,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("avg")
-        avg = Pokemon.avg(context:managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
+        avg = Pokemon.avg(managedObjectContext, fieldName: "level", predicate: nil, handler:{error in
             expectation.fulfill()
         })
         
@@ -561,7 +602,7 @@ class NSManagedObjectExtension: SuperRecordTestCase {
         })
         
         expectation = expectationWithDescription("avg")
-        avg = Pokemon.avg(context:managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level >= 6"), handler:{error in
+        avg = Pokemon.avg(managedObjectContext, fieldName: "level", predicate: NSPredicate(format: "level >= 6"), handler:{error in
             expectation.fulfill()
         })
         
