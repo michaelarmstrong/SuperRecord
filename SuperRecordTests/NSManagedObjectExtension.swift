@@ -259,8 +259,6 @@ class NSManagedObjectExtension: SuperRecordTestCase {
             try managedObjectContext.save()
         } catch _ {
         };
-
-        var error: NSError? = nil
     
         let levelPredicate = NSPredicate.predicateBuilder("level", value: 5, predicateOperator: NSPredicateOperator.GreaterThan);
         let typePredicate = NSPredicate.predicateBuilder("type", value: fireType, predicateOperator: NSPredicateOperator.Equal);

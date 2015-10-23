@@ -19,7 +19,8 @@ class SuperRecordTestCase: XCTestCase {
     
     var managedObjectContext  = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
     var error: NSError? = nil
-    
+    var psc : NSPersistentStoreCoordinator!
+
     let applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls.last!
@@ -30,13 +31,9 @@ class SuperRecordTestCase: XCTestCase {
     override func setUp() {
         super.setUp();
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Pokemon.sqlite")
-        do {
-            try NSFileManager.defaultManager().removeItemAtURL(url)
-        } catch _ {
-        }
         var error: NSError? = nil
         let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())!;
-        let psc : NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: mom);
+        psc  = NSPersistentStoreCoordinator(managedObjectModel: mom);
         try! psc.addPersistentStoreWithType(
             NSSQLiteStoreType,
             configuration: nil,
@@ -64,6 +61,11 @@ class SuperRecordTestCase: XCTestCase {
         };
         if(error != nil){
             XCTFail("Cannot save context: \(error?.localizedDescription)");
+        }
+        let stores = psc.persistentStores
+        for store in stores{
+            try! psc.removePersistentStore(store)
+            try! NSFileManager.defaultManager().removeItemAtURL(store.URL!)
         }
         super.tearDown();
     }
