@@ -150,6 +150,12 @@ public enum NSPredicateOperator : String {
     Operator <=
     */
     case LessThanOrEqual = "<="
+    
+    /**
+     Operator <=
+     */
+    case Contains = "contains[c]"
+
 }
 
 public extension NSPredicate {

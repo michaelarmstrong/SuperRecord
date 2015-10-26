@@ -186,6 +186,16 @@ class NSPredicateExtensionTest: SuperRecordTestCase {
         count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
         XCTAssertEqual(6, count, "Count mismatch")
     }
+    
+    
+    func testPredicateContains(){
+        PokemonFactory.populate(managedObjectContext);
+        let predicate = NSPredicate.predicateBuilder("name", value: "char", predicateOperator: .Contains)
+        let expectedPredicate = NSPredicate(format: "name contains[c] \"char\"")
+        checkPredicate(expectedPredicate, resultPredicate: predicate)
+        let count = Pokemon.count(managedObjectContext, predicate: predicate, error: nil)
+        XCTAssertEqual(3, count, "Count mismatch")
+    }
 
     
     private func checkPredicate(expectedPredicate : NSPredicate?, resultPredicate: NSPredicate?){
