@@ -1,0 +1,6 @@
+framework module SuperRecord {
+  umbrella header "SuperRecord-umbrella.h"
+
+  export *
+  module * { export * }
+}
