@@ -1,0 +1,17 @@
+PODS:
+  - Alamofire (3.1.0)
+  - SuperRecord (1.4)
+
+DEPENDENCIES:
+  - Alamofire
+  - SuperRecord (from `../`)
+
+EXTERNAL SOURCES:
+  SuperRecord:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 415bd7f56197722978759078486689f7ef913dce
+  SuperRecord: cf28be7a58cd87fe00982b45972e3d32540c2a1e
+
+COCOAPODS: 0.39.0

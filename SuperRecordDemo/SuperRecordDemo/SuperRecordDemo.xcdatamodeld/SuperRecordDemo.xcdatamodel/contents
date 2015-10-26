@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="Pokemon" representedClassName="Pokemon">
+        <attribute name="name" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="national_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="types" toMany="YES" deletionRule="No Action" destinationEntity="Type" inverseName="pokemons" inverseEntity="Type" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <entity name="Type" representedClassName="Type" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="typeID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="pokemons" toMany="YES" deletionRule="No Action" destinationEntity="Pokemon" inverseName="types" inverseEntity="Pokemon" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Pokemon" positionX="261" positionY="189" width="128" height="90"/>
+        <element name="Type" positionX="261" positionY="207" width="128" height="90"/>
+    </elements>
+</model>
