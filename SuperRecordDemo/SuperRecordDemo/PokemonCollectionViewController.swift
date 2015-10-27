@@ -37,7 +37,8 @@ class PokemonCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidLoad() {
-        
+
+        self.collectionView?.backgroundColor  = UIColor.whiteColor()
         super.viewDidLoad()
 
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -67,7 +68,7 @@ class PokemonCollectionViewController: UICollectionViewController {
         let pokemon = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Pokemon
         cell.backgroundColor = UIColor.whiteColor()
         cell.nameLabel.text = pokemon.name
-        
+        cell.image.image = UIImage(named: "\(pokemon.national_id)")
         return cell
     }
 

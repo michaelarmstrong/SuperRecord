@@ -12,7 +12,9 @@ import Cartography
 class PokemonCollectionViewCell: UICollectionViewCell {
 
     static let cellWidth: CGFloat = 100
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 130
+    static let imgSize: CGFloat = 80
+
     static let cellPadding: CGFloat = 10
 
     
@@ -25,28 +27,25 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         self.addSubview(nameLabel)
         self.addSubview(image)
     
-        image.backgroundColor = UIColor.blueColor()
-        nameLabel.backgroundColor = UIColor.redColor()
         nameLabel.font = UIFont.systemFontOfSize(12)
         nameLabel.textAlignment = .Center
-
+        image.contentMode = UIViewContentMode.ScaleAspectFit
         let padding = PokemonCollectionViewCell.cellPadding
+        let imageSize = PokemonCollectionViewCell.imgSize
         constrain(image, nameLabel) {image, label in
             image.top == image.superview!.top + padding
-            image.left == image.superview!.left + padding
-            image.right == image.superview!.right - padding
+            image.width == imageSize
+            image.height == imageSize
+            image.centerX == image.superview!.centerX
             
+            label.top == image.bottom + padding
             label.bottom == label.superview!.bottom - padding
-            label.height == 20
-            
-            align(left: image, label)
-            align(right: image, label)
-
-            distribute(by: padding, vertically:  image, label)
-
-            
-            
+            label.left == label.superview!.left + padding
+            label.right == label.superview!.right - padding
+    
         }
+        
+
 
 
     }
