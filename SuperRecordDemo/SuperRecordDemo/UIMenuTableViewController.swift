@@ -15,6 +15,7 @@ class UIMenuTableViewController: UITableViewController {
         "Find all pokemon sort by Name",
         "Find all pokemon with name containing 'charm'",
         "Find all pokemon of type 'Water'",
+        "CollectionView all pokemon",
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,11 @@ class UIMenuTableViewController: UITableViewController {
             let predicate = NSPredicate.predicateBuilder("types", value: fireType, predicateOperator: .Contains)!
             viewController = PokedexTableViewController(predicate: predicate)
             break
+            
+        case  4:
+            viewController = PokemonCollectionViewController()
+            break
+
         default:
             print("Not implemented method");
             abort()

@@ -1,9 +1,11 @@
 PODS:
   - Alamofire (3.1.0)
+  - Cartography (0.6.0)
   - SuperRecord (1.4)
 
 DEPENDENCIES:
   - Alamofire
+  - Cartography
   - SuperRecord (from `../`)
 
 EXTERNAL SOURCES:
@@ -12,6 +14,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
+  Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
   SuperRecord: cf28be7a58cd87fe00982b45972e3d32540c2a1e
 
 COCOAPODS: 0.39.0

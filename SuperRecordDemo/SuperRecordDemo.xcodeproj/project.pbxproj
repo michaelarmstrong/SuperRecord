@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1225383B1BDD98FB0062CC0D /* UIMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1225383A1BDD98FB0062CC0D /* UIMenuTableViewController.swift */; };
+		1241DFB71BDF953800C03E6D /* PokemonCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */; };
+		1248A7EC1BDF97150013C7E3 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */; };
 		128571011BDA473200710E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128571001BDA473200710E2D /* AppDelegate.swift */; };
 		128571041BDA473200710E2D /* SuperRecordDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 128571021BDA473200710E2D /* SuperRecordDemo.xcdatamodeld */; };
 		1285710D1BDA473200710E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1285710C1BDA473200710E2D /* Assets.xcassets */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		01CEEA7EA703AC354AE757F0 /* Pods_SuperRecordDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperRecordDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1225383A1BDD98FB0062CC0D /* UIMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMenuTableViewController.swift; sourceTree = "<group>"; };
+		1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewController.swift; sourceTree = "<group>"; };
+		1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
 		128570FD1BDA473200710E2D /* SuperRecordDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperRecordDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		128571001BDA473200710E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		128571031BDA473200710E2D /* SuperRecordDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SuperRecordDemo.xcdatamodel; sourceTree = "<group>"; };
@@ -61,6 +65,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		1248A7E91BDF96F90013C7E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		128570F41BDA473200710E2D = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +95,7 @@
 		128570FF1BDA473200710E2D /* SuperRecordDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1248A7E91BDF96F90013C7E3 /* View */,
 				1285711B1BDA49A100710E2D /* Entity */,
 				128571001BDA473200710E2D /* AppDelegate.swift */,
 				1285710C1BDA473200710E2D /* Assets.xcassets */,
@@ -90,6 +103,7 @@
 				128571111BDA473200710E2D /* Info.plist */,
 				128571021BDA473200710E2D /* SuperRecordDemo.xcdatamodeld */,
 				128571191BDA486A00710E2D /* PokedexTableViewController.swift */,
+				1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */,
 				1225383A1BDD98FB0062CC0D /* UIMenuTableViewController.swift */,
 			);
 			path = SuperRecordDemo;
@@ -243,6 +257,8 @@
 				1225383B1BDD98FB0062CC0D /* UIMenuTableViewController.swift in Sources */,
 				128571271BDA649000710E2D /* Type.swift in Sources */,
 				128571221BDA4D9300710E2D /* Pokemon+CoreDataProperties.swift in Sources */,
+				1241DFB71BDF953800C03E6D /* PokemonCollectionViewController.swift in Sources */,
+				1248A7EC1BDF97150013C7E3 /* PokemonCollectionViewCell.swift in Sources */,
 				128571041BDA473200710E2D /* SuperRecordDemo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,7 +364,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SuperRecordDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.superarmstrong.SuperRecordDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -361,7 +377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SuperRecordDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.superarmstrong.SuperRecordDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

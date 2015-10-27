@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D6C3345F01FD6532B59DB8F0'
+               BlueprintIdentifier = 'E209253D8D0C8FEE4FE8A168'
                BlueprintName = 'SuperRecord'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SuperRecord.framework'>
