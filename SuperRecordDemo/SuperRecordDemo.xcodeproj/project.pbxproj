@@ -23,11 +23,43 @@
 		F1E6B3AAA4CF6CCD755DEA4F /* Pods_SuperRecordDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01CEEA7EA703AC354AE757F0 /* Pods_SuperRecordDemo.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1258DAD11BE1187E00945DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1258DACA1BE1187E00945DDA /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3613F2649FA43D326DCEB7B4C039C2FB;
+			remoteInfo = Alamofire;
+		};
+		1258DAD31BE1187E00945DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1258DACA1BE1187E00945DDA /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D673936D3DD9BF0C5D686E85EC280A56;
+			remoteInfo = Cartography;
+		};
+		1258DAD51BE1187E00945DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1258DACA1BE1187E00945DDA /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D881242B81517E34F4533FB0F63C131;
+			remoteInfo = "Pods-SuperRecordDemo";
+		};
+		1258DAD71BE1187E00945DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1258DACA1BE1187E00945DDA /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0328B8C6ACB4B8AB5E5E3E149AFC69BF;
+			remoteInfo = SuperRecord;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		01CEEA7EA703AC354AE757F0 /* Pods_SuperRecordDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperRecordDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1225383A1BDD98FB0062CC0D /* UIMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMenuTableViewController.swift; sourceTree = "<group>"; };
 		1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewController.swift; sourceTree = "<group>"; };
 		1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
+		1258DACA1BE1187E00945DDA /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		128570FD1BDA473200710E2D /* SuperRecordDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperRecordDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		128571001BDA473200710E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		128571031BDA473200710E2D /* SuperRecordDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SuperRecordDemo.xcdatamodel; sourceTree = "<group>"; };
@@ -73,9 +105,21 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1258DACB1BE1187E00945DDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1258DAD21BE1187E00945DDA /* Alamofire.framework */,
+				1258DAD41BE1187E00945DDA /* Cartography.framework */,
+				1258DAD61BE1187E00945DDA /* Pods_SuperRecordDemo.framework */,
+				1258DAD81BE1187E00945DDA /* SuperRecord.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		128570F41BDA473200710E2D = {
 			isa = PBXGroup;
 			children = (
+				1258DACA1BE1187E00945DDA /* Pods.xcodeproj */,
 				128571171BDA474F00710E2D /* Podfile */,
 				128570FF1BDA473200710E2D /* SuperRecordDemo */,
 				128570FE1BDA473200710E2D /* Products */,
@@ -177,12 +221,49 @@
 			mainGroup = 128570F41BDA473200710E2D;
 			productRefGroup = 128570FE1BDA473200710E2D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1258DACB1BE1187E00945DDA /* Products */;
+					ProjectRef = 1258DACA1BE1187E00945DDA /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				128570FC1BDA473200710E2D /* SuperRecordDemo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1258DAD21BE1187E00945DDA /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 1258DAD11BE1187E00945DDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1258DAD41BE1187E00945DDA /* Cartography.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cartography.framework;
+			remoteRef = 1258DAD31BE1187E00945DDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1258DAD61BE1187E00945DDA /* Pods_SuperRecordDemo.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_SuperRecordDemo.framework;
+			remoteRef = 1258DAD51BE1187E00945DDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1258DAD81BE1187E00945DDA /* SuperRecord.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SuperRecord.framework;
+			remoteRef = 1258DAD71BE1187E00945DDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		128570FB1BDA473200710E2D /* Resources */ = {
