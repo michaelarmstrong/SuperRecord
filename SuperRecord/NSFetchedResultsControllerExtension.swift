@@ -15,34 +15,24 @@ import UIKit
 public extension NSFetchedResultsController {
     
     // MARK: Public Methods
-    class func superFetchedResultsController(entityName: String!, collectionView: UICollectionView!) -> NSFetchedResultsController {
+    
+    class func superFetchedResultsController(entityName: String!, collectionView: UICollectionView!, context: NSManagedObjectContext? = SuperCoreDataStack.defaultStack.managedObjectContext) -> NSFetchedResultsController {
         let fetchedResultsDelegate = setupFetchedResultsControllerDelegate(collectionView)
-        let fetchedResultsController = superFetchedResultsController(entityName, reusableView: collectionView, delegate: fetchedResultsDelegate)
+        let fetchedResultsController =  superFetchedResultsController(entityName, sectionNameKeyPath: nil, sortDescriptors: nil, predicate: nil, delegate: fetchedResultsDelegate, context: context)
         fetchedResultsDelegate.bindsLifetimeTo(fetchedResultsController)
         return fetchedResultsController
     }
-    
-    class func superFetchedResultsController(entityName: String!, tableView: UITableView!) -> NSFetchedResultsController {
+
+    class func superFetchedResultsController(entityName: String!, tableView: UITableView!, context: NSManagedObjectContext? = SuperCoreDataStack.defaultStack.managedObjectContext) -> NSFetchedResultsController {
         let fetchedResultsDelegate = setupFetchedResultsControllerDelegate(tableView)
-        let fetchedResultsController =  superFetchedResultsController(entityName, reusableView: tableView, delegate: fetchedResultsDelegate)
+        let fetchedResultsController =  superFetchedResultsController(entityName, sectionNameKeyPath: nil, sortDescriptors: nil, predicate: nil, delegate: fetchedResultsDelegate, context: context)
+        
         fetchedResultsDelegate.bindsLifetimeTo(fetchedResultsController)
         return fetchedResultsController
-    }
-    
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortedBy: String?, ascending: Bool, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortedBy: sortedBy, ascending: ascending, delegate: delegate)
     }
     
     class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortedBy: String?, ascending: Bool, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortedBy: sortedBy, ascending: ascending, delegate: delegate)
-    }
-    
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate)
-    }
-    
-    class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, tableView: UITableView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-        return superFetchedResultsController(entityName, sectionNameKeyPath: sectionNameKeyPath, sortDescriptors: sortDescriptors, predicate: predicate, delegate: delegate)
     }
     
     class func superFetchedResultsController(entityName: String!, sectionNameKeyPath: String?, sortDescriptors: [NSSortDescriptor]?, predicate: NSPredicate?, collectionView: UICollectionView!, delegate: NSFetchedResultsControllerDelegate, context: NSManagedObjectContext!) -> NSFetchedResultsController {
@@ -86,7 +76,7 @@ public extension NSFetchedResultsController {
         return fetchedResultsDelegate
     }
     
-    private class func superFetchedResultsController(entityName: String!, reusableView: UIScrollView!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+    private class func superFetchedResultsController(entityName: String!, delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
         return superFetchedResultsController(entityName, sectionNameKeyPath: nil, sortDescriptors: nil, predicate: nil, delegate: delegate)
     }
     
