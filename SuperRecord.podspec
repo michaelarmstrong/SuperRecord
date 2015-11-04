@@ -1,7 +1,7 @@
 # One Day this will work...
 Pod::Spec.new do |s|
   s.name         = "SuperRecord"
-  s.version      = "1.4"
+  s.version      = "1.5"
   s.summary      = "A Swift CoreData extension to bring some love and take the hassle out of common CoreData tasks."
   s.homepage     = "http://superarmstrong.uk"
   s.license      = { :type => "MIT", :file => "LICENSE" }
