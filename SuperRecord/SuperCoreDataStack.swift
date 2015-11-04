@@ -15,7 +15,7 @@ import UIKit
 import CoreData
 
 let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
-let stackName = infoDictionary!["CFBundleName"] as! String
+let stackName = infoDictionary!["CFBundleName"]!.stringByReplacingOccurrencesOfString(" ", withString: "_")
 let storeName = stackName + ".sqlite"
 
 let applicationDocumentsDirectory: NSURL = {
