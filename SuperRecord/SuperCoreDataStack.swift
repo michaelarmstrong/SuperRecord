@@ -18,7 +18,7 @@ let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
 let stackName = infoDictionary!["CFBundleName"] as! String
 let storeName = stackName + ".sqlite"
 
-let applicationDocumentsDirectory: NSURL = {
+public let applicationDocumentsDirectory: NSURL = {
     let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
     return urls.last!
     }()
@@ -49,8 +49,22 @@ public class SuperCoreDataStack: NSObject {
         
         super.init()
     }
-   
-    // MARK: - Core Data stack
+    
+    public func importSqliteFile(sqliteFileName: String, shouldOverride: Bool){
+        let fileManager = NSFileManager.defaultManager();
+        if let path = persistentStoreURL?.path {
+            if ( fileManager.fileExistsAtPath(path) ){
+                guard shouldOverride else {return}
+                try! fileManager.removeItemAtPath(path)
+            }
+            if let sqlitePath  = NSBundle.mainBundle().pathForResource(sqliteFileName, ofType: "sqlite"){
+                try! fileManager.copyItemAtPath(sqlitePath, toPath: path)
+            }
+        }
+    }
+    
+
+       // MARK: - Core Data stack
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.

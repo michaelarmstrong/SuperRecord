@@ -10,6 +10,7 @@
 		1225383B1BDD98FB0062CC0D /* UIMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1225383A1BDD98FB0062CC0D /* UIMenuTableViewController.swift */; };
 		1241DFB71BDF953800C03E6D /* PokemonCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */; };
 		1248A7EC1BDF97150013C7E3 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */; };
+		1258DADD1BE12C5100945DDA /* SuperRecordDemo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 1258DAD91BE11BDE00945DDA /* SuperRecordDemo.sqlite */; };
 		128571011BDA473200710E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128571001BDA473200710E2D /* AppDelegate.swift */; };
 		128571041BDA473200710E2D /* SuperRecordDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 128571021BDA473200710E2D /* SuperRecordDemo.xcdatamodeld */; };
 		1285710D1BDA473200710E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1285710C1BDA473200710E2D /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		1241DFB61BDF953800C03E6D /* PokemonCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewController.swift; sourceTree = "<group>"; };
 		1248A7EA1BDF97150013C7E3 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
 		1258DACA1BE1187E00945DDA /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		1258DAD91BE11BDE00945DDA /* SuperRecordDemo.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SuperRecordDemo.sqlite; sourceTree = "<group>"; };
 		128570FD1BDA473200710E2D /* SuperRecordDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperRecordDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		128571001BDA473200710E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		128571031BDA473200710E2D /* SuperRecordDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SuperRecordDemo.xcdatamodel; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		128570FF1BDA473200710E2D /* SuperRecordDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1258DAD91BE11BDE00945DDA /* SuperRecordDemo.sqlite */,
 				1248A7E91BDF96F90013C7E3 /* View */,
 				1285711B1BDA49A100710E2D /* Entity */,
 				128571001BDA473200710E2D /* AppDelegate.swift */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				128571101BDA473200710E2D /* LaunchScreen.storyboard in Resources */,
+				1258DADD1BE12C5100945DDA /* SuperRecordDemo.sqlite in Resources */,
 				1285710D1BDA473200710E2D /* Assets.xcassets in Resources */,
 				128571181BDA474F00710E2D /* Podfile in Resources */,
 			);

@@ -16,49 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     
-    func downloadTypes(){
-        for typeNumber in 1...20{
-            Alamofire.request(.GET, "http://pokeapi.co/api/v1/type/\(typeNumber)")
-                .responseJSON { response in
-                    if let JSON = response.result.value {
-                        let type = Type.createNewEntity() as! Type
-                        type.name = JSON["name"] as! String
-                        let id =  JSON["id"] as! Int
-                        type.typeID = Int16(id)
-                        try! SuperCoreDataStack.defaultStack.managedObjectContext!.save()
-                    }
-            }
-        }
-    }
-    
-    func downloadPokemon () {
-        for pokemonNumber in 1...10{
-            Alamofire.request(.GET, "http://pokeapi.co/api/v1/pokemon/\(pokemonNumber)")
-                .responseJSON { response in
-                    if let JSON = response.result.value {
-                        
-                        let pokemon  = Pokemon.createNewEntity() as! Pokemon
-                        pokemon.name = JSON["name"] as! String
-                        let id =  JSON["national_id"] as! Int
-                        pokemon.national_id = Int16(id)
-                        for pokemonType in JSON["types"] as! [AnyObject] {
-                            let typeName = (pokemonType["name"] as! String).capitalizedString
-                            print(typeName);
-                            let type = Type.findFirstOrCreateWithAttribute("name", value: typeName) as! Type
-                            pokemon.types.insert(type)
-                        }
-                        try! SuperCoreDataStack.defaultStack.managedObjectContext!.save()
-                    }
-            }
-
-        }
-        
-    }
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+        SuperCoreDataStack.defaultStack.importSqliteFile("SuperRecordDemo", shouldOverride: false)
         let rootViewController = UINavigationController(rootViewController: UIMenuTableViewController());
-        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = rootViewController
         self.window!.makeKeyAndVisible()

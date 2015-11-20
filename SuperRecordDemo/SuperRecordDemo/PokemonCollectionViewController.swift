@@ -52,14 +52,12 @@ class PokemonCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        print(self.fetchedResultsController.sections?.count ?? 0)
         return self.fetchedResultsController.sections?.count ?? 0
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
-                print(sectionInfo.numberOfObjects)
         return sectionInfo.numberOfObjects
     }
 
