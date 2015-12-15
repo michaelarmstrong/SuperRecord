@@ -9,13 +9,19 @@ Pod::Spec.new do |s|
   s.author       = "Michael Armstrong"
   s.source       = { 
     :git => "https://github.com/michaelarmstrong/SuperRecord.git",
-	:tag => s.version,
+    :tag => s.version,
     :branch => 'master'
   }
 
 
   s.ios.deployment_target = '8.0'
-  s.watchos.deployment_target = '2.0'
   s.source_files = 'SuperRecord/*.swift'
   s.requires_arc = true
+
+  s.subspec 'watch' do |ss|
+   ss.watchos.deployment_target = '2.0'
+   ss.source_files = 'SuperRecord/*.swift'
+   ss.requires_arc = true
+   ss.exclude_files = 'SuperRecord/NSFetchedResultsControllerExtension.swift' , 'SuperRecord/SuperFetchedResultsControllerDelegate.swift'
+  end
 end
