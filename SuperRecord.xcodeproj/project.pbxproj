@@ -16,7 +16,10 @@
 		129BB23A1A1B593500D21867 /* SuperRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */; };
 		12D1B5691A30B9CA008F7859 /* NSPredicateExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5681A30B9CA008F7859 /* NSPredicateExtensionTest.swift */; };
 		12FEA4BC1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */; };
-		6311B9451C204ADA00CD17B5 /* SuperRecord WatchFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 6311B9441C204ADA00CD17B5 /* SuperRecord WatchFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6311B9451C204ADA00CD17B5 /* SuperRecordWatchFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 6311B9441C204ADA00CD17B5 /* SuperRecordWatchFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6311B9601C2050B600CD17B5 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */; };
+		6311B9611C2050B900CD17B5 /* NSPredicateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12487FC61A25BFA20038C070 /* NSPredicateExtension.swift */; };
+		6311B9631C2050BD00CD17B5 /* SuperCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6EC19FA599600DAA557 /* SuperCoreDataStack.swift */; };
 		63DDD65419FA531800DAA557 /* SuperRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DDD64819FA531800DAA557 /* SuperRecord.framework */; };
 		63DDD6EA19FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E819FA598A00DAA557 /* NSFetchedResultsControllerExtension.swift */; };
 		63DDD6EB19FA598A00DAA557 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */; };
@@ -44,7 +47,7 @@
 		12D1B5681A30B9CA008F7859 /* NSPredicateExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPredicateExtensionTest.swift; sourceTree = "<group>"; };
 		12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
 		6311B9421C204ADA00CD17B5 /* SuperRecordWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SuperRecordWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6311B9441C204ADA00CD17B5 /* SuperRecord WatchFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SuperRecord WatchFramework.h"; sourceTree = "<group>"; };
+		6311B9441C204ADA00CD17B5 /* SuperRecordWatchFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuperRecordWatchFramework.h; sourceTree = "<group>"; };
 		6311B9461C204ADA00CD17B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63DDD64819FA531800DAA557 /* SuperRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SuperRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DDD64C19FA531800DAA557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,7 +90,7 @@
 		6311B9431C204ADA00CD17B5 /* SuperRecord WatchFramework */ = {
 			isa = PBXGroup;
 			children = (
-				6311B9441C204ADA00CD17B5 /* SuperRecord WatchFramework.h */,
+				6311B9441C204ADA00CD17B5 /* SuperRecordWatchFramework.h */,
 				6311B9461C204ADA00CD17B5 /* Info.plist */,
 			);
 			path = "SuperRecord WatchFramework";
@@ -182,7 +185,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6311B9451C204ADA00CD17B5 /* SuperRecord WatchFramework.h in Headers */,
+				6311B9451C204ADA00CD17B5 /* SuperRecordWatchFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +323,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6311B9631C2050BD00CD17B5 /* SuperCoreDataStack.swift in Sources */,
+				6311B9611C2050B900CD17B5 /* NSPredicateExtension.swift in Sources */,
+				6311B9601C2050B600CD17B5 /* NSManagedObjectExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
