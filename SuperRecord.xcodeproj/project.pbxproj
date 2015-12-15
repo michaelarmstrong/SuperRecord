@@ -16,7 +16,6 @@
 		129BB23A1A1B593500D21867 /* SuperRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD65A19FA531800DAA557 /* SuperRecordTests.swift */; };
 		12D1B5691A30B9CA008F7859 /* NSPredicateExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5681A30B9CA008F7859 /* NSPredicateExtensionTest.swift */; };
 		12FEA4BC1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FEA4BB1A1E6A9B0034C5D4 /* NSManagedObjectExtension.swift */; };
-		6311B9451C204ADA00CD17B5 /* SuperRecordWatchFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 6311B9441C204ADA00CD17B5 /* SuperRecordWatchFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6311B9601C2050B600CD17B5 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6E919FA598A00DAA557 /* NSManagedObjectExtension.swift */; };
 		6311B9611C2050B900CD17B5 /* NSPredicateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12487FC61A25BFA20038C070 /* NSPredicateExtension.swift */; };
 		6311B9631C2050BD00CD17B5 /* SuperCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DDD6EC19FA599600DAA557 /* SuperCoreDataStack.swift */; };
@@ -185,7 +184,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6311B9451C204ADA00CD17B5 /* SuperRecordWatchFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +568,7 @@
 				6311B9481C204ADA00CD17B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63DDD64219FA531800DAA557 /* Build configuration list for PBXProject "SuperRecord" */ = {
 			isa = XCConfigurationList;
