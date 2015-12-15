@@ -9,8 +9,9 @@ SuperRecord
 
 ===================
 
-** SUPPORTS SWIFT 2.0 from Version >= 1.4 **
-** SUPPORTS SWIFT 1.2 from Version <= 1.3 **
+<b> SUPPORTS SWIFT 2.0 from Version >= 1.4 ** </b> <br>
+<b> SUPPORTS SWIFT 1.2 from Version <= 1.3 </b> <br>
+<b> Both iOS and WatchOS </b>
  
 A **Swift CoreData Framework** consisting of several **Extensions** and Helpers to bring some love and take the hassle out of common CoreData tasks.
 
@@ -34,6 +35,11 @@ To integrate SuperRecord into your Xcode project using [Cocoapods](http://cocoap
 
 	use_frameworks!
 	pod 'SuperRecord'
+
+or for watch support use the subspec
+
+        pod 'SuperRecord/watch'
+
 	
 - Build	
 - Add import SuperRecord
