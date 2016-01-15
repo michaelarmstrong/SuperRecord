@@ -29,7 +29,7 @@ public extension NSManagedObject {
 
     class func updateAll (context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, propertiesToUpdate: [String : AnyObject], predicate:NSPredicate?, resultType: NSBatchUpdateRequestResultType = .UpdatedObjectsCountResultType) throws -> AnyObject{
         let error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-        let entityName : String = NSStringFromClass(self)
+        let entityName = String(self)
         let request = NSBatchUpdateRequest(entityName: entityName);
         request.propertiesToUpdate = propertiesToUpdate
         request.resultType = resultType
@@ -84,7 +84,7 @@ public extension NSManagedObject {
     - returns: NSArray of NSManagedObject.
     */
     class func findAllWithPredicate(predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
-        let entityName : NSString = NSStringFromClass(self)
+        let entityName = String(self)
         let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName as String)
         fetchRequest.includesPropertyValues = includesPropertyValues
@@ -142,7 +142,7 @@ public extension NSManagedObject {
     */
     
     class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
-        let entityName : NSString = NSStringFromClass(self)
+        let entityName = String(self)
         let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
         let fetchRequest = NSFetchRequest(entityName: entityName as String)
         fetchRequest.fetchLimit = 1
@@ -173,7 +173,7 @@ public extension NSManagedObject {
     - returns: NSManagedObject.
     */
     class func createNewEntity(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSManagedObject {
-        let entityName : NSString = NSStringFromClass(self)
+        let entityName = String(self)
         let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
         let obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
         return obj as NSManagedObject
@@ -224,7 +224,7 @@ public extension NSManagedObject {
     - returns: Int of total result set count.
     */
     class func count(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, predicate : NSPredicate?, error: NSErrorPointer) -> Int {
-            let entityName : NSString = NSStringFromClass(self)
+            let entityName = String(self)
             let fetchRequest = NSFetchRequest(entityName: entityName as String);
             fetchRequest.includesPropertyValues = false
             fetchRequest.includesSubentities = false
@@ -246,7 +246,7 @@ public extension NSManagedObject {
             expressionsDescription.append(expressionDescription);
         }
         
-        let entityName : NSString = NSStringFromClass(self)
+        let entityName = String(self)
 
         let fetchRequest = NSFetchRequest(entityName: entityName as String);
         
