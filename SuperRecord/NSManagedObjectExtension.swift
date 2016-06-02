@@ -124,7 +124,7 @@ public extension NSManagedObject {
     
     - returns: NSArray of NSManagedObject.
     */
-    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
+    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
         let predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
         return findAllWithPredicate(predicate, context: context, sortDescriptors:sortDescriptors)
     }
