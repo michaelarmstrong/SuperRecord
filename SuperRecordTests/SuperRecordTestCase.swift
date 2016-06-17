@@ -11,18 +11,18 @@ import CoreData
 import XCTest
 import SuperRecord
 
-let SuperRecordTestCaseTimeout : NSTimeInterval = 5
+let SuperRecordTestCaseTimeout : TimeInterval = 5
 
 
 
 class SuperRecordTestCase: XCTestCase {
     
-    var managedObjectContext  = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+    var managedObjectContext  = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
     var error: NSError? = nil
     var psc : NSPersistentStoreCoordinator!
 
-    let applicationDocumentsDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    let applicationDocumentsDirectory: URL = {
+        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls.last!
         }()
 
@@ -30,14 +30,14 @@ class SuperRecordTestCase: XCTestCase {
 
     override func setUp() {
         super.setUp();
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Pokemon.sqlite")
+        let url = try! self.applicationDocumentsDirectory.appendingPathComponent("Pokemon.sqlite")
         var error: NSError? = nil
-        let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())!;
+        let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModel(from: Bundle.allBundles())!;
         psc  = NSPersistentStoreCoordinator(managedObjectModel: mom);
-        try! psc.addPersistentStoreWithType(
-            NSSQLiteStoreType,
-            configuration: nil,
-            URL: url,
+        try! psc.addPersistentStore(
+            ofType: NSSQLiteStoreType,
+            configurationName: nil,
+            at: url,
             options: nil)
         if ((error) != nil)
         {
@@ -64,8 +64,8 @@ class SuperRecordTestCase: XCTestCase {
         }
         let stores = psc.persistentStores
         for store in stores{
-            try! psc.removePersistentStore(store)
-            try! NSFileManager.defaultManager().removeItemAtURL(store.URL!)
+            try! psc.remove(store)
+            try! FileManager.default().removeItem(at: store.url!)
         }
         super.tearDown();
     }

@@ -14,24 +14,24 @@
 import UIKit
 import CoreData
 
-let infoDictionary = NSBundle.mainBundle().infoDictionary as NSDictionary?
-let stackName = infoDictionary!["CFBundleName"]!.stringByReplacingOccurrencesOfString(" ", withString: "_")
+let infoDictionary = Bundle.main().infoDictionary as NSDictionary?
+let stackName = infoDictionary!["CFBundleName"]!.replacingOccurrences(of: " ", with: "_")
 let storeName = stackName + ".sqlite"
 
-public let applicationDocumentsDirectory: NSURL = {
-    let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+public let applicationDocumentsDirectory: URL = {
+    let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
     return urls.last!
     }()
 
 public class SuperCoreDataStack: NSObject {
     
-    let persistentStoreURL : NSURL?
+    let persistentStoreURL : URL?
     let storeType : NSString
     
     //TODO: Move away from this pattern so developers can use their own stack name and specify store type.
     public class var defaultStack : SuperCoreDataStack {
     struct DefaultStatic {
-            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: applicationDocumentsDirectory.URLByAppendingPathComponent(storeName))
+            static let instance : SuperCoreDataStack = SuperCoreDataStack(storeType:NSSQLiteStoreType,storeURL: try! applicationDocumentsDirectory.appendingPathComponent(storeName))
         }
         return DefaultStatic.instance
     }
@@ -43,22 +43,22 @@ public class SuperCoreDataStack: NSObject {
         return InMemoryStatic.instance
     }
     
-    init(storeType: NSString, storeURL: NSURL?) {
+    init(storeType: NSString, storeURL: URL?) {
         self.persistentStoreURL = storeURL
         self.storeType = storeType
         
         super.init()
     }
     
-    public func importSqliteFile(sqliteFileName: String, shouldOverride: Bool){
-        let fileManager = NSFileManager.defaultManager();
+    public func importSqliteFile(_ sqliteFileName: String, shouldOverride: Bool){
+        let fileManager = FileManager.default();
         if let path = persistentStoreURL?.path {
-            if ( fileManager.fileExistsAtPath(path) ){
+            if ( fileManager.fileExists(atPath: path) ){
                 guard shouldOverride else {return}
-                try! fileManager.removeItemAtPath(path)
+                try! fileManager.removeItem(atPath: path)
             }
-            if let sqlitePath  = NSBundle.mainBundle().pathForResource(sqliteFileName, ofType: "sqlite"){
-                try! fileManager.copyItemAtPath(sqlitePath, toPath: path)
+            if let sqlitePath  = Bundle.main().pathForResource(sqliteFileName, ofType: "sqlite"){
+                try! fileManager.copyItem(atPath: sqlitePath, toPath: path)
             }
         }
     }
@@ -68,8 +68,8 @@ public class SuperCoreDataStack: NSObject {
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource(stackName, withExtension: "momd")
-        return NSManagedObjectModel(contentsOfURL: modelURL!)!
+        let modelURL = Bundle.main().urlForResource(stackName, withExtension: "momd")
+        return NSManagedObjectModel(contentsOf: modelURL!)!
         }()
     
     //TODO : Implement better error handling around this boilerplate and implement in memory store types.
@@ -82,7 +82,7 @@ public class SuperCoreDataStack: NSObject {
         var failureReason = "There was an error creating or loading the application's saved data."
         
         do {
-            try coordinator!.addPersistentStoreWithType(self.storeType as String, configuration: nil, URL: self.persistentStoreURL, options: nil)
+            try coordinator!.addPersistentStore(ofType: self.storeType as String, configurationName: nil, at: self.persistentStoreURL, options: nil)
         } catch var error1 as NSError {
             error = error1
             coordinator = nil
@@ -110,7 +110,7 @@ public class SuperCoreDataStack: NSObject {
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()

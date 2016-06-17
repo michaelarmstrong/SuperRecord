@@ -21,9 +21,9 @@ import CoreData
 class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControllerDelegate {
     
     enum ReusableViewType : Int {
-        case CollectionView
-        case TableView
-        case Unknown
+        case collectionView
+        case tableView
+        case unknown
     }
     
     var tableView : UITableView?
@@ -55,17 +55,17 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
     func receiverType() -> ReusableViewType
     {
         if let _ = collectionView {
-            return ReusableViewType.CollectionView
+            return ReusableViewType.collectionView
         }
         
         if let _ = tableView {
-            return ReusableViewType.TableView
+            return ReusableViewType.tableView
         }
         
-        return ReusableViewType.Unknown
+        return ReusableViewType.unknown
     }
     
-    func bindsLifetimeTo(owner: AnyObject!) -> Void {
+    func bindsLifetimeTo(_ owner: AnyObject!) -> Void {
         let oldOwner: AnyObject? = self.owner
         self.owner = owner
         
@@ -73,43 +73,42 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
         if(ownerArray == nil){
             ownerArray = NSMutableArray()
             objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            //objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, UInt(objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN));
         }
-        ownerArray?.addObject(self)
+        ownerArray?.add(self)
         
         if(oldOwner != nil){
             let oldOwnerArray : NSMutableArray = objc_getAssociatedObject(oldOwner, kOwnerKey) as! NSMutableArray;
-            oldOwnerArray.removeObjectIdenticalTo(self)
+            oldOwnerArray.removeObject(identicalTo: self)
         }
     }
     
     // !MARK : Reusable View Updates (UICollectionView / UITableView)
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
-        if(receiverType() == ReusableViewType.TableView){
+        if(receiverType() == ReusableViewType.tableView){
             tableView!.beginUpdates()
-        } else if(receiverType() == ReusableViewType.CollectionView) {
+        } else if(receiverType() == ReusableViewType.collectionView) {
             // nothing to do... yet.
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType)
     {
-        if(receiverType() == .TableView){
-            if type == NSFetchedResultsChangeType.Insert {
-                tableView!.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Fade)
+        if(receiverType() == .tableView){
+            if type == NSFetchedResultsChangeType.insert {
+                tableView!.insertSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
             }
-            else if type == NSFetchedResultsChangeType.Delete {
-                tableView!.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Fade)
+            else if type == NSFetchedResultsChangeType.delete {
+                tableView!.deleteSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
             }
-        } else if(receiverType() == .CollectionView) {
+        } else if(receiverType() == .collectionView) {
             var changeDictionary : Dictionary<NSFetchedResultsChangeType,Int> = Dictionary()
             
             switch (type) {
-            case NSFetchedResultsChangeType.Insert:
+            case NSFetchedResultsChangeType.insert:
                 changeDictionary[type] = sectionIndex
-            case NSFetchedResultsChangeType.Delete:
+            case NSFetchedResultsChangeType.delete:
                 changeDictionary[type] = sectionIndex
             default:
                 print("Unexpected NSFetchedResultsChangeType received for didChangeSection. \(type)")
@@ -118,34 +117,34 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
         }
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        if(receiverType() == ReusableViewType.TableView){
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if(receiverType() == ReusableViewType.tableView){
             switch type {
-            case NSFetchedResultsChangeType.Insert:
-                tableView!.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-            case NSFetchedResultsChangeType.Delete:
-                tableView!.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-            case NSFetchedResultsChangeType.Update:
-                tableView!.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-            case NSFetchedResultsChangeType.Move:
-                tableView!.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-                tableView!.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+            case NSFetchedResultsChangeType.insert:
+                tableView!.insertRows(at: [newIndexPath!], with: UITableViewRowAnimation.fade)
+            case NSFetchedResultsChangeType.delete:
+                tableView!.deleteRows(at: [indexPath!], with: UITableViewRowAnimation.fade)
+            case NSFetchedResultsChangeType.update:
+                tableView!.reloadRows(at: [indexPath!], with: UITableViewRowAnimation.fade)
+            case NSFetchedResultsChangeType.move:
+                tableView!.deleteRows(at: [indexPath!], with: UITableViewRowAnimation.fade)
+                tableView!.insertRows(at: [newIndexPath!], with: UITableViewRowAnimation.fade)
             }
 
-        } else if(receiverType() == ReusableViewType.CollectionView) {
+        } else if(receiverType() == ReusableViewType.collectionView) {
             var changeDictionary : Dictionary<NSFetchedResultsChangeType,AnyObject> = Dictionary()
 
             switch (type) {
-            case NSFetchedResultsChangeType.Insert:
+            case NSFetchedResultsChangeType.insert:
                 changeDictionary[type] = newIndexPath
                 break;
-            case NSFetchedResultsChangeType.Delete:
+            case NSFetchedResultsChangeType.delete:
                 changeDictionary[type] = indexPath
                 break;
-            case NSFetchedResultsChangeType.Update:
+            case NSFetchedResultsChangeType.update:
                 changeDictionary[type] = indexPath
                 break;
-            case NSFetchedResultsChangeType.Move:
+            case NSFetchedResultsChangeType.move:
                 // !TODO : we may need to migrate this to a homogenous Array as I expect this to throw a runtime exception.
                 changeDictionary[type] = [indexPath!, newIndexPath!]
                 break;
@@ -156,24 +155,24 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
     }
 
 
-    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
-        if(receiverType() == ReusableViewType.TableView){
+        if(receiverType() == ReusableViewType.tableView){
             tableView!.endUpdates()
-        } else if(receiverType() == ReusableViewType.CollectionView){
+        } else if(receiverType() == ReusableViewType.collectionView){
            if(sectionChanges.count > 0){
                 collectionView!.performBatchUpdates({() -> Void in
                     for change in self.sectionChanges {
                         for (dictKey,dictValue) in change {
                             switch (dictKey) {
-                            case NSFetchedResultsChangeType.Insert:
-                                self.collectionView!.insertSections(NSIndexSet(index: dictValue))
+                            case NSFetchedResultsChangeType.insert:
+                                self.collectionView!.insertSections(IndexSet(integer: dictValue))
                                 break;
-                            case NSFetchedResultsChangeType.Delete:
-                                self.collectionView!.deleteSections(NSIndexSet(index: dictValue))
+                            case NSFetchedResultsChangeType.delete:
+                                self.collectionView!.deleteSections(IndexSet(integer: dictValue))
                                 break;
-                            case NSFetchedResultsChangeType.Update:
-                                self.collectionView!.reloadSections(NSIndexSet(index: dictValue))
+                            case NSFetchedResultsChangeType.update:
+                                self.collectionView!.reloadSections(IndexSet(integer: dictValue))
                                 break;
                             default:
                                 print("Unexpected NSFetchedResultsChangeType stored for controllerDidChangeContent. \(dictKey)")
@@ -193,16 +192,16 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                         for change in self.objectChanges {
                             for (dictKey,dictValue) in change  {
                                 switch (dictKey) {
-                                case NSFetchedResultsChangeType.Insert:
-                                    self.collectionView!.insertItemsAtIndexPaths([dictValue as! NSIndexPath])
+                                case NSFetchedResultsChangeType.insert:
+                                    self.collectionView!.insertItems(at: [dictValue as! IndexPath])
                                     break;
-                                case NSFetchedResultsChangeType.Delete:
-                                    self.collectionView!.deleteItemsAtIndexPaths([dictValue as! NSIndexPath])
+                                case NSFetchedResultsChangeType.delete:
+                                    self.collectionView!.deleteItems(at: [dictValue as! IndexPath])
                                     break;
-                                case NSFetchedResultsChangeType.Update:
-                                    self.collectionView!.reloadItemsAtIndexPaths([dictValue as! NSIndexPath])
+                                case NSFetchedResultsChangeType.update:
+                                    self.collectionView!.reloadItems(at: [dictValue as! IndexPath])
                                     break;
-                                case NSFetchedResultsChangeType.Move:
+                                case NSFetchedResultsChangeType.move:
                                     //TODO: Implement Move properly.
                                     self.collectionView?.reloadData()
                                     break;
@@ -213,7 +212,7 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                 }
             }
         }
-        sectionChanges.removeAll(keepCapacity: false)
-        objectChanges.removeAll(keepCapacity: false)
+        sectionChanges.removeAll(keepingCapacity: false)
+        objectChanges.removeAll(keepingCapacity: false)
     }
 }

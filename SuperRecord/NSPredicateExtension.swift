@@ -17,7 +17,7 @@ Create a new NSPredicate as logical AND of left and right predicate
 
 - returns: NSPredicate
 */
-public func & (left : NSPredicate, right : NSPredicate )-> NSPredicate{
+public func & (left : Predicate, right : Predicate )-> Predicate{
     return [left] & [right]
 }
 
@@ -29,7 +29,7 @@ Create a new NSPredicate as logical AND of left and right predicates
 
 - returns: NSPredicate
 */
-public func & (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
+public func & (left : Predicate, right : [Predicate] )-> Predicate{
     return [left] & right
 }
 
@@ -41,8 +41,8 @@ Create a new NSPredicate as logical AND of left and right predicates
 
 - returns: NSPredicate
 */
-public func & (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
-    return NSCompoundPredicate(andPredicateWithSubpredicates: left + right)
+public func & (left : [Predicate], right : [Predicate] )-> Predicate{
+    return CompoundPredicate(andPredicateWithSubpredicates: left + right)
 }
 
 /**
@@ -55,7 +55,7 @@ Create a new NSPredicate as logical OR of left and right predicate
 - returns: NSPredicate
 */
 
-public func | (left : NSPredicate, right : NSPredicate )-> NSPredicate{
+public func | (left : Predicate, right : Predicate )-> Predicate{
     return [left] | [right]
 }
 
@@ -69,7 +69,7 @@ Create a new NSPredicate as logical OR of left and right predicates
 - returns: NSPredicate
 */
 
-public func | (left : NSPredicate, right : [NSPredicate] )-> NSPredicate{
+public func | (left : Predicate, right : [Predicate] )-> Predicate{
     return [left] | right
 }
 
@@ -83,8 +83,8 @@ Create a new NSPredicate as logical OR of left and right predicates
 
 - returns: NSPredicate
 */
-public func | (left : [NSPredicate], right : [NSPredicate] )-> NSPredicate{
-    return NSCompoundPredicate(orPredicateWithSubpredicates: left + right)
+public func | (left : [Predicate], right : [Predicate] )-> Predicate{
+    return CompoundPredicate(orPredicateWithSubpredicates: left + right)
 }
 
 /**
@@ -158,7 +158,7 @@ public enum NSPredicateOperator : String {
 
 }
 
-public extension NSPredicate {
+public extension Predicate {
     
     /**
     Init a new NSPredicate using the input predicates adding parenthesis for more complex NSPredicate
@@ -169,7 +169,7 @@ public extension NSPredicate {
     
     - returns: NSPredicate
     */
-    public convenience init?(firstPredicate : NSPredicate, secondPredicate: NSPredicate, predicateOperator: NSLogicOperator ) {
+    public convenience init?(firstPredicate : Predicate, secondPredicate: Predicate, predicateOperator: NSLogicOperator ) {
             self.init(format: "(\(firstPredicate)) \(predicateOperator.rawValue) (\(secondPredicate))")
     }
 
@@ -183,9 +183,9 @@ public extension NSPredicate {
     
     - returns: NSPredicate
     */
-    public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> NSPredicate? {
-        var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
-        predicate = predicate.predicateWithSubstitutionVariables(["value" : value]);
+    public class func predicateBuilder(_ attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> Predicate? {
+        var predicate = Predicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
+        predicate = predicate.withSubstitutionVariables(["value" : value]);
         return predicate
     }
 }
