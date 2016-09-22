@@ -230,7 +230,11 @@ public extension NSManagedObject {
             fetchRequest.includesSubentities = false
             fetchRequest.predicate = predicate
             fetchRequest.propertiesToFetch = [];
-            return context.countForFetchRequest(fetchRequest, error: error)
+        do {
+            return try context.countForFetchRequest(fetchRequest)
+        } catch {
+            return 0; 
+        }
     }
     
     
