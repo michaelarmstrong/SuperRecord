@@ -27,16 +27,16 @@ public extension NSManagedObject {
     - returns: AnyObject? depends on resultType
     */
 
-    class func updateAll (context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, propertiesToUpdate: [String : AnyObject], predicate:NSPredicate?, resultType: NSBatchUpdateRequestResultType = .UpdatedObjectsCountResultType) throws -> AnyObject{
+    class func updateAll (_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, propertiesToUpdate: [String : AnyObject], predicate:NSPredicate?, resultType: NSBatchUpdateRequestResultType = .updatedObjectsCountResultType) throws -> AnyObject{
         let error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-        let entityName = String(self)
+        let entityName = String(describing: self)
         let request = NSBatchUpdateRequest(entityName: entityName);
         request.propertiesToUpdate = propertiesToUpdate
         request.resultType = resultType
         request.predicate = predicate
-        let result =  try! context.executeRequest(request) as! NSBatchUpdateResult;
+        let result =  try! context.execute(request) as! NSBatchUpdateResult;
         if let value = result.result {
-            return value
+            return value as AnyObject
         }
         throw error
     }
@@ -50,7 +50,7 @@ public extension NSManagedObject {
     - parameter context: the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
     
     */
-    class func deleteAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
+    class func deleteAll(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
         deleteAll(nil, context: context)
     }
     
@@ -62,10 +62,10 @@ public extension NSManagedObject {
     - parameter context: the NSManagedObjectContext. Default value is SuperCoreDataStack.defaultStack.managedObjectContext
     
     */
-    class func deleteAll(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
+    class func deleteAll(_ predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> Void {
         let results = findAllWithPredicate(predicate, includesPropertyValues: false, context: context, completionHandler: nil)
         for result in results {
-            context.deleteObject(result as! NSManagedObject)
+            context.delete(result as! NSManagedObject)
         }
     }
     
@@ -83,18 +83,18 @@ public extension NSManagedObject {
     
     - returns: NSArray of NSManagedObject.
     */
-    class func findAllWithPredicate(predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil, completionHandler handler: ((NSError!) -> Void)! = nil) -> NSArray {
-        let entityName = String(self)
-        let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
-        let fetchRequest = NSFetchRequest(entityName: entityName as String)
+    class func findAllWithPredicate(_ predicate: NSPredicate!, includesPropertyValues: Bool = true, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil, completionHandler handler: ((NSError?) -> Void)! = nil) -> NSArray {
+        let entityName = String(describing: self)
+        let entityDescription = NSEntityDescription.entity(forEntityName: entityName as String, in: context)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName as String)
         fetchRequest.includesPropertyValues = includesPropertyValues
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
         fetchRequest.sortDescriptors = sortDescriptors
         var results = NSArray()
         let error : NSError? = nil
-        context.performBlockAndWait({ () -> Void in
-            results = (try! context.executeFetchRequest(fetchRequest)) as! [NSManagedObject]
+        context.performAndWait({ () -> Void in
+            results = (try! context.fetch(fetchRequest)) as! [NSManagedObject] as NSArray
         })
         handler?(error);
         return results
@@ -108,7 +108,7 @@ public extension NSManagedObject {
     
     - returns: NSArray of NSManagedObject.
     */
-    class func findAll(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
+    class func findAll(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
         return findAllWithPredicate(nil, context: context, sortDescriptors:sortDescriptors)
     }
     
@@ -124,7 +124,7 @@ public extension NSManagedObject {
     
     - returns: NSArray of NSManagedObject.
     */
-    class func findAllWithAttribute(attribute: String!, value: AnyObject, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
+    class func findAllWithAttribute(_ attribute: String!, value: AnyObject, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, sortDescriptors: [NSSortDescriptor]? = nil) -> NSArray {
         let predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
         return findAllWithPredicate(predicate, context: context, sortDescriptors:sortDescriptors)
     }
@@ -141,17 +141,17 @@ public extension NSManagedObject {
     - returns: NSManagedObject.
     */
     
-    class func findFirstOrCreateWithPredicate(predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
-        let entityName = String(self)
-        let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
-        let fetchRequest = NSFetchRequest(entityName: entityName as String)
+    class func findFirstOrCreateWithPredicate(_ predicate: NSPredicate!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError?) -> Void)! = nil) -> NSManagedObject {
+        let entityName = String(describing: self)
+        let entityDescription = NSEntityDescription.entity(forEntityName: entityName as String, in: context)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName as String)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = predicate
         fetchRequest.entity = entityDescription
         var fetchedObjects = NSArray()
         let error : NSError? = nil
-        context.performBlockAndWait({ () -> Void in
-            let results = (try! context.executeFetchRequest(fetchRequest)) as NSArray
+        context.performAndWait({ () -> Void in
+            let results = (try! context.fetch(fetchRequest)) as NSArray
             fetchedObjects = results
         })
         if let firstObject = fetchedObjects.firstObject as? NSManagedObject {
@@ -159,7 +159,7 @@ public extension NSManagedObject {
             return firstObject
         }
 
-        let obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context) as NSManagedObject
+        let obj = NSManagedObject(entity: entityDescription!, insertInto: context) as NSManagedObject
         
         handler?(error);
         return obj
@@ -172,10 +172,10 @@ public extension NSManagedObject {
     
     - returns: NSManagedObject.
     */
-    class func createNewEntity(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSManagedObject {
-        let entityName = String(self)
-        let entityDescription = NSEntityDescription.entityForName(entityName as String, inManagedObjectContext: context)
-        let obj = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: context)
+    class func createNewEntity(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!) -> NSManagedObject {
+        let entityName = String(describing: self)
+        let entityDescription = NSEntityDescription.entity(forEntityName: entityName as String, in: context)
+        let obj = NSManagedObject(entity: entityDescription!, insertInto: context)
         return obj as NSManagedObject
     }
 
@@ -191,7 +191,7 @@ public extension NSManagedObject {
     
     - returns: NSManagedObject.
     */
-    class func findFirstOrCreateWithAttribute(attribute: String!, value: AnyObject!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError!) -> Void)! = nil) -> NSManagedObject {
+    class func findFirstOrCreateWithAttribute(_ attribute: String!, value: AnyObject!, context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, handler: ((NSError?) -> Void)! = nil) -> NSManagedObject {
         let predicate = NSPredicate.predicateBuilder(attribute, value: value, predicateOperator: .Equal)
         return findFirstOrCreateWithPredicate(predicate, context: context, handler: handler)
     }
@@ -208,7 +208,7 @@ public extension NSManagedObject {
     
     - returns: Int of total result set count.
     */
-    class func count(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, error: NSErrorPointer) -> Int {
+    class func count(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, error: NSErrorPointer) -> Int {
         return count(context, predicate: nil, error: error);
     }
     
@@ -223,49 +223,49 @@ public extension NSManagedObject {
     
     - returns: Int of total result set count.
     */
-    class func count(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, predicate : NSPredicate?, error: NSErrorPointer) -> Int {
-            let entityName = String(self)
-            let fetchRequest = NSFetchRequest(entityName: entityName as String);
+    class func count(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, predicate : NSPredicate?, error: NSErrorPointer) -> Int {
+            let entityName = String(describing: self)
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName as String);
             fetchRequest.includesPropertyValues = false
             fetchRequest.includesSubentities = false
             fetchRequest.predicate = predicate
             fetchRequest.propertiesToFetch = [];
-            return try! context.countForFetchRequest(fetchRequest)
+            return try! context.count(for: fetchRequest)
     }
     
     
-    class func function(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, function: String, fieldName: [String], predicate : NSPredicate?, groupByFieldName: [String], handler: ((NSError!) -> Void)) -> [AnyObject] {
+    class func function(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, function: String, fieldName: [String], predicate : NSPredicate?, groupByFieldName: [String], handler: ((NSError!) -> Void)) -> [AnyObject] {
         let error : NSError? = nil
         var expressionsDescription = [AnyObject]();
         for field in fieldName{
             let expression = NSExpression(forKeyPath: field);
             let expressionDescription = NSExpressionDescription();
             expressionDescription.expression = NSExpression(forFunction: function, arguments: [expression])
-            expressionDescription.expressionResultType = NSAttributeType.DoubleAttributeType;
+            expressionDescription.expressionResultType = NSAttributeType.doubleAttributeType;
             expressionDescription.name = field
             expressionsDescription.append(expressionDescription);
         }
         
-        let entityName = String(self)
+        let entityName = String(describing: self)
 
-        let fetchRequest = NSFetchRequest(entityName: entityName as String);
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName as String);
         
         if(groupByFieldName.count > 0 ){
             fetchRequest.propertiesToGroupBy = groupByFieldName
             for groupBy in groupByFieldName {
-                expressionsDescription.append(groupBy)
+                expressionsDescription.append(groupBy as AnyObject)
             }
 
         }
         fetchRequest.propertiesToFetch = expressionsDescription
-        fetchRequest.resultType = NSFetchRequestResultType.DictionaryResultType
+        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
         fetchRequest.predicate = predicate
 
         var results = [AnyObject]()
         
-        context.performBlockAndWait({
+        context.performAndWait({
             do {
-                try results = context.executeFetchRequest(fetchRequest) as [AnyObject]!;
+                try results = context.fetch(fetchRequest) as [AnyObject]!;
             } catch {
 
             }
@@ -275,14 +275,14 @@ public extension NSManagedObject {
         return results
     }
     
-    class func function(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, function: String, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
+    class func function(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, function: String, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
         let results = self.function(context, function: function , fieldName: fieldName, predicate: predicate, groupByFieldName: [], handler: handler)
         var resultValue = [Double]();
 
         var tempResult = [Double]()
         for result in results{
             for field in fieldName{
-                let value = result.valueForKey(field) as! Double
+                let value = result.value(forKey: field) as! Double
                 tempResult.append(value)
             }
         }
@@ -290,55 +290,55 @@ public extension NSManagedObject {
         return resultValue;
     }
     
-    class func sum(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate? = nil, handler: ((NSError!) -> Void)! = nil) -> [Double] {
+    class func sum(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate? = nil, handler: ((NSError?) -> Void)! = nil) -> [Double] {
         return function(context, function: "sum:", fieldName: fieldName, predicate: predicate, handler: handler);
     }
     
-    class func sum(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError!) -> Void)! = nil) -> Double! {
+    class func sum(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError?) -> Void)! = nil) -> Double! {
         var results = sum(context, fieldName: [fieldName], predicate: predicate, handler: handler)
         return results.isEmpty ? 0 : results[0];
     }
     
-    class func sum(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
+    class func sum(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
         return function(context, function: "sum:", fieldName: fieldName, predicate: predicate, groupByFieldName: groupByField, handler: handler)
     }
     
-    class func max(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
+    class func max(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
         return function(context, function: "max:", fieldName: fieldName, predicate: predicate, handler: handler);
     }
     
-    class func max(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError!) -> Void)! = nil) -> Double! {
+    class func max(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError?) -> Void)! = nil) -> Double! {
         var results = max(context, fieldName: [fieldName], predicate: predicate, handler: handler)
         return results.isEmpty ? 0 : results[0];
     }
 
-    class func max(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
+    class func max(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
         return function(context, function: "max:", fieldName: fieldName, predicate: predicate, groupByFieldName: groupByField, handler: handler)
     }
 
-    class func min(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
+    class func min(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
         return function(context, function: "min:", fieldName: fieldName, predicate: predicate, handler: handler);
     }
     
-    class func min(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError!) -> Void)! = nil) -> Double! {
+    class func min(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError?) -> Void)! = nil) -> Double! {
         var results = min(context, fieldName: [fieldName], predicate: predicate, handler: handler)
         return results.isEmpty ? 0 : results[0];
     }
     
-    class func min(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
+    class func min(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
         return function(context, function: "min:", fieldName: fieldName, predicate: predicate, groupByFieldName: groupByField, handler: handler)
     }
 
-    class func avg(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
+    class func avg(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, handler: ((NSError!) -> Void)) -> [Double] {
         return function(context, function: "average:", fieldName: fieldName, predicate: predicate, handler: handler);
     }
     
-    class func avg(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError!) -> Void)!  = nil) -> Double! {
+    class func avg(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: String, predicate : NSPredicate? = nil, handler: ((NSError?) -> Void)!  = nil) -> Double! {
         var results = avg(context, fieldName: [fieldName], predicate: predicate, handler: handler)
         return results.isEmpty ? 0 : results[0];
     }
 
-    class func avg(context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
+    class func avg(_ context: NSManagedObjectContext = SuperCoreDataStack.defaultStack.managedObjectContext!, fieldName: [String], predicate : NSPredicate?, groupByField:[String], handler: ((NSError!) -> Void))-> [AnyObject] {
         return function(context, function: "average:", fieldName: fieldName, predicate: predicate, groupByFieldName: groupByField, handler: handler)
     }
 

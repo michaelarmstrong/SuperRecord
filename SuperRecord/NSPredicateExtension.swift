@@ -183,9 +183,9 @@ public extension NSPredicate {
     
     - returns: NSPredicate
     */
-    public class func predicateBuilder(attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> NSPredicate? {
+    public class func predicateBuilder(_ attribute: String!, value: AnyObject, predicateOperator: NSPredicateOperator) -> NSPredicate? {
         var predicate = NSPredicate(format: "%K \(predicateOperator.rawValue) $value", attribute)
-        predicate = predicate.predicateWithSubstitutionVariables(["value" : value]);
+        predicate = predicate.withSubstitutionVariables(["value" : value]);
         return predicate
     }
 }
