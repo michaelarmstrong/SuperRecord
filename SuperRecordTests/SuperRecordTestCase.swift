@@ -22,7 +22,7 @@ class SuperRecordTestCase: XCTestCase {
     var psc : NSPersistentStoreCoordinator!
 
     let applicationDocumentsDirectory: URL = {
-        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls.last!
         }()
 
@@ -30,9 +30,9 @@ class SuperRecordTestCase: XCTestCase {
 
     override func setUp() {
         super.setUp();
-        let url = try! self.applicationDocumentsDirectory.appendingPathComponent("Pokemon.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("Pokemon.sqlite")
         var error: NSError? = nil
-        let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModel(from: Bundle.allBundles())!;
+        let mom : NSManagedObjectModel = NSManagedObjectModel.mergedModel(from: Bundle.allBundles)!;
         psc  = NSPersistentStoreCoordinator(managedObjectModel: mom);
         try! psc.addPersistentStore(
             ofType: NSSQLiteStoreType,
@@ -65,7 +65,7 @@ class SuperRecordTestCase: XCTestCase {
         let stores = psc.persistentStores
         for store in stores{
             try! psc.remove(store)
-            try! FileManager.default().removeItem(at: store.url!)
+            try! FileManager.default.removeItem(at: store.url!)
         }
         super.tearDown();
     }

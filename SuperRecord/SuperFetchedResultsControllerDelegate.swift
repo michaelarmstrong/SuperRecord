@@ -29,11 +29,29 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
     var tableView : UITableView?
     var collectionView : UICollectionView?
     
-    var objectChanges : Array<Dictionary<NSFetchedResultsChangeType,AnyObject>> = Array()
+    var objectChanges : Array<Dictionary<NSFetchedResultsChangeType,IndexPath>> = Array()
     var sectionChanges : Array<Dictionary<NSFetchedResultsChangeType,Int>> = Array()
     
     let kOwnerKey: String = "kOwnerKey"
     weak var owner : AnyObject?
+    
+    convenience init(tableView tv: UITableView!) {
+        
+        self.init()
+
+        weak var weakTableView = tv
+        let reusableView: UITableView! = weakTableView
+        self.tableView = reusableView
+    }
+    
+    convenience init(collectionView cv: UICollectionView!) {
+        
+        self.init()
+        
+        weak var weakCollectionView = cv
+        let reusableView: UICollectionView! = weakCollectionView
+        self.collectionView = reusableView
+    }
     
     
     var reusableView : AnyObject? {
@@ -69,10 +87,11 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
         let oldOwner: AnyObject? = self.owner
         self.owner = owner
         
-        var ownerArray : AnyObject? = objc_getAssociatedObject(self.owner, kOwnerKey);
+        var ownerArray : AnyObject? = objc_getAssociatedObject(self.owner, kOwnerKey) as AnyObject?;
         if(ownerArray == nil){
             ownerArray = NSMutableArray()
             objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            //objc_setAssociatedObject(self.owner, kOwnerKey, ownerArray, UInt(objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN));
         }
         ownerArray?.add(self)
         
@@ -117,7 +136,7 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
         }
     }
 
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         if(receiverType() == ReusableViewType.tableView){
             switch type {
             case NSFetchedResultsChangeType.insert:
@@ -132,22 +151,24 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
             }
 
         } else if(receiverType() == ReusableViewType.collectionView) {
-            var changeDictionary : Dictionary<NSFetchedResultsChangeType,AnyObject> = Dictionary()
+            var changeDictionary = Dictionary<NSFetchedResultsChangeType,IndexPath>()
 
             switch (type) {
             case NSFetchedResultsChangeType.insert:
-                changeDictionary[type] = newIndexPath
-                break;
+                changeDictionary[type] = newIndexPath as IndexPath?
+                break
             case NSFetchedResultsChangeType.delete:
-                changeDictionary[type] = indexPath
-                break;
+                changeDictionary[type] = indexPath as IndexPath?
+                break
             case NSFetchedResultsChangeType.update:
-                changeDictionary[type] = indexPath
-                break;
+                changeDictionary[type] = indexPath as IndexPath?
+                break
             case NSFetchedResultsChangeType.move:
                 // !TODO : we may need to migrate this to a homogenous Array as I expect this to throw a runtime exception.
-                changeDictionary[type] = [indexPath!, newIndexPath!]
-                break;
+                
+                //changeDictionary[type] = [indexPath, newIndexPath]
+                
+                break
             }
             objectChanges.append(changeDictionary)
         }
@@ -193,18 +214,18 @@ class SuperFetchedResultsControllerDelegate : NSObject, NSFetchedResultsControll
                             for (dictKey,dictValue) in change  {
                                 switch (dictKey) {
                                 case NSFetchedResultsChangeType.insert:
-                                    self.collectionView!.insertItems(at: [dictValue as! IndexPath])
-                                    break;
+                                    self.collectionView!.insertItems(at: [dictValue])
+                                    break
                                 case NSFetchedResultsChangeType.delete:
-                                    self.collectionView!.deleteItems(at: [dictValue as! IndexPath])
-                                    break;
+                                    self.collectionView!.deleteItems(at: [dictValue])
+                                    break
                                 case NSFetchedResultsChangeType.update:
-                                    self.collectionView!.reloadItems(at: [dictValue as! IndexPath])
-                                    break;
+                                    self.collectionView!.reloadItems(at: [dictValue])
+                                    break
                                 case NSFetchedResultsChangeType.move:
                                     //TODO: Implement Move properly.
                                     self.collectionView?.reloadData()
-                                    break;
+                                    break
                                 }
                             }
                         }
